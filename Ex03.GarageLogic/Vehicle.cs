@@ -16,5 +16,15 @@ namespace Ex03.GarageLogic
             m_Model = i_Model;
             m_LicenceNumber = i_LicenceNumber;
         }
+
+        public virtual void InitializeWheels(string i_ManufcatorName, float i_MaxWheelAirPressure, int i_AmountOfWheels)
+        {
+            Wheel tempWheel = new Wheel(i_ManufcatorName, i_MaxWheelAirPressure);
+
+            for (int i = 0; i < i_AmountOfWheels; i++)
+            {
+                m_Wheels.Add(tempWheel);
+            }
+        }
     }
 }

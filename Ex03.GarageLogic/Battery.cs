@@ -26,6 +26,14 @@ namespace Ex03.GarageLogic
             }
         }
 
+        public float MaxChargeInHours
+        {
+            get
+            {
+                return m_MaxChargeInHours;
+            }
+        }
+
         public void Charge(float i_NumOfChargeHoursToAdd)
         {
             if (m_ChargeLeftInHours + i_NumOfChargeHoursToAdd > m_MaxChargeInHours)
