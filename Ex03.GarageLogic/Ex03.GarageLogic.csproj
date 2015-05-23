@@ -35,7 +35,12 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Battery.cs" />
     <Compile Include="Car.cs" />
+    <Compile Include="ElectricCar.cs" />
+    <Compile Include="FueledCar.cs" />
+    <Compile Include="FuelTank.cs" />
+    <Compile Include="Utils.cs" />
     <Compile Include="Vehicle.cs" />
     <Compile Include="Wheel.cs" />
   </ItemGroup>
