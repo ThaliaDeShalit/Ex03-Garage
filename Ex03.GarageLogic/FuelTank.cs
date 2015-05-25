@@ -44,7 +44,7 @@ namespace Ex03.GarageLogic
             }
             else if (i_AmountOfFuelToAdd + m_CurrentFuelAmount > m_MaxFuelAmount)
             {
-                throw new ValueOutOfRangeException();
+                throw new ValueOutOfRangeException(m_MaxFuelAmount - m_CurrentFuelAmount, 0f);
             }
             else
             {

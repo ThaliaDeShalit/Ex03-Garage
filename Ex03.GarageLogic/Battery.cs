@@ -38,7 +38,7 @@ namespace Ex03.GarageLogic
         {
             if (m_ChargeLeftInHours + i_NumOfChargeHoursToAdd > m_MaxChargeInHours)
             {
-                throw new ValueOutOfRangeException();
+                throw new ValueOutOfRangeException(m_MaxChargeInHours - m_ChargeLeftInHours, 0f);
             }
             else
             {
