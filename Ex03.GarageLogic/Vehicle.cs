@@ -10,6 +10,7 @@ namespace Ex03.GarageLogic
         protected string m_LicenceNumber;
         protected float m_PercentageOfEnergyLeft;
         protected List<Wheel> m_Wheels;
+        protected PowerSource m_PowerSource;
 
         public virtual Vehicle(string i_Model, string i_LicenceNumber)
         {
@@ -17,6 +18,7 @@ namespace Ex03.GarageLogic
             m_LicenceNumber = i_LicenceNumber;
         }
 
+        // TODO:
         public virtual void InitializeWheels(string i_ManufcatorName, float i_MaxWheelAirPressure, int i_AmountOfWheels)
         {
             Wheel tempWheel = new Wheel(i_ManufcatorName, i_MaxWheelAirPressure);
@@ -24,6 +26,22 @@ namespace Ex03.GarageLogic
             for (int i = 0; i < i_AmountOfWheels; i++)
             {
                 m_Wheels.Add(tempWheel);
+            }
+        }
+
+        public string LicenceNumber
+        {
+            get
+            {
+                return m_LicenceNumber;
+            }
+        }
+
+        public List<Wheel> Wheels
+        {
+            get
+            {
+                return m_Wheels;
             }
         }
     }

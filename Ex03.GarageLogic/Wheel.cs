@@ -16,7 +16,7 @@ namespace Ex03.GarageLogic
             m_MaxAirPressure = i_MaxAirPressure;
         }
 
-        public void inflate(float i_AirToAdd)
+        public void Inflate(float i_AirToAdd)
         {
             if (m_CurrentAirPressure + i_AirToAdd > m_MaxAirPressure)
             {
@@ -25,6 +25,29 @@ namespace Ex03.GarageLogic
             else
             {
                 m_CurrentAirPressure += i_AirToAdd;
+            }
+        }
+
+        public float CurrentAirPressure
+        {
+            get
+            {
+                return m_CurrentAirPressure;
+            }
+            set
+            {
+                m_CurrentAirPressure = value;
+            }
+        }
+
+        public float MaxAirPressure {
+            get
+            {
+                return m_MaxAirPressure;
+            }
+            set
+            {
+                m_MaxAirPressure = value;
             }
         }
     }

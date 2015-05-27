@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Ex03.GarageLogic
 {
-    class Car : Vehicle
+    abstract class Car : Vehicle
     {
         protected const float k_MaxWheelAirPressure = 31;
         protected const int k_AmountOfWheels = 4;

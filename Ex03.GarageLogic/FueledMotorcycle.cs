@@ -18,5 +18,13 @@ namespace Ex03.GarageLogic
             m_FuelTank = new FuelTank(k_FuelType, K_FuelTankMaxFuelAmount);
             InitializeWheels(i_WheelManufactorName, k_MaxWheelAirPressure, k_AmountOfWheels);
         }
+
+        public eFuelType FuelType
+        {
+            get
+            {
+                return k_FuelType;
+            }
+        }
     }
 }
