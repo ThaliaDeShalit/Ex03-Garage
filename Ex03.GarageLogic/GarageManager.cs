@@ -67,9 +67,17 @@ namespace Ex03.GarageLogic
 
         public void FuelVehicle(string i_LicencePlate, eFuelType i_FuelType, float i_AmountOfFuel)
         {
-            Vehicle vehicleToFuel = m_Vehicles[i_LicencePlate];
+            Vehicle vehicleToFuel = m_Vehicles[i_LicencePlate].Vehicle;
 
-            if (vehicleToFuel.FuelType)
+            Type type = vehicleToFuel.GetType();
+
+            type.
+            
+
+            if ((type)vehicleToFuel.FuelType)
+            {
+
+            }
         }
     }
 }
