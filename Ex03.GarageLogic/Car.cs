@@ -12,9 +12,9 @@ namespace Ex03.GarageLogic
         protected eCarColor m_CarColor;
         protected eNumOfCarDoors m_NumOfCarDoors;
 
-        public Car(string i_Model, string i_LicenceNumber, string i_WheelManufactorName, eCarColor i_CarColor, eNumOfCarDoors i_NumOfCarDoors) : base(i_Model, i_LicenceNumber)
+        public Car(string i_Model, string i_LicenceNumber, string i_WheelManufactorName, float i_CurrentAirPressure, eCarColor i_CarColor, eNumOfCarDoors i_NumOfCarDoors) : base(i_Model, i_LicenceNumber)
         {
-            InitializeWheels(i_WheelManufactorName, k_MaxWheelAirPressure, k_AmountOfWheels);
+            InitializeWheels(i_WheelManufactorName, k_MaxWheelAirPressure, i_CurrentAirPressure, k_AmountOfWheels);
             m_CarColor = i_CarColor;
             m_NumOfCarDoors = i_NumOfCarDoors;
         }
