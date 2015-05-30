@@ -13,10 +13,10 @@ namespace Ex03.GarageLogic
             switch (i_VehicleType)
             {
                 case eVehicleType.FueledCar:
-                    newVehicle = new FueledCar((string)i_VehicleProporties[eVehiclePropertyType.Model], (string)i_VehicleProporties[eVehiclePropertyType.LicencePlate], (string)i_VehicleProporties[eVehiclePropertyType.WheelManuctorName], (eCarColor)i_VehicleProporties[eVehiclePropertyType.CarColor], (eNumOfCarDoors)i_VehicleProporties[eVehiclePropertyType.AmountOfDoors]);
+                    newVehicle = new FueledCar((string)i_VehicleProporties[eVehiclePropertyType.Model], (string)i_VehicleProporties[eVehiclePropertyType.LicencePlate], (string)i_VehicleProporties[eVehiclePropertyType.WheelManuctorName], (eCarColor)i_VehicleProporties[eVehiclePropertyType.CarColor], (eAmountOfDoors)i_VehicleProporties[eVehiclePropertyType.AmountOfDoors]);
                     break;
                 case eVehicleType.ElectricCar:
-                    newVehicle = new ElectricCar((string)i_VehicleProporties[eVehiclePropertyType.Model], (string)i_VehicleProporties[eVehiclePropertyType.LicencePlate], (string)i_VehicleProporties[eVehiclePropertyType.WheelManuctorName], (eCarColor)i_VehicleProporties[eVehiclePropertyType.CarColor], (eNumOfCarDoors)i_VehicleProporties[eVehiclePropertyType.AmountOfDoors]);
+                    newVehicle = new ElectricCar((string)i_VehicleProporties[eVehiclePropertyType.Model], (string)i_VehicleProporties[eVehiclePropertyType.LicencePlate], (string)i_VehicleProporties[eVehiclePropertyType.WheelManuctorName], (eCarColor)i_VehicleProporties[eVehiclePropertyType.CarColor], (eAmountOfDoors)i_VehicleProporties[eVehiclePropertyType.AmountOfDoors]);
                     break;
                 case eVehicleType.FueledMotorcycle:
                     newVehicle = new FueledMotorcycle((string)i_VehicleProporties[eVehiclePropertyType.Model], (string)i_VehicleProporties[eVehiclePropertyType.LicencePlate], (string)i_VehicleProporties[eVehiclePropertyType.WheelManuctorName], (eLicenceType)i_VehicleProporties[eVehiclePropertyType.LicenceType], (int)i_VehicleProporties[eVehiclePropertyType.EngineVolume]);

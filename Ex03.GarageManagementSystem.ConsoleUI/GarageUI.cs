@@ -19,146 +19,192 @@ namespace Ex03.GarageManagementSystem.ConsoleUI
         private const float k_MaxAirPressureFuelMotorcycle = 34f;
         private const float k_MaxAirPressureTruck = 25f;
 
-        private readonly string r_WelcomeMessage = "Welcome to the garage, please choose by number an operation to preform:";
+        private const string k_WelcomeMessage = "Welcome to the garage, please choose by number an operation to preform:";
 
-        private readonly string r_UserOptions =
+        // User options
+        private const string k_UserOptions =
 @"1: Register a new vehicle to the garage
 2: Show all the vehicles currently in the garage, by licence plate
 3: Change status of a specific vehicle in the garage
 4: Inflate a vehicle's wheels to the maximum possible capacity
 5: Fuel a vehicle powered by fuel
 6: Charge a veicle powered by battery
-7: Show all the information for a selected vehicle";
+7: Show all the information for a selected vehicle
 
-        private readonly string r_InvalidUserOption = "Input not valid. Please enter the number corresponding with the operation you would like to perform.";
-        private readonly string r_GetLicencePlate = "Please enter the licence plate of the vehicle you would like to register (digits and letters only):";
-        private readonly string r_InvalidLicencePlate = "Input not valid. Please enter the licence plate using only letters and digits.";
+8: To exit";
+        private const string k_InvalidUserOption = "Input not valid. Please enter the number corresponding with the operation you would like to perform.";
+        
+        // exit
+        private const string k_ExitPrompt = "Goodbye! (please press enter to exit)";
 
-        private readonly string r_CarAlreadyExists =
+        // Licence plate
+        private const string k_GetLicencePlate = "Please enter the licence plate of the vehicle you would like to register (digits and letters only):";
+        private const string k_InvalidLicencePlate = "Input not valid. Please enter the licence plate using only letters and digits.";
+
+        private const string k_VehicleAlreadyExists =
 @"Vehicle with licence plate %s already exists in the garage.
 It's status has been changed to 'In Progress'.";
 
-        private readonly string r_GetVehicleType =
+        // Vehicle type
+        private const string k_GetVehicleType =
 @"Please enter the vehicle type you would like to register:
 1: Fueled Car
 2: Electric Car
 3: Fueled Motorcycle
 4: Electric Motorcycle
 5: Truck";
+        private const string k_InvalidVehicleType = "The selected vehicle type is not supported. Please select one of the supported vehicle types displayed above.";
+        
+        // Owner Name
+        private const string k_GetNameOfOwner = "Please enter the name of the owner of the vehicle:";
+        private const string k_InvalidOwnerName = "Input cannot be empty. Please enter the name of the vehicle owner:";
+        
+        // Owner phone number
+        private const string k_GetOwnerPhoneNumber = "Enter the owner's phone number:";
+        private const string k_InvalidOwnerPhoneNumber = "Invalid input. Please enter a phone number, consisting of digits only.";
+        
+        // Wheel manufctor name
+        private const string k_GetWheelManufacturerName = "Enter the wheels' manufacturer name:";
+        private const string k_InvalidWheelManufacturerName = "Input cannot be empty. Please enter the name of the wheels' manufacturer:";
 
-        private readonly string r_InvalidVehicleType = "The selected vehicle type is not supported. Please select one of the supported vehicle types displayed above.";
-        private readonly string r_GetNameOfOwner = "Please enter the name of the owner of the vehicle:";
-        private readonly string r_InvalidOwnerName = "Input cannot be empty. Please enter the name of the vehicle owner:";
-        private readonly string r_GetOwnerPhoneNumber = "Enter the owner's phone number:";
-        private readonly string r_InvalidOwnerPhoneNumber = "Invalid input. Please enter a phone number, consisting of digits only.";
-        private readonly string r_GetWheelManufacturerName = "Enter the wheels' manufacturer name:";
-        private readonly string r_InvalidWheelManufacturerName = "Input cannot be empty. Please enter the name of the wheels' manufacturer:";
-        private readonly string r_GetWheelAirPressure = "Enter the current air pressure in the wheels:";
-        private readonly string r_InvalidWheelAirPressure = "Input not valid. Please enter a positive float between 0 and the maximum air pressure of the wheels.";
+        // Wheel air pressure
+        private const string k_GetWheelAirPressure = "Enter the current air pressure in the wheels:";
+        private const string k_InvalidWheelAirPressure = "Input not valid. Please enter a positive float between 0 and the maximum air pressure of the wheels.";
 
         // Car color
-        private readonly string r_GetCarColor =
+        private const string k_GetCarColor =
 @"What color is your car? Select one of the supported colors:
 1: Green
 2: Red
 3: White
 4: Black";
 
-        private readonly string r_InvalidCarColor = "Selected number is not supported. Please select a number between 0 and 4.";
+        private const string k_InvalidCarColor = "Selected number is not supported. Please select a number between 0 and 4.";
 
         // Amount of doors
-        private readonly string r_GetAmountOfDoors = "How many doors does your vehicle have? (one of 2, 3, 4 or 5)";
-        private readonly string r_InvalidAmountOfDoors = "The number of doors you entered is not supported by this garage. We only repair vehicles with 2 to 5 doors.";
+        private const string k_GetAmountOfDoors = "How many doors does your vehicle have? (one of 2, 3, 4 or 5)";
+        private const string k_InvalidAmountOfDoors = "The number of doors you entered is not supported by this garage. We only repair vehicles with 2 to 5 doors.";
 
         // Current fuel capacity
-        private readonly string r_GetCurrentFuelCapacity = "Enter current fuel capacity:";
-        private readonly string r_InvalidFuelCapacity = "The amount of fuel you entered is not possible. Please make sure the value you entered is a positive integer between 0 and the maximum capacity of your fuel tank.";
+        private const string k_GetCurrentFuelCapacity = "Enter current fuel capacity:";
+        private const string k_InvalidFuelCapacity = "The amount of fuel you entered is not possible. Please make sure the value you entered is a positive integer between 0 and the maximum capacity of your fuel tank.";
 
         // Current battery capacity
-        private readonly string r_GetBatteryCapacity = "Enter current battery capacity:";
-        private readonly string r_InvalidBatteryCapacity = "The capacity entered is not possible. Please make sure the value you entered is a positive integer between 0 and the maximum capacity of your battery.";
+        private const string k_GetBatteryCapacity = "Enter current battery capacity:";
+        private const string k_InvalidBatteryCapacity = "The capacity entered is not possible. Please make sure the value you entered is a positive integer between 0 and the maximum capacity of your battery.";
 
         // Current powersource capacity
-        private readonly string r_GetPowerSourceCapacity = "Enter current power capacity (fuel amount/ battery charge):";
-        private readonly string r_InvalidPowerSourceCapacity = "The value entered is not possible. Please enter a positive value between 0 and the %d.";
+        private const string k_GetPowerSourceCapacity = "Enter current power capacity (fuel amount/ battery charge):";
+        private const string k_InvalidPowerSourceCapacity = "The value entered is not possible. Please enter a positive value between 0 and the %d.";
 
         // Licence type
-        private readonly string r_GetLicenceType =
+        private const string k_GetLicenceType =
 @"Which licence type is your motorcycle? Select one of the possible types:
 1: A
 2: A2
 3: AB
 4: B1";
-        private readonly string r_InvalidLicenceType = "The selected licence type is not supported. Please select one of the supported licence types.";
+        private const string k_InvalidLicenceType = "The selected licence type is not supported. Please select one of the supported licence types.";
 
         // Engine volume
-        private readonly string r_GetEngineVolume = "Enter the volume of your engine:";
-        private readonly string r_InvalidEngineVolume = "Invalid value. Please enter a positive integer value.";
+        private const string k_GetEngineVolume = "Enter the volume of your engine:";
+        private const string k_InvalidEngineVolume = "Invalid value. Please enter a positive integer value.";
 
         // Model name
-        private readonly string r_GetCarModelName = "Enter your vehicle's model name:";
-        private readonly string r_InvalidCarModelName = "Please enter the name of your vehicle's model.";
+        private const string k_GetVehicleModelName = "Enter your vehicle's model name:";
+        private const string k_InvalidVehicleModelName = "Please enter the name of your vehicle's model.";
 
         // Carrying hazardous materials
-        private readonly string r_GetCarryingHazardousMaterials = "Is your vehicle carrying hazardous materials? (y/n)";
-        private readonly string r_InvalidCarryingHazardousMaterials = "Invalid input. Please select either 'y' or 'n'.";
+        private const string k_GetCarryingHazardousMaterials = "Is your vehicle carrying hazardous materials? (y/n)";
+        private const string k_InvalidCarryingHazardousMaterials = "Invalid input. Please select either 'y' or 'n'.";
 
         // Current carry weight
-        private readonly string r_GetCurrentCarryingWeight = "Enter the current weight your vehicle is carrying:";
-        private readonly string r_InvalidCurrentCarryingWeight = "Invalid input. Please enter a positive integer.";
+        private const string k_GetCurrentCarryingWeight = "Enter the current weight your vehicle is carrying:";
+        private const string k_InvalidCurrentCarryingWeight = "Invalid input. Please enter a positive integer.";
 
+        private const string k_EnterToContinue = "Please press enter to continue";
+
+        // Vehicle type to pull
+        private const string k_GetVehicleTypeToPull = "Please enter whether you would like to pull all vehicles, or vehcile in a specific status - In progress, fixed or paid: [a/i/f/p]";
+        private const string k_InvalidVehicleTypeToPull = "Invalid input. Please enter either a for all vehicles, i for vehicles in progress, f for fixed or p for paid";
 
         public void Run()
         {
             string userInput;
             int userInputInNumber;
+            bool quit = false;
 
             m_GarageManager = new GarageManager();
 
-            Console.WriteLine(r_WelcomeMessage);
+            Console.WriteLine(k_WelcomeMessage);
 
             while (true)
             {
-                Console.WriteLine(r_UserOptions);
+                Console.WriteLine(k_UserOptions);
                 userInput = Console.ReadLine();
 
                 if (checkValidityOfIntInput(userInput, 1, 7, out userInputInNumber))
                 {
-                    Console.WriteLine(r_InvalidUserOption);
+                    Console.WriteLine(k_InvalidUserOption);
                     continue;
                 }
 
                 switch ((eGarageOperations)userInputInNumber)
                 {
                     case eGarageOperations.RegisterNewCar:
+                        Console.Clear();
                         registerNewCar();
+                        pressEnterToContinue();
                         break;
                     case eGarageOperations.PullAllVehicles:
+                        Console.Clear();
                         pullAllVehicles();
+                        pressEnterToContinue();
                         break;
                     case eGarageOperations.ChangeVehicleStatus:
+                        Console.Clear();
                         changeVehicleStatus();
+                        pressEnterToContinue();
                         break;
                     case eGarageOperations.InflateWheels:
+                        Console.Clear();
                         inflateWheels();
+                        pressEnterToContinue();
                         break;
                     case eGarageOperations.FuelVehicle:
+                        Console.Clear();
                         fuelVehicle();
+                        pressEnterToContinue();
                         break;
                     case eGarageOperations.ChargeVehicle:
+                        Console.Clear();
                         chargeVehicle();
+                        pressEnterToContinue();
                         break;
                     case eGarageOperations.AllInfoOfVehicle:
+                        Console.Clear();
                         getAllInfoOfVehicle();
+                        pressEnterToContinue();
                         break;
+                    case eGarageOperations.Exit:
+                        Console.Clear();
+                        quit = true;
+                        break;
+                }
+
+                if (quit)
+                {
+                    break;
                 }
             }
 
+            Console.WriteLine(k_ExitPrompt);
+            Console.ReadLine();
         }
 
         private void registerNewCar()
         {
-            Console.WriteLine(r_GetLicencePlate);
+            Console.WriteLine(k_GetLicencePlate);
             bool inputIsValid = false;
             bool carAlreadyExists = false;
             string licencePlate;
@@ -167,7 +213,6 @@ It's status has been changed to 'In Progress'.";
             string nameOfOwner;
             string phoneNumberOfOwner;
             Dictionary<eVehiclePropertyType, object> vehicleProperties = new Dictionary<eVehiclePropertyType, object>();
-            float maxCapacityOfAirPressure = 0;
 
             while (!inputIsValid)
             {
@@ -185,7 +230,7 @@ It's status has been changed to 'In Progress'.";
 
                 if (!inputIsValid)
                 {
-                    Console.WriteLine(r_InvalidLicencePlate);
+                    Console.WriteLine(k_InvalidLicencePlate);
                     continue;
                 }
 
@@ -194,78 +239,74 @@ It's status has been changed to 'In Progress'.";
 
                 if (carAlreadyExists)
                 {
-                    Console.WriteLine(r_CarAlreadyExists, licencePlate);
+                    Console.WriteLine(k_VehicleAlreadyExists, licencePlate);
                     break;
                 }
                 else
                 {
-                    vehicleType = (eVehicleType)getVehicleType();
+                    vehicleType = (eVehicleType)getIntRepresentationOfEnum(1, 5, k_GetVehicleType, k_InvalidVehicleType);
                     nameOfOwner = getNameOfOwner();
                     phoneNumberOfOwner = getPhoneNumberOfOwner();
 
-                    vehicleProperties.Add(eVehiclePropertyType.Model, getVehicleModel());
+                    vehicleProperties.Add(eVehiclePropertyType.Model, getTextInput(k_GetVehicleModelName, k_InvalidVehicleModelName));
                     vehicleProperties.Add(eVehiclePropertyType.LicencePlate, licencePlate);
-                    vehicleProperties.Add(eVehiclePropertyType.WheelManuctorName, getWheelManuctorName());
+                    vehicleProperties.Add(eVehiclePropertyType.WheelManuctorName, getTextInput(k_GetWheelManufacturerName, k_InvalidWheelManufacturerName));
 
                     switch (vehicleType)
                     {
                         case eVehicleType.FueledCar:
-                            vehicleProperties.Add(eVehiclePropertyType.WheelAirPressure, getCurrentWheelAirPressure(k_MaxAirPressureCarAndElectricMotorcycle));
-                            vehicleProperties.Add(eVehiclePropertyType.PowerSourceCapacity, getPowerSourceCapacity(k_MaxFuelCapacityCar));
-                            vehicleProperties.Add(eVehiclePropertyType.CarColor, getCarColor());
-                            vehicleProperties.Add(eVehiclePropertyType.AmountOfDoors, getAmountOfDoors());
+                            vehicleProperties.Add(eVehiclePropertyType.WheelAirPressure, getFloatInput(k_MaxAirPressureCarAndElectricMotorcycle, k_GetWheelAirPressure, k_InvalidWheelAirPressure));
+                            vehicleProperties.Add(eVehiclePropertyType.PowerSourceCapacity, getFloatInput(k_MaxFuelCapacityCar, k_GetPowerSourceCapacity, k_InvalidPowerSourceCapacity));
+                            vehicleProperties.Add(eVehiclePropertyType.CarColor, (eCarColor)getIntRepresentationOfEnum(1, 4, k_GetCarColor, k_InvalidCarColor));
+                            vehicleProperties.Add(eVehiclePropertyType.AmountOfDoors, (eAmountOfDoors)getIntRepresentationOfEnum(2, 5, k_GetAmountOfDoors, k_InvalidAmountOfDoors));
                             break;
                         case eVehicleType.ElectricCar:
-                            vehicleProperties.Add(eVehiclePropertyType.WheelAirPressure, getCurrentWheelAirPressure(k_MaxAirPressureCarAndElectricMotorcycle));
-                            vehicleProperties.Add(eVehiclePropertyType.PowerSourceCapacity, getPowerSourceCapacity(k_MaxBatteryCapacityCar));
-                            vehicleProperties.Add(eVehiclePropertyType.CarColor, getCarColor());
-                            vehicleProperties.Add(eVehiclePropertyType.AmountOfDoors, getAmountOfDoors());
+                            vehicleProperties.Add(eVehiclePropertyType.WheelAirPressure, getFloatInput(k_MaxAirPressureCarAndElectricMotorcycle, k_GetWheelAirPressure, k_InvalidWheelAirPressure));
+                            vehicleProperties.Add(eVehiclePropertyType.PowerSourceCapacity, getFloatInput(k_MaxBatteryCapacityCar, k_GetPowerSourceCapacity, k_InvalidPowerSourceCapacity));
+                            vehicleProperties.Add(eVehiclePropertyType.CarColor, (eCarColor)getIntRepresentationOfEnum(1, 4, k_GetCarColor, k_InvalidCarColor));
+                            vehicleProperties.Add(eVehiclePropertyType.AmountOfDoors, (eAmountOfDoors)getIntRepresentationOfEnum(2, 5, k_GetAmountOfDoors, k_InvalidAmountOfDoors));
                             break;
                         case eVehicleType.FueledMotorcycle:
-                            vehicleProperties.Add(eVehiclePropertyType.WheelAirPressure, getCurrentWheelAirPressure(k_MaxAirPressureFuelMotorcycle));
-                            vehicleProperties.Add(eVehiclePropertyType.PowerSourceCapacity, getPowerSourceCapacity(k_MaxFuelCapacityMotorcycle));
-                            vehicleProperties.Add(eVehiclePropertyType.LicenceType, getLicenceType());
+                            vehicleProperties.Add(eVehiclePropertyType.WheelAirPressure, getFloatInput(k_MaxAirPressureFuelMotorcycle, k_GetWheelAirPressure, k_InvalidWheelAirPressure));
+                            vehicleProperties.Add(eVehiclePropertyType.PowerSourceCapacity, getFloatInput(k_MaxFuelCapacityMotorcycle, k_GetPowerSourceCapacity, k_InvalidPowerSourceCapacity));
+                            vehicleProperties.Add(eVehiclePropertyType.LicenceType, (eLicenceType) getIntRepresentationOfEnum(1, 4, k_GetLicenceType, k_InvalidLicenceType));
                             vehicleProperties.Add(eVehiclePropertyType.EngineVolume, getEngineVolume());
                             break;
                         case eVehicleType.ElecticMotorcycle:
-                            vehicleProperties.Add(eVehiclePropertyType.WheelAirPressure, getCurrentWheelAirPressure(k_MaxAirPressureCarAndElectricMotorcycle));
-                            vehicleProperties.Add(eVehiclePropertyType.PowerSourceCapacity, getPowerSourceCapacity(k_MaxBatteryCapacityMotorcycle));
-                            vehicleProperties.Add(eVehiclePropertyType.LicenceType, getLicenceType());
+                            vehicleProperties.Add(eVehiclePropertyType.WheelAirPressure, getFloatInput(k_MaxAirPressureCarAndElectricMotorcycle, k_GetWheelAirPressure, k_InvalidWheelAirPressure));
+                            vehicleProperties.Add(eVehiclePropertyType.PowerSourceCapacity, getFloatInput(k_MaxBatteryCapacityMotorcycle, k_GetPowerSourceCapacity, k_InvalidPowerSourceCapacity));
+                            vehicleProperties.Add(eVehiclePropertyType.LicenceType, (eLicenceType) getIntRepresentationOfEnum(1, 4, k_GetLicenceType, k_InvalidLicenceType));
                             vehicleProperties.Add(eVehiclePropertyType.EngineVolume, getEngineVolume());
                             break;
                         case eVehicleType.Truck:
-                            vehicleProperties.Add(eVehiclePropertyType.WheelAirPressure, getCurrentWheelAirPressure(k_MaxAirPressureTruck));
-                            vehicleProperties.Add(eVehiclePropertyType.PowerSourceCapacity, getPowerSourceCapacity(k_MaxFuelCapacityTruck));
+                            vehicleProperties.Add(eVehiclePropertyType.WheelAirPressure, getFloatInput(k_MaxAirPressureTruck, k_GetWheelAirPressure, k_InvalidWheelAirPressure));
+                            vehicleProperties.Add(eVehiclePropertyType.PowerSourceCapacity, getFloatInput(k_MaxFuelCapacityTruck, k_GetPowerSourceCapacity, k_InvalidPowerSourceCapacity));
                             vehicleProperties.Add(eVehiclePropertyType.CarryingHazardousMaterials, getCarryingHazardousMaterials());
-                            vehicleProperties.Add(eVehiclePropertyType.CarryWeight, getCurrentCarryWeight());
+                            vehicleProperties.Add(eVehiclePropertyType.CarryWeight, getFloatInput(float.MaxValue, k_GetCurrentCarryingWeight, k_InvalidCurrentCarryingWeight));
                             break;
                     }
-
 
                     m_GarageManager.InsertNewVehicle(nameOfOwner, phoneNumberOfOwner, vehicleType, vehicleProperties);
                 }
             }
         }
 
-        private int getVehicleType()
+        private int getIntRepresentationOfEnum(int i_MinValue, int i_MaxValue, string i_RequestPrompt, string i_ErrorPrompt)
         {
             string input;
             int inputInInt = 0;
 
-            Console.WriteLine(r_GetVehicleType);
+            Console.WriteLine(i_RequestPrompt);
             while (true)
             {
                 input = Console.ReadLine();
 
-                if (!checkValidityOfIntInput(input, 1, 5, out inputInInt))
+                if (checkValidityOfIntInput(input, i_MinValue, i_MaxValue, out inputInInt))
                 {
-                    Console.WriteLine(r_InvalidVehicleType);
-                    continue;
+                    break;                    
                 }
-                else
-                {
-                    break;
-                }
+
+                Console.WriteLine(i_ErrorPrompt);
             }
 
             return inputInInt;
@@ -275,7 +316,7 @@ It's status has been changed to 'In Progress'.";
         {
             string input;
 
-            Console.WriteLine(r_GetNameOfOwner);
+            Console.WriteLine(k_GetNameOfOwner);
 
             while (true)
             {
@@ -283,7 +324,7 @@ It's status has been changed to 'In Progress'.";
 
                 if (input == null)
                 {
-                    Console.WriteLine(r_InvalidOwnerName);
+                    Console.WriteLine(k_InvalidOwnerName);
                     continue;
                 }
                 else
@@ -299,7 +340,7 @@ It's status has been changed to 'In Progress'.";
         {
             string input = string.Empty;
             bool inputIsValid = false;
-            Console.WriteLine(r_GetOwnerPhoneNumber);
+            Console.WriteLine(k_GetOwnerPhoneNumber);
 
             while (!inputIsValid)
             {
@@ -317,7 +358,7 @@ It's status has been changed to 'In Progress'.";
 
                 if (!inputIsValid)
                 {
-                    Console.WriteLine(r_InvalidOwnerPhoneNumber);
+                    Console.WriteLine(k_InvalidOwnerPhoneNumber);
                     continue;
                 }
             }
@@ -329,7 +370,7 @@ It's status has been changed to 'In Progress'.";
         {
             string input;
 
-            Console.WriteLine(r_GetWheelManufacturerName);
+            Console.WriteLine(k_GetWheelManufacturerName);
 
             while (true)
             {
@@ -337,7 +378,7 @@ It's status has been changed to 'In Progress'.";
 
                 if (input == null)
                 {
-                    Console.WriteLine(r_InvalidWheelManufacturerName);
+                    Console.WriteLine(k_InvalidWheelManufacturerName);
                     continue;
                 }
                 else
@@ -349,34 +390,102 @@ It's status has been changed to 'In Progress'.";
             return input;
         }
 
-        private float getCurrentWheelAirPressure(float i_MaxValue)
+        private float getFloatInput(float i_MaxValue, string i_RequestPrompt, string i_ErrorPrompt)
         {
             string input;
             bool inputIsValid = false;
-            float currentAirPressure = 0;
-            Console.WriteLine(r_GetWheelAirPressure);
+            float inputInFloat = 0;
+            Console.WriteLine(i_RequestPrompt);
 
             while (!inputIsValid)
             {
                 input = Console.ReadLine();
 
-                inputIsValid = float.TryParse(input, out currentAirPressure);
+                inputIsValid = float.TryParse(input, out inputInFloat);
 
                 if (inputIsValid)
                 {
-                    if (currentAirPressure > i_MaxValue || currentAirPressure < 0)
+                    if (inputInFloat > i_MaxValue || inputInFloat < 0)
                     {
-                        Console.WriteLine(r_InvalidWheelAirPressure);
+                        Console.WriteLine(i_ErrorPrompt);
                         inputIsValid = false;
                         continue;
                     }
                 }
             }
 
-            return currentAirPressure;
+            return inputInFloat;
         }
 
-        private string getVehicleModel() {}
+        private string getTextInput(string i_RequestPrompt, string i_ErrorPrompt)
+        {
+            string input;
+
+            Console.WriteLine(i_RequestPrompt);
+
+            while (true)
+            {
+                input = Console.ReadLine();
+
+                if (input != string.Empty)
+                {
+                    break;
+                }
+
+                Console.WriteLine(i_ErrorPrompt);
+            }
+
+            return input;
+        }
+
+        private int getEngineVolume()
+        {
+            string input;
+            int inputInInt = 0;
+
+            Console.WriteLine(k_GetEngineVolume);
+            while (true)
+            {
+                input = Console.ReadLine();
+
+                if (int.TryParse(input, out inputInInt))
+                {
+                    break;
+                }
+
+                Console.WriteLine(k_InvalidEngineVolume);
+            }
+
+            return inputInInt;
+        }
+
+        private bool getCarryingHazardousMaterials()
+        {
+            string input;
+            bool isHazardous;
+
+            Console.WriteLine(k_GetCarryingHazardousMaterials);
+            while (true)
+            {
+                input = Console.ReadLine();
+                
+                if (input.Length == 1)
+                {
+                    if (input == "y" || input == "Y")
+                    {
+                        isHazardous = true;
+                        break;
+                    } else if (input == "n" || input == "N") {
+                        isHazardous = false;
+                        break;
+                    }
+                }
+
+                Console.WriteLine(k_InvalidCarryingHazardousMaterials);
+            }
+
+            return isHazardous;
+        }
 
         private bool checkValidityOfIntInput(string i_Input, int i_Min, int i_Max, out int io_InputInInt)
         {
@@ -393,6 +502,67 @@ It's status has been changed to 'In Progress'.";
 
             return isValid;
         }
+
+        private void pressEnterToContinue()
+        {
+            Console.WriteLine();
+            Console.WriteLine(k_EnterToContinue);
+            Console.ReadLine();
+            Console.Clear();
+        }
+
+        // Todo - talk to nadav regarding the implementation
+        private void pullAllVehicles()
+        {
+            string input;
+            eVehicleStatus? vehicleStatus = null;
+            bool isValid = false;
+            List<string> vehicles;
+
+            Console.WriteLine(k_GetVehicleTypeToPull);
+
+            while (true)
+            {
+                input = Console.ReadLine();
+
+                if (input.Length == 1)
+                {
+                    if (input == "a" || input == "A")
+                    {
+                        isValid = true;
+                    }
+                    else if (input == "i" || input == "I")
+                    {
+                        vehicleStatus = eVehicleStatus.InProgress;
+                        isValid = true;
+                    }
+                    else if (input == "f" || input == "F")
+                    {
+                        vehicleStatus = eVehicleStatus.Fixed;
+                        isValid = true;
+                    }
+                    else if (input == "p" || input == "P")
+                    {
+                        vehicleStatus = eVehicleStatus.Paid;
+                        isValid = true;
+                    }
+                }
+
+                if (isValid)
+                {
+                    vehicles = m_GarageManager.GetLicencePlates(vehicleStatus);
+
+                    foreach (string licencePlate in vehicles)
+                    {
+                        Console.WriteLine(licencePlate);
+                    }
+                    
+                    break;
+                }
+
+                Console.WriteLine(k_InvalidVehicleTypeToPull);
+            }
+        }
     }
 
     enum eGarageOperations
@@ -403,6 +573,7 @@ It's status has been changed to 'In Progress'.";
         InflateWheels,
         FuelVehicle,
         ChargeVehicle,
-        AllInfoOfVehicle
+        AllInfoOfVehicle,
+        Exit
     }
 }

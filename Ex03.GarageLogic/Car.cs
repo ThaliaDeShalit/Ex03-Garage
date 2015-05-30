@@ -10,9 +10,9 @@ namespace Ex03.GarageLogic
         protected const int k_AmountOfWheels = 4;
 
         protected eCarColor m_CarColor;
-        protected eNumOfCarDoors m_NumOfCarDoors;
+        protected eAmountOfDoors m_NumOfCarDoors;
 
-        public Car(string i_Model, string i_LicenceNumber, string i_WheelManufactorName, float i_CurrentAirPressure, eCarColor i_CarColor, eNumOfCarDoors i_NumOfCarDoors) : base(i_Model, i_LicenceNumber)
+        public Car(string i_Model, string i_LicenceNumber, string i_WheelManufactorName, float i_CurrentAirPressure, eCarColor i_CarColor, eAmountOfDoors i_NumOfCarDoors) : base(i_Model, i_LicenceNumber)
         {
             InitializeWheels(i_WheelManufactorName, k_MaxWheelAirPressure, i_CurrentAirPressure, k_AmountOfWheels);
             m_CarColor = i_CarColor;
@@ -28,7 +28,7 @@ namespace Ex03.GarageLogic
         Black
     }
 
-    public enum eNumOfCarDoors
+    public enum eAmountOfDoors
     {
         Two = 2,
         Three = 3,
