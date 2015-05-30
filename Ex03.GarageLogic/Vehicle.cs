@@ -19,7 +19,7 @@ namespace Ex03.GarageLogic
         }
 
         // TODO:
-        public virtual void InitializeWheels(string i_ManufcatorName, float i_MaxWheelAirPressure, int i_AmountOfWheels)
+        public virtual void InitializeWheels(string i_ManufcatorName, float i_MaxWheelAirPressure, float i_CurrentWheelPressure, int i_AmountOfWheels)
         {
             Wheel tempWheel = new Wheel(i_ManufcatorName, i_MaxWheelAirPressure);
 
@@ -43,6 +43,38 @@ namespace Ex03.GarageLogic
             {
                 return m_Wheels;
             }
+        }
+
+        public PowerSource PowerSource
+        {
+            get
+            {
+                return m_PowerSource;
+            }
+        }
+
+        public bool isFueled()
+        {
+            bool v_Fuel = false;
+
+            if (m_PowerSource is FuelTank)
+            {
+                v_Fuel = true;
+            }
+
+            return v_Fuel;
+        }
+
+        public bool isElectric()
+        {
+            bool v_Electric = false;
+
+            if (m_PowerSource is Battery)
+            {
+                v_Electric = true;
+            }
+
+            return v_Electric;
         }
     }
 }

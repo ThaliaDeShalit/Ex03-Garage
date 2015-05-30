@@ -17,7 +17,7 @@ namespace Ex03.GarageLogic
         }
     }
 
-    enum eLicenceType
+    public enum eLicenceType
     {
         A,
         A2,

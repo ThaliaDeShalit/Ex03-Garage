@@ -10,5 +10,10 @@ namespace Ex03.GarageLogic
         {
             m_MaximumCapacity = i_MaxChargeInHours;
         }
+
+        public void Charge(float i_NumOfHoursToAdd)
+        {
+            FillPowerSource(i_NumOfHoursToAdd);
+        }
     }
 }

@@ -9,8 +9,8 @@ namespace Ex03.GarageLogic
         private const float K_FuelTankMaxFuelAmount = 35f;
         private const eFuelType k_FuelType = eFuelType.Octan96;
         
-        public FueledCar(string i_Model, string i_LicenceNumber, string i_WheelManufactorName, eCarColor i_CarColor, eNumOfCarDoors i_NumOfCarDoors)
-            : base(i_Model, i_LicenceNumber, i_WheelManufactorName, i_CarColor, i_NumOfCarDoors)
+        public FueledCar(string i_Model, string i_LicencePlate, string i_WheelManufactorName, eCarColor i_CarColor, eNumOfCarDoors i_NumOfCarDoors)
+            : base(i_Model, i_LicencePlate, i_WheelManufactorName, i_CarColor, i_NumOfCarDoors)
         {
             m_PowerSource = new FuelTank(k_FuelType, K_FuelTankMaxFuelAmount);
         }

@@ -40,7 +40,7 @@ namespace Ex03.GarageLogic
         }
     }
 
-    enum eVehicleStatus {
+    public enum eVehicleStatus {
         InProgress,
         Fixed,
         Paid

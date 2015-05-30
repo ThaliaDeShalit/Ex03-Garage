@@ -4,26 +4,27 @@ using System.Text;
 
 namespace Ex03.GarageLogic
 {
-    class GarageManager
+    public class GarageManager
     {
         private Dictionary<string, VehicleInfo> m_Vehicles;
 
-        public bool TryToInsertNewVehicle(string i_OwnerName, string i_OwnerNumber, eVehicleType i_VehicleType, Dictionary<string, string> i_VehicleProporties)
+        public void InsertNewVehicle(string i_OwnerName, string i_OwnerNumber, eVehicleType i_VehicleType, Dictionary<string, object> i_VehicleProporties)
         {
-            bool insertWasSuccesfull = true;
-            
-            string licencePlate = i_VehicleProporties["Licence Plate"];
+            Vehicle vehicle = VehicleFactory.CreateVehicle(i_VehicleType, i_VehicleProporties);
+            VehicleInfo newVehicle = new VehicleInfo(i_OwnerName, i_OwnerNumber, eVehicleStatus.InProgress, vehicle);
+        }
 
-            if (m_Vehicles.ContainsKey(licencePlate))
+        public bool CheckIfExists(string i_LicencePlate)
+        {
+            bool exists = false;
+
+            if (m_Vehicles.ContainsKey(i_LicencePlate))
             {
-                insertWasSuccesfull = false;
-                m_Vehicles[licencePlate].VehicleStatus = eVehicleStatus.InProgress;
-            } else {
-                Vehicle vehicle = VehicleFactory.CreateVehicle(i_VehicleType);
-                VehicleInfo newVehicle = new VehicleInfo(i_OwnerName, i_OwnerNumber, eVehicleStatus.InProgress, vehicle);
+                exists = true;
+                m_Vehicles[i_LicencePlate].VehicleStatus = eVehicleStatus.InProgress;
             }
 
-            return insertWasSuccesfull;
+            return exists;
         }
 
         public List<string> GetLicencePlates(eVehicleStatus? i_VehicleStatus)
@@ -69,14 +70,35 @@ namespace Ex03.GarageLogic
         {
             Vehicle vehicleToFuel = m_Vehicles[i_LicencePlate].Vehicle;
 
-            Type type = vehicleToFuel.GetType();
-
-            type.
-            
-
-            if ((type)vehicleToFuel.FuelType)
+            if (!vehicleToFuel.isFueled())
             {
+                throw new ArgumentException();
+            }
+            else
+            {
+                FuelTank fuelTank = (FuelTank)vehicleToFuel.PowerSource;
 
+                if (fuelTank.FuelType == i_FuelType) {
+                    fuelTank.Fuel(i_AmountOfFuel, i_FuelType);
+                }
+                else
+                {
+                    throw new ArgumentException();
+                }
+            }
+        }
+
+        public void ChargeVehicle(string i_LicencePlate, float i_NumOfMinuToCharge)
+        {
+            Vehicle vehicleToCharge = m_Vehicles[i_LicencePlate].Vehicle;
+
+            if (!vehicleToCharge.isElectric())
+            {
+                throw new ArgumentException();
+            }
+            else
+            {
+                ((Battery)vehicleToCharge.PowerSource).Charge(i_NumOfMinuToCharge);
             }
         }
     }

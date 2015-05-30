@@ -24,6 +24,22 @@ namespace Ex03.GarageLogic
             {
                 FillPowerSource(i_AmountOfFuelToAdd);
             }
-        } 
+        }
+
+        public eFuelType FuelType
+        {
+            get
+            {
+                return m_FuelType;
+            }
+        }
+    }
+
+    public enum eFuelType
+    {
+        Soler,
+        Octan95,
+        Octan96,
+        Octan98
     }
 }
