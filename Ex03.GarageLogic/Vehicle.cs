@@ -19,9 +19,9 @@ namespace Ex03.GarageLogic
         }
 
         // TODO:
-        public virtual void InitializeWheels(string i_ManufcatorName, float i_MaxWheelAirPressure, float i_CurrentWheelPressure, int i_AmountOfWheels)
+        public virtual void InitializeWheels(string i_ManufcatorName, float i_MaxWheelAirPressure, float i_CurrentAirPressure, int i_AmountOfWheels)
         {
-            Wheel tempWheel = new Wheel(i_ManufcatorName, i_MaxWheelAirPressure);
+            Wheel tempWheel = new Wheel(i_ManufcatorName, i_MaxWheelAirPressure, i_CurrentAirPressure);
 
             for (int i = 0; i < i_AmountOfWheels; i++)
             {

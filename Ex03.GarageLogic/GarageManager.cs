@@ -8,7 +8,7 @@ namespace Ex03.GarageLogic
     {
         private Dictionary<string, VehicleInfo> m_Vehicles;
 
-        public void InsertNewVehicle(string i_OwnerName, string i_OwnerNumber, eVehicleType i_VehicleType, Dictionary<string, object> i_VehicleProporties)
+        public void InsertNewVehicle(string i_OwnerName, string i_OwnerNumber, eVehicleType i_VehicleType, Dictionary<eVehiclePropertyType, object> i_VehicleProporties)
         {
             Vehicle vehicle = VehicleFactory.CreateVehicle(i_VehicleType, i_VehicleProporties);
             VehicleInfo newVehicle = new VehicleInfo(i_OwnerName, i_OwnerNumber, eVehicleStatus.InProgress, vehicle);
