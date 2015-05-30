@@ -19,7 +19,7 @@ namespace Ex03.GarageManagementSystem.ConsoleUI
         private const float k_MaxAirPressureFuelMotorcycle = 34f;
         private const float k_MaxAirPressureTruck = 25f;
 
-        private readonly string r_Welcome = "Welcome to the garage, please choose by number an operation to preform:";
+        private readonly string r_WelcomeMessage = "Welcome to the garage, please choose by number an operation to preform:";
 
         private readonly string r_UserOptions =
 @"1: Register a new vehicle to the garage
@@ -30,9 +30,9 @@ namespace Ex03.GarageManagementSystem.ConsoleUI
 6: Charge a veicle powered by battery
 7: Show all the information for a selected vehicle";
 
-        private readonly string r_MainMenuInvalidInput = "Input not valid. Please enter the number corresponding with the operation you would like to perform.";
+        private readonly string r_InvalidUserOption = "Input not valid. Please enter the number corresponding with the operation you would like to perform.";
         private readonly string r_GetLicencePlate = "Please enter the licence plate of the vehicle you would like to register (digits and letters only):";
-        private readonly string r_LicencePlateError = "Input not valid. Please enter the licence plate using only letters and digits.";
+        private readonly string r_InvalidLicencePlate = "Input not valid. Please enter the licence plate using only letters and digits.";
 
         private readonly string r_CarAlreadyExists = 
 @"Vehicle with licence plate %s already exists in the garage.
@@ -46,15 +46,15 @@ It's status has been changed to 'In Progress'.";
 4: Electric Motorcycle
 5: Truck";
 
-        private readonly string r_VehicleTypeError = "Input not valid - Please enter the number corresponding to the vehicle type you would like to register";
+        private readonly string r_InvalidVehicleType = "The selected vehicle type is not supported. Please select one of the supported vehicle types displayed above.";
         private readonly string r_GetNameOfOwner = "Please enter the name of the owner of the vehicle:";
-        private readonly string r_GetNameError = "Input not valid - Name can not be empty. Please enter a valid input";
-        private readonly string r_GetPhoneOfOwner = "Please enter the phone of the owner of the vehicle:";
-        private readonly string r_GetPhoneError = "Input not valid - Plese enter a phone number, consisting of only digits";
-        private readonly string r_GetWheelManufctorName = "Please enter the name of the Wheel Manuctor";
-        private readonly string r_WheelManufctorError = "Input not valid - Wheel Manufctor name can not be empty. Please enter a valid input";
-        private readonly string r_GetWheelPressure = "Please enter the current amount of air pressure in the wheels";
-        private readonly string r_WheelAirPressureError = "Input not valid, please enter a valid amount (float, and not more than the max capacity)";
+        private readonly string r_InvalidOwnerName = "Input cannot be empty. Please enter the name of the vehicle owner:";
+        private readonly string r_GetOwnerPhoneNumber = "Enter the owner's phone number:";
+        private readonly string r_InvalidOwnerPhoneNumber = "Invalid input. Please enter a phone number, consisting of digits only.";
+        private readonly string r_GetWheelManufacturerName = "Enter the wheels' manufacturer name:";
+        private readonly string r_InvalidWheelManufacturerName = "Input cannot be empty. Please enter the name of the wheels' manufacturer:";
+        private readonly string r_GetWheelAirPressure = "Enter the current air pressure in the wheels:";
+        private readonly string r_InvalidWheelAirPressure = "Input not valid. Please enter a positive float between 0 and the maximum air pressure of the wheels.";
 
         // Car color
         private readonly string r_GetCarColor = 
@@ -71,15 +71,15 @@ It's status has been changed to 'In Progress'.";
         private readonly string r_InvalidAmountOfDoors = "The number of doors you entered is not supported by this garage. We only repair vehicles with 2 to 5 doors.";
 
         // Current fuel capacity
-        private readonly string r_GetCurrentFuelCapacity = "How much fuel is currenly in your car?";
+        private readonly string r_GetCurrentFuelCapacity = "Enter current fuel capacity:";
         private readonly string r_InvalidFuelCapacity = "The amount of fuel you entered is not possible. Please make sure the value you entered is a positive integer between 0 and the maximum capacity of your fuel tank.";
 
         // Current battery capacity
-        private readonly string r_GetBatteryCapacity = "What is the current capacity of your vehicle's battery?";
+        private readonly string r_GetBatteryCapacity = "Enter current battery capacity:";
         private readonly string r_InvalidBatteryCapacity = "The capacity entered is not possible. Please make sure the value you entered is a positive integer between 0 and the maximum capacity of your battery."
 
         // Current powersource capacity
-        private readonly string r_GetPowerSourceCapacity = "How much power does your vehicle currently have? (Fuel amount/ Battery charge)";
+        private readonly string r_GetPowerSourceCapacity = "Enter current power capacity (fuel amount/ battery charge):";
         private readonly string r_InvalidPowerSourceCapacity = "The value entered is not possible. Please enter a positive value between 0 and the %d.";
 
         // Licence type
@@ -92,11 +92,11 @@ It's status has been changed to 'In Progress'.";
         private readonly string r_InvalidLicenceType = "The selected licence type is not supported. Please select one of the supported licence types.";
 
         // Engine volume
-        private readonly string r_GetEngineVolume = "What is the volume of your engine?";
+        private readonly string r_GetEngineVolume = "Enter the volume of your engine:";
         private readonly string r_InvalidEngineVolume = "Invalid value. Please enter a positive integer value.";
 
         // Model name
-        private readonly string r_GetCarModelName = "What model is your vehicle?";
+        private readonly string r_GetCarModelName = "Enter your vehicle's model name:";
         private readonly string r_InvalidCarModelName = "Please enter the name of your vehicle's model.";
 
         // Carrying hazardous materials
@@ -104,7 +104,7 @@ It's status has been changed to 'In Progress'.";
         private readonly string r_InvalidCarryingHazardousMaterials = "Invalid input. Please select either 'y' or 'n'.";
 
         // Current carry weight
-        private readonly string r_GetCurrentCarryingWeight = "How much weight is your vehicle currenly carrying?";
+        private readonly string r_GetCurrentCarryingWeight = "Enter the current weight your vehicle is carrying:";
         private readonly string r_InvalidCurrentCarryingWeight = "Invalid input. Please enter a positive integer.";
 
         
@@ -115,7 +115,7 @@ It's status has been changed to 'In Progress'.";
 
             m_GarageManager = new GarageManager();
 
-            Console.WriteLine(r_Welcome);
+            Console.WriteLine(r_WelcomeMessage);
             
             while (true)
             {
@@ -124,7 +124,7 @@ It's status has been changed to 'In Progress'.";
 
                 if (checkValidityOfIntInput(userInput, 1, 7, out userInputInNumber))
                 {
-                    Console.WriteLine(r_MainMenuInvalidInput);
+                    Console.WriteLine(r_InvalidUserOption);
                     continue;
                 }
 
@@ -185,7 +185,7 @@ It's status has been changed to 'In Progress'.";
 
                 if (!inputIsValid)
                 {
-                    Console.WriteLine(r_LicencePlateError);
+                    Console.WriteLine(r_InvalidLicencePlate);
                     continue;
                 }
 
@@ -259,7 +259,7 @@ It's status has been changed to 'In Progress'.";
 
                 if (!checkValidityOfIntInput(input, 1, 5, out inputInInt))
                 {
-                    Console.WriteLine(r_VehicleTypeError);
+                    Console.WriteLine(r_InvalidVehicleType);
                     continue;
                 }
                 else
@@ -283,7 +283,7 @@ It's status has been changed to 'In Progress'.";
 
                 if (input == null)
                 {
-                    Console.WriteLine(r_GetNameError);
+                    Console.WriteLine(r_InvalidOwnerName);
                     continue;
                 }
                 else
@@ -299,7 +299,7 @@ It's status has been changed to 'In Progress'.";
         {
             string input = string.Empty;
             bool inputIsValid = false;
-            Console.WriteLine(r_GetPhoneOfOwner);
+            Console.WriteLine(r_GetOwnerPhoneNumber);
 
             while (!inputIsValid)
             {
@@ -317,7 +317,7 @@ It's status has been changed to 'In Progress'.";
 
                 if (!inputIsValid)
                 {
-                    Console.WriteLine(r_GetPhoneError);
+                    Console.WriteLine(r_InvalidOwnerPhoneNumber);
                     continue;
                 }
             }
@@ -325,11 +325,11 @@ It's status has been changed to 'In Progress'.";
             return input;
         }
 
-        private string getWheelManuctorName()
+        private string getWheelManufacturerName()
         {
             string input;
 
-            Console.WriteLine(r_GetWheelManufctorName);
+            Console.WriteLine(r_GetWheelManufacturerName);
 
             while (true)
             {
@@ -337,7 +337,7 @@ It's status has been changed to 'In Progress'.";
 
                 if (input == null)
                 {
-                    Console.WriteLine(r_WheelManufctorError);
+                    Console.WriteLine(r_InvalidWheelManufacturerName);
                     continue;
                 }
                 else
@@ -354,7 +354,7 @@ It's status has been changed to 'In Progress'.";
             string input;
             bool inputIsValid = false;
             float currentAirPressure = 0;
-            Console.WriteLine(r_GetWheelPressure);
+            Console.WriteLine(r_GetWheelAirPressure);
 
             while (!inputIsValid)
             {
@@ -366,7 +366,7 @@ It's status has been changed to 'In Progress'.";
                 {
                     if (currentAirPressure > i_MaxValue || currentAirPressure < 0)
                     {
-                        Console.WriteLine(r_WheelAirPressureError);
+                        Console.WriteLine(r_InvalidWheelAirPressure);
                         inputIsValid = false;
                         continue;
                     }
