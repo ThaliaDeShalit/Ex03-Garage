@@ -10,20 +10,29 @@ namespace Ex03.GarageManagementSystem.ConsoleUI
 
         private GarageManager m_GarageManager;
 
+        private const float k_MaxFuelCapacityMotorcycle = 8f;
+        private const float k_MaxBatteryCapacityMotorcycle = 1.2f;
+        private const float k_MaxFuelCapacityCar = 35f;
+        private const float k_MaxBatteryCapacityCar = 2.2f;
+        private const float k_MaxFuelCapacityTruck = 170f;
+        private const float k_MaxAirPressureCarAndElectricMotorcycle = 31f;
+        private const float k_MaxAirPressureGasMotorcycle = 34f;
+        private const float k_MaxAirPressureTruck = 25f;
+
         private readonly string r_Welcome = "Welcome to the garage, please choose by number an operation to preform:";
 
         private readonly string r_UserOptions =
 @"1: Register a new vehicle to the garage
-2: Pull all the vehicles currently in the garage, by licence plate
+2: Show all the vehicles currently in the garage, by licence plate
 3: Change status of a specific vehicle in the garage
 4: Inflate a vehicle's wheels to the maximum possible capacity
 5: Fuel a vehicle powered by fuel
 6: Charge a veicle powered by battery
-7: Get all the information regarding a specific vehicle";
+7: Show all the information for a selected vehicle";
 
-        private readonly string r_MainMenuInvalidInput = "Input not valid - Please enter the number corresponding to the operation you would like to preform";
-        private readonly string r_GetLicencePlate = "Please enter the licence plate of the vehicle you would like to register (only digits and letters):";
-        private readonly string r_LicencePlateError = "Input not valid - Please enter the licence plate using only letters and digits";
+        private readonly string r_MainMenuInvalidInput = "Input not valid. Please enter the number corresponding with the operation you would like to perform.";
+        private readonly string r_GetLicencePlate = "Please enter the licence plate of the vehicle you would like to register (digits and letters only):";
+        private readonly string r_LicencePlateError = "Input not valid. Please enter the licence plate using only letters and digits.";
 
         private readonly string r_CarAlreadyExists = 
 @"Vehicle with licence plate %s already exists in the garage.
@@ -47,7 +56,56 @@ It's status has been changed to 'In Progress'.";
         private readonly string r_GetWheelPressure = "Please enter the current amount of air pressure in the wheels";
         private readonly string r_WheelAirPressureError = "Input not valid, please enter a valid amount (float, and not more than the max capacity)";
 
+        // Car color
+        private readonly string r_GetCarColor = 
+@"What color is your car? Select one of the supported colors:
+1: Green
+2: Red
+3: White
+4: Black";
 
+        private readonly string r_InvalidCarColor = "Selected number is not supported. Please select a number between 0 and 4.";
+
+        // Amount of doors
+        private readonly string r_GetAmountOfDoors = "How many doors does your vehicle have? (one of 2, 3, 4 or 5)";
+        private readonly string r_InvalidAmountOfDoors = "The number of doors you entered is not supported by this garage. We only repair vehicles with 2 to 5 doors.";
+
+        // Current fuel capacity
+        private readonly string r_GetCurrentFuelCapacity = "How much fuel is currenly in your car?";
+        private readonly string r_InvalidFuelCapacity = "The amount of fuel you entered is not possible. Please make sure the value you entered is a positive integer between 0 and the maximum capacity of your fuel tank.";
+
+        // Current battery capacity
+        private readonly string r_GetBatteryCapacity = "What is the current capacity of your vehicle's battery?";
+        private readonly string r_InvalidBatteryCapacity = "The capacity entered is not possible. Please make sure the value you entered is a positive integer between 0 and the maximum capacity of your battery."
+
+        // Current powersource capacity
+        private readonly string r_GetPowerSourceCapacity = "How much power does your vehicle currently have? (Fuel amount/ Battery charge)";
+        private readonly string r_InvalidPowerSourceCapacity = "The value entered is not possible. Please enter a positive value between 0 and the %d.";
+
+        // Licence type
+        private readonly string r_GetLicenceType =
+@"Which licence type is your motorcycle? Select one of the possible types:
+1: A
+2: A2
+3: AB
+4: B1";
+        private readonly string r_InvalidLicenceType = "The selected licence type is not supported. Please select one of the supported licence types.";
+
+        // Engine volume
+        private readonly string r_GetEngineVolume = "What is the volume of your engine?";
+        private readonly string r_InvalidEngineVolume = "Invalid value. Please enter a positive integer value.";
+
+        // Model name
+        private readonly string r_GetCarModelName = "What model is your vehicle?";
+        private readonly string r_InvalidCarModelName = "Please enter the name of your vehicle's model.";
+
+        // Carrying hazardous materials
+        private readonly string r_GetCarryingHazardousMaterials = "Is your vehicle carrying hazardous materials? (y/n)";
+        private readonly string r_InvalidCarryingHazardousMaterials = "Invalid input. Please select either 'y' or 'n'.";
+
+        // Current carry weight
+        private readonly string r_GetCurrentCarryingWeight = "How much weight is your vehicle currenly carrying?";
+        private readonly string r_InvalidCurrentCarryingWeight = "Invalid input. Please enter a positive integer.";
 
         
         public void Run()
@@ -184,7 +242,6 @@ It's status has been changed to 'In Progress'.";
                 }
             }
         }
-
 
         private int getVehicleType()
         {
