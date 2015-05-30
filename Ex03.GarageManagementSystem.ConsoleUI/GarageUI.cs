@@ -16,7 +16,7 @@ namespace Ex03.GarageManagementSystem.ConsoleUI
         private const float k_MaxBatteryCapacityCar = 2.2f;
         private const float k_MaxFuelCapacityTruck = 170f;
         private const float k_MaxAirPressureCarAndElectricMotorcycle = 31f;
-        private const float k_MaxAirPressureGasMotorcycle = 34f;
+        private const float k_MaxAirPressureFuelMotorcycle = 34f;
         private const float k_MaxAirPressureTruck = 25f;
 
         private readonly string r_Welcome = "Welcome to the garage, please choose by number an operation to preform:";
@@ -205,33 +205,37 @@ It's status has been changed to 'In Progress'.";
 
                     vehicleProperties.Add(eVehiclePropertyType.Model, getVehicleModel());
                     vehicleProperties.Add(eVehiclePropertyType.LicencePlate, licencePlate);
-                    vehicleProperties.Add(eVehiclePropertyType.PowerSourceCapacity, getPowerSourceCapacity());
                     vehicleProperties.Add(eVehiclePropertyType.WheelManuctorName, getWheelManuctorName());
 
                     switch (vehicleType)
                     {
                         case eVehicleType.FueledCar:
-                            vehicleProperties.Add(eVehiclePropertyType.WheelAirPressure, getCurrentWheelAirPressure(31));
+                            vehicleProperties.Add(eVehiclePropertyType.WheelAirPressure, getCurrentWheelAirPressure(k_MaxAirPressureCarAndElectricMotorcycle));
+                            vehicleProperties.Add(eVehiclePropertyType.PowerSourceCapacity, getPowerSourceCapacity(k_MaxFuelCapacityCar));
                             vehicleProperties.Add(eVehiclePropertyType.CarColor, getCarColor());
                             vehicleProperties.Add(eVehiclePropertyType.AmountOfDoors, getAmountOfDoors());
                             break;
                         case eVehicleType.ElectricCar:
-                            vehicleProperties.Add(eVehiclePropertyType.WheelAirPressure, getCurrentWheelAirPressure(31));
+                            vehicleProperties.Add(eVehiclePropertyType.WheelAirPressure, getCurrentWheelAirPressure(k_MaxAirPressureCarAndElectricMotorcycle));
+                            vehicleProperties.Add(eVehiclePropertyType.PowerSourceCapacity, getPowerSourceCapacity(k_MaxBatteryCapacityCar));
                             vehicleProperties.Add(eVehiclePropertyType.CarColor, getCarColor());
                             vehicleProperties.Add(eVehiclePropertyType.AmountOfDoors, getAmountOfDoors());
                             break;
                         case eVehicleType.FueledMotorcycle:
-                            vehicleProperties.Add(eVehiclePropertyType.WheelAirPressure, getCurrentWheelAirPressure(34));
+                            vehicleProperties.Add(eVehiclePropertyType.WheelAirPressure, getCurrentWheelAirPressure(k_MaxAirPressureFuelMotorcycle));
+                            vehicleProperties.Add(eVehiclePropertyType.PowerSourceCapacity, getPowerSourceCapacity(k_MaxFuelCapacityMotorcycle));
                             vehicleProperties.Add(eVehiclePropertyType.LicenceType, getLicenceType());
                             vehicleProperties.Add(eVehiclePropertyType.EngineVolume, getEngineVolume());
                             break;
                         case eVehicleType.ElecticMotorcycle:
-                            vehicleProperties.Add(eVehiclePropertyType.WheelAirPressure, getCurrentWheelAirPressure(31));
+                            vehicleProperties.Add(eVehiclePropertyType.WheelAirPressure, getCurrentWheelAirPressure(k_MaxAirPressureCarAndElectricMotorcycle));
+                            vehicleProperties.Add(eVehiclePropertyType.PowerSourceCapacity, getPowerSourceCapacity(k_MaxBatteryCapacityMotorcycle));
                             vehicleProperties.Add(eVehiclePropertyType.LicenceType, getLicenceType());
                             vehicleProperties.Add(eVehiclePropertyType.EngineVolume, getEngineVolume());
                             break;
                         case eVehicleType.Truck:
-                            vehicleProperties.Add(eVehiclePropertyType.WheelAirPressure, getCurrentWheelAirPressure(25));
+                            vehicleProperties.Add(eVehiclePropertyType.WheelAirPressure, getCurrentWheelAirPressure(k_MaxAirPressureTruck));
+                            vehicleProperties.Add(eVehiclePropertyType.PowerSourceCapacity, getPowerSourceCapacity(k_MaxFuelCapacityTruck));
                             vehicleProperties.Add(eVehiclePropertyType.CarryingHazardousMaterials, getCarryingHazardousMaterials());
                             vehicleProperties.Add(eVehiclePropertyType.CarryWeight, getCurrentCarryWeight());
                             break;
@@ -371,6 +375,8 @@ It's status has been changed to 'In Progress'.";
 
             return currentAirPressure;
         }
+
+        private string getVehicleModel() {}
 
         private bool checkValidityOfIntInput(string i_Input, int i_Min, int i_Max, out int io_InputInInt)
         {
