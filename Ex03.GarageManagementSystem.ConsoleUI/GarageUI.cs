@@ -34,7 +34,7 @@ namespace Ex03.GarageManagementSystem.ConsoleUI
         private readonly string r_GetLicencePlate = "Please enter the licence plate of the vehicle you would like to register (digits and letters only):";
         private readonly string r_InvalidLicencePlate = "Input not valid. Please enter the licence plate using only letters and digits.";
 
-        private readonly string r_CarAlreadyExists = 
+        private readonly string r_CarAlreadyExists =
 @"Vehicle with licence plate %s already exists in the garage.
 It's status has been changed to 'In Progress'.";
 
@@ -57,7 +57,7 @@ It's status has been changed to 'In Progress'.";
         private readonly string r_InvalidWheelAirPressure = "Input not valid. Please enter a positive float between 0 and the maximum air pressure of the wheels.";
 
         // Car color
-        private readonly string r_GetCarColor = 
+        private readonly string r_GetCarColor =
 @"What color is your car? Select one of the supported colors:
 1: Green
 2: Red
@@ -76,7 +76,7 @@ It's status has been changed to 'In Progress'.";
 
         // Current battery capacity
         private readonly string r_GetBatteryCapacity = "Enter current battery capacity:";
-        private readonly string r_InvalidBatteryCapacity = "The capacity entered is not possible. Please make sure the value you entered is a positive integer between 0 and the maximum capacity of your battery."
+        private readonly string r_InvalidBatteryCapacity = "The capacity entered is not possible. Please make sure the value you entered is a positive integer between 0 and the maximum capacity of your battery.";
 
         // Current powersource capacity
         private readonly string r_GetPowerSourceCapacity = "Enter current power capacity (fuel amount/ battery charge):";
@@ -107,7 +107,7 @@ It's status has been changed to 'In Progress'.";
         private readonly string r_GetCurrentCarryingWeight = "Enter the current weight your vehicle is carrying:";
         private readonly string r_InvalidCurrentCarryingWeight = "Invalid input. Please enter a positive integer.";
 
-        
+
         public void Run()
         {
             string userInput;
@@ -116,7 +116,7 @@ It's status has been changed to 'In Progress'.";
             m_GarageManager = new GarageManager();
 
             Console.WriteLine(r_WelcomeMessage);
-            
+
             while (true)
             {
                 Console.WriteLine(r_UserOptions);
@@ -168,7 +168,7 @@ It's status has been changed to 'In Progress'.";
             string phoneNumberOfOwner;
             Dictionary<eVehiclePropertyType, object> vehicleProperties = new Dictionary<eVehiclePropertyType, object>();
             float maxCapacityOfAirPressure = 0;
-            
+
             while (!inputIsValid)
             {
                 licencePlate = Console.ReadLine();
@@ -274,9 +274,9 @@ It's status has been changed to 'In Progress'.";
         private string getNameOfOwner()
         {
             string input;
-            
+
             Console.WriteLine(r_GetNameOfOwner);
-            
+
             while (true)
             {
                 input = Console.ReadLine();
