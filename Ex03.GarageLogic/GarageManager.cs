@@ -6,7 +6,7 @@ namespace Ex03.GarageLogic
 {
     public class GarageManager
     {
-        private Dictionary<string, VehicleInfo> m_Vehicles;
+        private Dictionary<string, VehicleInfo> m_Vehicles = new Dictionary<string, VehicleInfo>();
 
         public void InsertNewVehicle(string i_OwnerName, string i_OwnerNumber, eVehicleType i_VehicleType, Dictionary<eVehiclePropertyType, object> i_VehicleProporties)
         {

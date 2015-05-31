@@ -167,7 +167,7 @@ It's status has been changed to 'In Progress'.";
                 Console.WriteLine(k_UserOptions);
                 userInput = Console.ReadLine();
 
-                if (checkValidityOfIntInput(userInput, 1, 7, out userInputInNumber))
+                if (!checkValidityOfIntInput(userInput, 1, 8, out userInputInNumber))
                 {
                     Console.WriteLine(k_InvalidUserOption);
                     continue;
@@ -732,7 +732,7 @@ It's status has been changed to 'In Progress'.";
 
     enum eGarageOperations
     {
-        RegisterNewCar,
+        RegisterNewCar = 1,
         PullAllVehicles,
         ChangeVehicleStatus,
         InflateWheels,
