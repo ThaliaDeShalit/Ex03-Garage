@@ -38,6 +38,18 @@ namespace Ex03.GarageLogic
                 m_VehicleStatus = value;
             }
         }
+
+        public string ToString()
+        {
+            string str = string.Format(
+@"General vehicle info:
+Vehicle owner - {0}
+Vehicle status - {1}
+
+{2}", m_VehicleOwnerName, m_VehicleStatus, m_Vehicle.ToString());
+
+            return str;
+        }
     }
 
     public enum eVehicleStatus {

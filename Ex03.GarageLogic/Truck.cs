@@ -16,13 +16,35 @@ namespace Ex03.GarageLogic
 
         private FuelTank m_FuelTank;
 
-        public Truck(string i_Model, string i_LicenceNumber, string i_WheelManufactorName, bool i_IsCarryingHazardousMaterials, float i_CurrentCarryWeight)
-            : base(i_Model, i_LicenceNumber)
+        public Truck(string i_Model, string i_LicenceNumber, PowerSource i_PowerSource, string i_WheelManufactorName, float i_CurrentAirPressure, bool i_IsCarryingHazardousMaterials, float i_CurrentCarryWeight)
+            : base(i_Model, i_LicenceNumber, i_PowerSource)
         {
-            InitializeWheels(i_WheelManufactorName, k_MaxWheelAirPressure, k_AmountOfWheels);
-
+            InitializeWheels(i_WheelManufactorName, k_MaxWheelAirPressure, i_CurrentAirPressure, k_AmountOfWheels);
             m_IsCarryingHazardousMaterials = i_IsCarryingHazardousMaterials;
             m_CurrentCarryWeight = i_CurrentCarryWeight;
+        }
+
+        public string ToString()
+        {
+            string isCarryingHazardousMaterials;
+
+            if (m_IsCarryingHazardousMaterials)
+            {
+                isCarryingHazardousMaterials = "yes";
+            }
+            else
+            {
+                isCarryingHazardousMaterials = "no";
+            }
+            
+            string str = string.Format(
+@"{0}
+
+Truck properties:
+Carrying hazardous materials - {1}
+Current carry weight - {2}", base.ToString(), isCarryingHazardousMaterials, m_CurrentCarryWeight.ToString());
+
+            return str;
         }
     }
 }

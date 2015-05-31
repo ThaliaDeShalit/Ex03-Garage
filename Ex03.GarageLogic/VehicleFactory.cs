@@ -6,26 +6,73 @@ namespace Ex03.GarageLogic
 {
     class VehicleFactory
     {
+        private const float k_MaxFuelCapacityMotorcycle = 8f;
+        private const float k_MaxBatteryCapacityMotorcycle = 1.2f;
+        private const float k_MaxFuelCapacityCar = 35f;
+        private const float k_MaxBatteryCapacityCar = 2.2f;
+        private const float k_MaxFuelCapacityTruck = 170f;
+        private const float k_MaxAirPressureCarAndElectricMotorcycle = 31f;
+        private const float k_MaxAirPressureFuelMotorcycle = 34f;
+        private const float k_MaxAirPressureTruck = 25f;
+        
         public static Vehicle CreateVehicle(eVehicleType i_VehicleType, Dictionary<eVehiclePropertyType, object> i_VehicleProporties)
         {
             Vehicle newVehicle = null;
+            PowerSource newPowerSource = null;
 
             switch (i_VehicleType)
             {
                 case eVehicleType.FueledCar:
-                    newVehicle = new FueledCar((string)i_VehicleProporties[eVehiclePropertyType.Model], (string)i_VehicleProporties[eVehiclePropertyType.LicencePlate], (string)i_VehicleProporties[eVehiclePropertyType.WheelManuctorName], (eCarColor)i_VehicleProporties[eVehiclePropertyType.CarColor], (eAmountOfDoors)i_VehicleProporties[eVehiclePropertyType.AmountOfDoors]);
+                    newPowerSource = new FuelTank(eFuelType.Octan96, k_MaxFuelCapacityCar);
+                    newVehicle = new Car((string)i_VehicleProporties[eVehiclePropertyType.Model], 
+                        (string)i_VehicleProporties[eVehiclePropertyType.LicencePlate], 
+                        newPowerSource,
+                        (string)i_VehicleProporties[eVehiclePropertyType.WheelManuctorName],
+                        (float)i_VehicleProporties[eVehiclePropertyType.WheelAirPressure],
+                        (eCarColor)i_VehicleProporties[eVehiclePropertyType.CarColor], 
+                        (eAmountOfDoors)i_VehicleProporties[eVehiclePropertyType.AmountOfDoors]);
                     break;
                 case eVehicleType.ElectricCar:
-                    newVehicle = new ElectricCar((string)i_VehicleProporties[eVehiclePropertyType.Model], (string)i_VehicleProporties[eVehiclePropertyType.LicencePlate], (string)i_VehicleProporties[eVehiclePropertyType.WheelManuctorName], (eCarColor)i_VehicleProporties[eVehiclePropertyType.CarColor], (eAmountOfDoors)i_VehicleProporties[eVehiclePropertyType.AmountOfDoors]);
+                    newPowerSource = new Battery(k_MaxBatteryCapacityCar);
+                    newVehicle = new Car((string)i_VehicleProporties[eVehiclePropertyType.Model],
+                        (string)i_VehicleProporties[eVehiclePropertyType.LicencePlate],
+                        newPowerSource,
+                        (string)i_VehicleProporties[eVehiclePropertyType.WheelManuctorName],
+                        (float)i_VehicleProporties[eVehiclePropertyType.WheelAirPressure],
+                        (eCarColor)i_VehicleProporties[eVehiclePropertyType.CarColor],
+                        (eAmountOfDoors)i_VehicleProporties[eVehiclePropertyType.AmountOfDoors]);
                     break;
                 case eVehicleType.FueledMotorcycle:
-                    newVehicle = new FueledMotorcycle((string)i_VehicleProporties[eVehiclePropertyType.Model], (string)i_VehicleProporties[eVehiclePropertyType.LicencePlate], (string)i_VehicleProporties[eVehiclePropertyType.WheelManuctorName], (eLicenceType)i_VehicleProporties[eVehiclePropertyType.LicenceType], (int)i_VehicleProporties[eVehiclePropertyType.EngineVolume]);
+                    newPowerSource = new FuelTank(eFuelType.Octan98, k_MaxFuelCapacityMotorcycle);
+                    newVehicle = new Motorcycle((string)i_VehicleProporties[eVehiclePropertyType.Model], 
+                        (string)i_VehicleProporties[eVehiclePropertyType.LicencePlate],
+                        newPowerSource,
+                        (string)i_VehicleProporties[eVehiclePropertyType.WheelManuctorName],
+                        (float)i_VehicleProporties[eVehiclePropertyType.WheelAirPressure],
+                        k_MaxAirPressureFuelMotorcycle,
+                        (eLicenceType)i_VehicleProporties[eVehiclePropertyType.LicenceType], 
+                        (int)i_VehicleProporties[eVehiclePropertyType.EngineVolume]);
                     break;
                 case eVehicleType.ElecticMotorcycle:
-                    newVehicle = new ElectricMotorcycle((string)i_VehicleProporties[eVehiclePropertyType.Model], (string)i_VehicleProporties[eVehiclePropertyType.LicencePlate], (string)i_VehicleProporties[eVehiclePropertyType.WheelManuctorName], (eLicenceType)i_VehicleProporties[eVehiclePropertyType.LicenceType], (int)i_VehicleProporties[eVehiclePropertyType.EngineVolume]);
+                    newPowerSource = new Battery(k_MaxBatteryCapacityMotorcycle);
+                    newVehicle = new Motorcycle((string)i_VehicleProporties[eVehiclePropertyType.Model],
+                        (string)i_VehicleProporties[eVehiclePropertyType.LicencePlate],
+                        newPowerSource,
+                        (string)i_VehicleProporties[eVehiclePropertyType.WheelManuctorName],
+                        (float)i_VehicleProporties[eVehiclePropertyType.WheelAirPressure],
+                        k_MaxAirPressureCarAndElectricMotorcycle,
+                        (eLicenceType)i_VehicleProporties[eVehiclePropertyType.LicenceType],
+                        (int)i_VehicleProporties[eVehiclePropertyType.EngineVolume]);
                     break;
                 case eVehicleType.Truck:
-                    newVehicle = new Truck((string)i_VehicleProporties[eVehiclePropertyType.Model], (string)i_VehicleProporties[eVehiclePropertyType.LicencePlate], (string)i_VehicleProporties[eVehiclePropertyType.WheelManuctorName], (bool)i_VehicleProporties[eVehiclePropertyType.CarryingHazardousMaterials], (float)i_VehicleProporties[eVehiclePropertyType.CarryWeight]);
+                    newPowerSource = new FuelTank(eFuelType.Soler, k_MaxFuelCapacityTruck);
+                    newVehicle = new Truck((string)i_VehicleProporties[eVehiclePropertyType.Model], 
+                        (string)i_VehicleProporties[eVehiclePropertyType.LicencePlate],
+                        newPowerSource,
+                        (string)i_VehicleProporties[eVehiclePropertyType.WheelManuctorName],
+                        (float)i_VehicleProporties[eVehiclePropertyType.WheelAirPressure],
+                        (bool)i_VehicleProporties[eVehiclePropertyType.CarryingHazardousMaterials], 
+                        (float)i_VehicleProporties[eVehiclePropertyType.CarryWeight]);
                     break;
             }
 

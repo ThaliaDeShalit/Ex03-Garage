@@ -5,7 +5,7 @@ using Ex03.GarageLogic;
 
 namespace Ex03.GarageManagementSystem.ConsoleUI
 {
-    class GarageUI
+    class GarageUIManager
     {
 
         private GarageManager m_GarageManager;
@@ -38,7 +38,7 @@ namespace Ex03.GarageManagementSystem.ConsoleUI
         private const string k_ExitPrompt = "Goodbye! (please press enter to exit)";
 
         // Licence plate
-        private const string k_GetLicencePlate = "Please enter the licence plate of the vehicle you would like to register (digits and letters only):";
+        private const string k_GetLicencePlateToRegister = "Please enter the licence plate of the vehicle you would like to register (digits and letters only):";
         private const string k_InvalidLicencePlate = "Input not valid. Please enter the licence plate using only letters and digits.";
 
         private const string k_VehicleAlreadyExists =
@@ -122,11 +122,35 @@ It's status has been changed to 'In Progress'.";
         private const string k_GetCurrentCarryingWeight = "Enter the current weight your vehicle is carrying:";
         private const string k_InvalidCurrentCarryingWeight = "Invalid input. Please enter a positive integer.";
 
+        private const string k_VehicleRegisteredSuccefully = "Vehicle registered succefully";
+
         private const string k_EnterToContinue = "Please press enter to continue";
+        private const string k_GetLicencePlate = "Please enter the licence plate";
 
         // Vehicle type to pull
         private const string k_GetVehicleTypeToPull = "Please enter whether you would like to pull all vehicles, or vehcile in a specific status - In progress, fixed or paid: [a/i/f/p]";
         private const string k_InvalidVehicleTypeToPull = "Invalid input. Please enter either a for all vehicles, i for vehicles in progress, f for fixed or p for paid";
+
+        private const string k_GetVehicleStatus =
+@"To which status would you like to change your vehicle status to?
+1: In progress
+2: Fixed
+3: Paid";
+        private const string k_InvalidVehicleStatus = "Invalid input, please enter a digit that corresponds to one of the supported statuses";
+
+        private const string k_GetFuelType =
+@"Which fuel type would you like to use to fuel your vehicle?
+1: Soler
+2: Octan 95
+3: Octan 96
+4: Octan 98";
+        private const string k_InvalidFuelType = "Invalid input, please enter a digit that corresponds to one the supported fuel type";
+
+        private const string k_GetAmountOfFuel = "Please enter the amount of fuel you would like to fuel your vehicle with";
+        private const string k_InvalidAmountOfFuel = "Invalid input, please enter a float to represent the amount of fuel you would like to fuel";
+
+        private const string k_GetAmountOfMinToCharge = "Please enter the amount of minutes to charge your vehicle with";
+        private const string k_InvalidAmountOfMinToCharge = "Invalid input, please enter an int to represent the amount of minutes to charge your vehicle";
 
         public void Run()
         {
@@ -181,9 +205,9 @@ It's status has been changed to 'In Progress'.";
                         chargeVehicle();
                         pressEnterToContinue();
                         break;
-                    case eGarageOperations.AllInfoOfVehicle:
+                    case eGarageOperations.CompleteVehicleInfo:
                         Console.Clear();
-                        getAllInfoOfVehicle();
+                        getCompleteVehicleInfo();
                         pressEnterToContinue();
                         break;
                     case eGarageOperations.Exit:
@@ -204,7 +228,7 @@ It's status has been changed to 'In Progress'.";
 
         private void registerNewCar()
         {
-            Console.WriteLine(k_GetLicencePlate);
+            Console.WriteLine(k_GetLicencePlateToRegister);
             bool inputIsValid = false;
             bool carAlreadyExists = false;
             string licencePlate;
@@ -287,8 +311,41 @@ It's status has been changed to 'In Progress'.";
                     }
 
                     m_GarageManager.InsertNewVehicle(nameOfOwner, phoneNumberOfOwner, vehicleType, vehicleProperties);
+
+                    Console.WriteLine(k_VehicleRegisteredSuccefully);
                 }
             }
+        }
+
+        private string getLicencePlate()
+        {
+            string licencePlate;
+            bool inputIsValid = false;
+            
+            Console.WriteLine(k_GetLicencePlate);
+            while (true)
+            {
+                licencePlate = Console.ReadLine();
+
+                inputIsValid = true;
+                foreach (char character in licencePlate)
+                {
+                    if (!char.IsLetterOrDigit(character))
+                    {
+                        inputIsValid = false;
+                        break;
+                    }
+                }
+
+                if (inputIsValid)
+                {
+                    break;
+                }
+
+                Console.WriteLine(k_InvalidLicencePlate);
+            }
+
+            return licencePlate;
         }
 
         private int getIntRepresentationOfEnum(int i_MinValue, int i_MaxValue, string i_RequestPrompt, string i_ErrorPrompt)
@@ -563,6 +620,114 @@ It's status has been changed to 'In Progress'.";
                 Console.WriteLine(k_InvalidVehicleTypeToPull);
             }
         }
+
+        private void changeVehicleStatus()
+        {
+            string licencePlate;
+            eVehicleStatus vehicleStatus;
+
+            licencePlate = getLicencePlate();
+            vehicleStatus = (eVehicleStatus)getIntRepresentationOfEnum(1, 3, k_GetVehicleStatus, k_InvalidVehicleStatus);
+
+            m_GarageManager.ChangeVehicleStatus(licencePlate, vehicleStatus);
+        }
+
+        private void inflateWheels()
+        {
+            string licencePlate;
+
+            licencePlate = getLicencePlate();
+            m_GarageManager.InflateWheels(licencePlate);
+        }
+
+        // todo - add try and catch
+        private void fuelVehicle()
+        {
+            string licencePlate;
+            eFuelType fuelType;
+            float amountOfFuel;
+            string input;
+            bool isValid = true;
+
+            licencePlate = getLicencePlate();
+            fuelType = (eFuelType)getIntRepresentationOfEnum(1, 4, k_GetFuelType, k_InvalidFuelType);
+
+            Console.WriteLine(k_GetAmountOfFuel);
+            while (true)
+            {
+                input = Console.ReadLine();
+
+                if (float.TryParse(input, out amountOfFuel))
+                {
+                    try
+                    {
+                        m_GarageManager.FuelVehicle(licencePlate, fuelType, amountOfFuel);
+                        isValid = true;
+                    }
+                    catch (ArgumentException exception)
+                    {
+                        Console.WriteLine(exception);
+                        isValid = false;
+                    }
+                } 
+                else 
+                {
+                    Console.WriteLine(k_InvalidAmountOfFuel);
+                }
+
+                if (isValid)
+                {
+                    break;
+                }
+            }
+        }
+
+        private void chargeVehicle()
+        {
+            string licencePlate;
+            string input;
+            int minToCharge;
+            bool isValid = false;
+
+            licencePlate = getLicencePlate();
+
+            Console.WriteLine(k_GetAmountOfMinToCharge);
+            while (true)
+            {
+                input = Console.ReadLine();
+
+                if (int.TryParse(input, out minToCharge))
+                {
+                    try
+                    {
+                        m_GarageManager.ChargeVehicle(licencePlate, minToCharge / 60);
+                        isValid = true;
+                    }
+                    catch (ArgumentException exception)
+                    {
+                        Console.WriteLine(exception);
+                        isValid = false;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine(k_InvalidAmountOfMinToCharge);
+                }
+
+                if (isValid)
+                {
+                    break;
+                }
+            }
+        }
+
+        private void getCompleteVehicleInfo()
+        {
+            string licencePlate;
+
+            licencePlate = getLicencePlate();
+            Console.WriteLine(m_GarageManager.ToString(licencePlate));
+        }
     }
 
     enum eGarageOperations
@@ -573,7 +738,7 @@ It's status has been changed to 'In Progress'.";
         InflateWheels,
         FuelVehicle,
         ChargeVehicle,
-        AllInfoOfVehicle,
+        CompleteVehicleInfo,
         Exit
     }
 }

@@ -15,5 +15,10 @@ namespace Ex03.GarageLogic
         {
             FillPowerSource(i_NumOfHoursToAdd);
         }
+
+        public string ToString()
+        {
+            return "Power source type - battery";
+        }
     }
 }

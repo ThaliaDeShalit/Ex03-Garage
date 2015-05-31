@@ -7,18 +7,19 @@ namespace Ex03.GarageLogic
     abstract class Vehicle
     {
         protected string m_Model;
-        protected string m_LicenceNumber;
+        protected string m_LicencePlate;
         protected float m_PercentageOfEnergyLeft;
         protected List<Wheel> m_Wheels;
         protected PowerSource m_PowerSource;
 
-        public virtual Vehicle(string i_Model, string i_LicenceNumber)
+        public Vehicle(string i_Model, string i_LicenceNumber, PowerSource i_PowerSource)
         {
             m_Model = i_Model;
-            m_LicenceNumber = i_LicenceNumber;
+            m_LicencePlate = i_LicenceNumber;
+            m_PowerSource = i_PowerSource;
+            m_PercentageOfEnergyLeft = i_PowerSource.CurrentPowerSourceCapacity / i_PowerSource.MaximumPowerSourceCapacity;
         }
 
-        // TODO:
         public virtual void InitializeWheels(string i_ManufcatorName, float i_MaxWheelAirPressure, float i_CurrentAirPressure, int i_AmountOfWheels)
         {
             Wheel tempWheel = new Wheel(i_ManufcatorName, i_MaxWheelAirPressure, i_CurrentAirPressure);
@@ -33,7 +34,7 @@ namespace Ex03.GarageLogic
         {
             get
             {
-                return m_LicenceNumber;
+                return m_LicencePlate;
             }
         }
 
@@ -75,6 +76,24 @@ namespace Ex03.GarageLogic
             }
 
             return v_Electric;
+        }
+
+        public string ToString()
+        {
+            string str = string.Format(
+@"Vehicle:
+Model name - {0}
+Licence plate - {1}
+
+Wheel:
+Manufctor name - {3}
+Current air pressure - {4} out of {5}
+
+Power Source:
+Current percentage of power in power source - {2}
+{6}", m_Model, m_LicencePlate, m_PercentageOfEnergyLeft, m_Wheels[0].ManufctorName, m_Wheels[0].CurrentAirPressure, m_Wheels[0].MaxAirPressure, m_PowerSource.ToString());
+
+            return str;
         }
     }
 }

@@ -40,10 +40,6 @@
     <Compile Include="PowerSource.cs" />
     <Compile Include="VehicleFactory.cs" />
     <Compile Include="VehicleInfo.cs" />
-    <Compile Include="ElectricCar.cs" />
-    <Compile Include="ElectricMotorcycle.cs" />
-    <Compile Include="FueledCar.cs" />
-    <Compile Include="FueledMotorcycle.cs" />
     <Compile Include="FuelTank.cs" />
     <Compile Include="GarageManager.cs" />
     <Compile Include="Motorcycle.cs" />

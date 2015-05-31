@@ -33,6 +33,15 @@ namespace Ex03.GarageLogic
                 return m_FuelType;
             }
         }
+
+        public string ToString()
+        {
+            string str = string.Format(
+@"Power source type - fuel tank
+Fuel type - {0}", m_FuelType);
+
+            return str;
+        }
     }
 
     public enum eFuelType
@@ -42,4 +51,6 @@ namespace Ex03.GarageLogic
         Octan96,
         Octan98
     }
+
+    
 }

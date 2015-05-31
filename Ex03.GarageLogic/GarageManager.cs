@@ -88,7 +88,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public void ChargeVehicle(string i_LicencePlate, float i_NumOfMinuToCharge)
+        public void ChargeVehicle(string i_LicencePlate, float i_HoursToCharge)
         {
             Vehicle vehicleToCharge = m_Vehicles[i_LicencePlate].Vehicle;
 
@@ -98,8 +98,14 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                ((Battery)vehicleToCharge.PowerSource).Charge(i_NumOfMinuToCharge);
+                ((Battery)vehicleToCharge.PowerSource).Charge(i_HoursToCharge);
             }
         }
+
+        public string ToString(string i_LicencePlate)
+        {
+            return m_Vehicles[i_LicencePlate].ToString();
+        }
+
     }
 }

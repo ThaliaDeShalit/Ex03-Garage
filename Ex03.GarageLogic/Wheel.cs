@@ -51,5 +51,13 @@ namespace Ex03.GarageLogic
                 m_MaxAirPressure = value;
             }
         }
+
+        public string ManufctorName
+        {
+            get
+            {
+                return m_ManufctorName;
+            }
+        }
     }
 }
