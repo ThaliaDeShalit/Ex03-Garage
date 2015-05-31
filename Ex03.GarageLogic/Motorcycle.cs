@@ -36,7 +36,7 @@ Engine volume - {2}", base.ToString(), m_LicenceType, m_EngineVolume.ToString())
 
     public enum eLicenceType
     {
-        A,
+        A = 1,
         A2,
         AB,
         B1

@@ -8,10 +8,11 @@ namespace Ex03.GarageLogic
     {
         private eFuelType m_FuelType;
 
-        public FuelTank(eFuelType i_FuelType, float i_MaxFuelAmount)
+        public FuelTank(eFuelType i_FuelType, float i_MaxFuelAmount, float i_CurrentFuelAmount)
         {
             m_FuelType = i_FuelType;
             m_MaximumCapacity = i_MaxFuelAmount;
+            m_CurrentCapacity = i_CurrentFuelAmount;
         }
 
         public void Fuel(float i_AmountOfFuelToAdd, eFuelType i_FuelType)
@@ -34,7 +35,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public string ToString()
+        public override string ToString()
         {
             string str = string.Format(
 @"Power source type - fuel tank
@@ -46,7 +47,7 @@ Fuel type - {0}", m_FuelType);
 
     public enum eFuelType
     {
-        Soler,
+        Soler = 1,
         Octan95,
         Octan96,
         Octan98

@@ -721,6 +721,7 @@ It's status has been changed to 'In Progress'.";
             }
         }
 
+        // TODO: Check if licence plate is in the dictionary
         private void getCompleteVehicleInfo()
         {
             string licencePlate;

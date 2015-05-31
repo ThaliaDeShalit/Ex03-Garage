@@ -23,7 +23,7 @@ namespace Ex03.GarageLogic
             switch (i_VehicleType)
             {
                 case eVehicleType.FueledCar:
-                    newPowerSource = new FuelTank(eFuelType.Octan96, k_MaxFuelCapacityCar);
+                    newPowerSource = new FuelTank(eFuelType.Octan96, k_MaxFuelCapacityCar, (float) i_VehicleProporties[eVehiclePropertyType.PowerSourceCapacity]);
                     newVehicle = new Car((string)i_VehicleProporties[eVehiclePropertyType.Model], 
                         (string)i_VehicleProporties[eVehiclePropertyType.LicencePlate], 
                         newPowerSource,
@@ -33,7 +33,7 @@ namespace Ex03.GarageLogic
                         (eAmountOfDoors)i_VehicleProporties[eVehiclePropertyType.AmountOfDoors]);
                     break;
                 case eVehicleType.ElectricCar:
-                    newPowerSource = new Battery(k_MaxBatteryCapacityCar);
+                    newPowerSource = new Battery(k_MaxBatteryCapacityCar, (float) i_VehicleProporties[eVehiclePropertyType.PowerSourceCapacity]);
                     newVehicle = new Car((string)i_VehicleProporties[eVehiclePropertyType.Model],
                         (string)i_VehicleProporties[eVehiclePropertyType.LicencePlate],
                         newPowerSource,
@@ -43,7 +43,7 @@ namespace Ex03.GarageLogic
                         (eAmountOfDoors)i_VehicleProporties[eVehiclePropertyType.AmountOfDoors]);
                     break;
                 case eVehicleType.FueledMotorcycle:
-                    newPowerSource = new FuelTank(eFuelType.Octan98, k_MaxFuelCapacityMotorcycle);
+                    newPowerSource = new FuelTank(eFuelType.Octan98, k_MaxFuelCapacityMotorcycle, (float)i_VehicleProporties[eVehiclePropertyType.PowerSourceCapacity]);
                     newVehicle = new Motorcycle((string)i_VehicleProporties[eVehiclePropertyType.Model], 
                         (string)i_VehicleProporties[eVehiclePropertyType.LicencePlate],
                         newPowerSource,
@@ -54,7 +54,7 @@ namespace Ex03.GarageLogic
                         (int)i_VehicleProporties[eVehiclePropertyType.EngineVolume]);
                     break;
                 case eVehicleType.ElecticMotorcycle:
-                    newPowerSource = new Battery(k_MaxBatteryCapacityMotorcycle);
+                    newPowerSource = new Battery(k_MaxBatteryCapacityMotorcycle, (float)i_VehicleProporties[eVehiclePropertyType.PowerSourceCapacity]);
                     newVehicle = new Motorcycle((string)i_VehicleProporties[eVehiclePropertyType.Model],
                         (string)i_VehicleProporties[eVehiclePropertyType.LicencePlate],
                         newPowerSource,
@@ -65,7 +65,7 @@ namespace Ex03.GarageLogic
                         (int)i_VehicleProporties[eVehiclePropertyType.EngineVolume]);
                     break;
                 case eVehicleType.Truck:
-                    newPowerSource = new FuelTank(eFuelType.Soler, k_MaxFuelCapacityTruck);
+                    newPowerSource = new FuelTank(eFuelType.Soler, k_MaxFuelCapacityTruck, (float)i_VehicleProporties[eVehiclePropertyType.PowerSourceCapacity]);
                     newVehicle = new Truck((string)i_VehicleProporties[eVehiclePropertyType.Model], 
                         (string)i_VehicleProporties[eVehiclePropertyType.LicencePlate],
                         newPowerSource,
@@ -82,7 +82,7 @@ namespace Ex03.GarageLogic
 
     public enum eVehicleType
     {
-        FueledCar,
+        FueledCar = 1,
         ElectricCar,
         FueledMotorcycle,
         ElecticMotorcycle,
@@ -91,7 +91,7 @@ namespace Ex03.GarageLogic
 
     public enum eVehiclePropertyType
     {
-        Model,
+        Model = 1,
         LicencePlate, 
         PowerSourceCapacity,
         WheelManuctorName,

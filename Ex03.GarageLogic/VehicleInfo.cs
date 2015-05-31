@@ -53,7 +53,7 @@ Vehicle status - {1}
     }
 
     public enum eVehicleStatus {
-        InProgress,
+        InProgress = 1,
         Fixed,
         Paid
     }

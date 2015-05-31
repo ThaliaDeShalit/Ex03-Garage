@@ -11,7 +11,8 @@ namespace Ex03.GarageLogic
         public void InsertNewVehicle(string i_OwnerName, string i_OwnerNumber, eVehicleType i_VehicleType, Dictionary<eVehiclePropertyType, object> i_VehicleProporties)
         {
             Vehicle vehicle = VehicleFactory.CreateVehicle(i_VehicleType, i_VehicleProporties);
-            VehicleInfo newVehicle = new VehicleInfo(i_OwnerName, i_OwnerNumber, eVehicleStatus.InProgress, vehicle);
+            VehicleInfo newVehicleInfo = new VehicleInfo(i_OwnerName, i_OwnerNumber, eVehicleStatus.InProgress, vehicle);
+            m_Vehicles.Add(vehicle.LicencePlate, newVehicleInfo);
         }
 
         public bool CheckIfExists(string i_LicencePlate)
@@ -35,7 +36,7 @@ namespace Ex03.GarageLogic
             {
                 foreach (VehicleInfo vehicleInfo in m_Vehicles.Values)
                 {
-                    licencePlate.Add(vehicleInfo.Vehicle.LicenceNumber);
+                    licencePlate.Add(vehicleInfo.Vehicle.LicencePlate);
                 }
             }
             else
@@ -46,7 +47,7 @@ namespace Ex03.GarageLogic
                 {
                     if (vehicleInfo.VehicleStatus == vehicleStatus)
                     {
-                        licencePlate.Add(vehicleInfo.Vehicle.LicenceNumber);
+                        licencePlate.Add(vehicleInfo.Vehicle.LicencePlate);
                     }
                 }
             }
@@ -80,6 +81,7 @@ namespace Ex03.GarageLogic
 
                 if (fuelTank.FuelType == i_FuelType) {
                     fuelTank.Fuel(i_AmountOfFuel, i_FuelType);
+                    vehicleToFuel.PercentageOfEnergyLeft = i_AmountOfFuel / fuelTank.MaximumPowerSourceCapacity;
                 }
                 else
                 {
@@ -99,6 +101,7 @@ namespace Ex03.GarageLogic
             else
             {
                 ((Battery)vehicleToCharge.PowerSource).Charge(i_HoursToCharge);
+                vehicleToCharge.PercentageOfEnergyLeft = i_HoursToCharge / vehicleToCharge.PowerSource.MaximumPowerSourceCapacity;
             }
         }
 

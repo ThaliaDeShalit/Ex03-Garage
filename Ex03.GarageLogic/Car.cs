@@ -35,7 +35,7 @@ Number of doors - {2}", base.ToString(), m_CarColor, m_NumOfCarDoors);
 
     public enum eCarColor
     {
-        Green,
+        Green = 1,
         Red,
         White,
         Black
