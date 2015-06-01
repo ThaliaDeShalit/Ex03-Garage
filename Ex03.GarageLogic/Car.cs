@@ -18,6 +18,15 @@ namespace Ex03.GarageLogic
             InitializeWheels(i_WheelManufactorName, k_MaxWheelAirPressure, i_CurrentAirPressure, k_AmountOfWheels);
             m_CarColor = i_CarColor;
             m_NumOfCarDoors = i_NumOfCarDoors;
+            m_NumOfExtraProperties = 2;
+        }
+
+        internal Car(PowerSource i_PowerSource)
+        {
+            m_PowerSource = i_PowerSource;
+            m_Wheels = new List<Wheel>();
+            SetWheelsMaxAirPressure(k_MaxWheelAirPressure, k_AmountOfWheels);
+            m_NumOfExtraProperties = 2;
         }
 
         internal string ToString()
@@ -32,9 +41,38 @@ Number of doors - {2}", base.ToString(), m_CarColor, m_NumOfCarDoors);
             return str;
         }
 
-        protected enum eProperties
+        internal Question GetProperty(int i_PropertyNumber)
         {
-            CarColor = (Enum.GetValues(typeof(Vehicle.eProperties)).Length + 1),
+            Question propertyQuestion = null;
+            eProperties property;
+
+            property = (eProperties)i_PropertyNumber;
+            switch (property)
+            {
+                case eProperties.CarColor:
+                    propertyQuestion = getCarColorQuestion();
+                    break;
+                case eProperties.AmountOfDoors:
+                    propertyQuestion = getAmountOfDoorsQuestion();
+                    break;
+            }
+
+            return propertyQuestion;
+        }
+
+        private QuestionWithMultipleAnswers getCarColorQuestion()
+        {
+            return new QuestionWithMultipleAnswers("Which color is your car?", Enum.GetValues(typeof(eCarColor)));
+        }
+
+        private QuestionWithOneAnswer getAmountOfDoorsQuestion()
+        {
+            return new QuestionWithOneAnswer("How many doors do you have? (between 2 and 5)");
+        }
+
+        internal enum eProperties
+        {
+            CarColor = 1,
             AmountOfDoors
         }
     }

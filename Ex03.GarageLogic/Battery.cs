@@ -12,6 +12,11 @@ namespace Ex03.GarageLogic
             m_CurrentCapacity = i_CurrentChargeInHours;
         }
 
+        internal Battery(float i_MaxChargeInHours)
+        {
+            m_MaximumCapacity = i_MaxChargeInHours;
+        }
+
         internal void Charge(float i_NumOfHoursToAdd)
         {
             FillPowerSource(i_NumOfHoursToAdd);

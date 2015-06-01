@@ -19,6 +19,15 @@ namespace Ex03.GarageLogic
             m_LicenceType = i_LicenceType;
             m_EngineVolume = i_EngineVolume;
             r_MaxAirPressure = i_MaxAirPressure;
+            m_NumOfExtraProperties = 2;
+        }
+
+        internal Motorcycle(PowerSource i_PowerSource, float i_MaxAirPressure)
+        {
+            m_PowerSource = i_PowerSource;
+            m_Wheels = new List<Wheel>();
+            SetWheelsMaxAirPressure(i_MaxAirPressure, k_AmountOfWheels);
+            m_NumOfExtraProperties = 2;
         }
 
         internal string ToString()
@@ -33,9 +42,38 @@ Engine volume - {2}", base.ToString(), m_LicenceType, m_EngineVolume.ToString())
             return str;
         }
 
+        internal Question GetProperty(int i_PropertyNumber)
+        {
+            Question propertyQuestion = null;
+            eProperties property;
+
+            property = (eProperties)i_PropertyNumber;
+            switch (property)
+            {
+                case eProperties.LicenceType:
+                    propertyQuestion = getLicenceTypeQuestion();
+                    break;
+                case eProperties.EngineVolume:
+                    propertyQuestion = getEngineVolumeQuestion();
+                    break;
+            }
+
+            return propertyQuestion;
+        }
+
+        private QuestionWithMultipleAnswers getLicenceTypeQuestion()
+        {
+            return new QuestionWithMultipleAnswers("Which licence type is your motorcycle?", Enum.GetValues(typeof(eLicenceType)));
+        }
+
+        private QuestionWithOneAnswer getEngineVolumeQuestion()
+        {
+            return new QuestionWithOneAnswer("What is your engine volume?");
+        }
+
         protected enum eProperties
         {
-            LicenceType = (Enum.GetValues(typeof(Vehicle.eProperties)).Length + 1),
+            LicenceType = 1,
             EngineVolume
         }
     }

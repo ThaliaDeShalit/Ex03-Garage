@@ -4,8 +4,10 @@ using System.Text;
 
 namespace Ex03.GarageLogic
 {
-    private abstract class Vehicle
+    internal abstract class Vehicle
     {
+        protected int m_NumOfExtraProperties;
+
         protected string m_Model;
         protected string m_LicencePlate;
         protected float m_PercentageOfEnergyLeft;
@@ -20,7 +22,9 @@ namespace Ex03.GarageLogic
             m_PercentageOfEnergyLeft = i_PowerSource.CurrentPowerSourceCapacity / i_PowerSource.MaximumPowerSourceCapacity;
         }
 
-        protected virtual void InitializeWheels(string i_ManufcatorName, float i_MaxWheelAirPressure, float i_CurrentAirPressure, int i_AmountOfWheels)
+        internal Vehicle();
+
+        protected void InitializeWheels(string i_ManufcatorName, float i_MaxWheelAirPressure, float i_CurrentAirPressure, int i_AmountOfWheels)
         {
             m_Wheels = new List<Wheel>();
             Wheel tempWheel = new Wheel(i_ManufcatorName, i_MaxWheelAirPressure, i_CurrentAirPressure);
@@ -31,11 +35,60 @@ namespace Ex03.GarageLogic
             }
         }
 
+        protected void SetWheelsMaxAirPressure(float i_MaxAirPressure, int i_AmountOfWheels)
+        {
+            for (int i = 0; i < i_AmountOfWheels; i++)
+            {
+                m_Wheels.Add(new Wheel(i_MaxAirPressure));
+            }
+        }
+
+        internal string Model
+        {
+            get
+            {
+                return m_Model;
+            }
+            set
+            {
+                if (value != string.Empty)
+                {
+                    m_Model = value;
+                }
+                else
+                {
+                    throw new FormatException("Model name can not be empty");
+                }
+            }
+        }
+
         internal string LicencePlate
         {
             get
             {
                 return m_LicencePlate;
+            }
+            set
+            {
+                bool inputIsValid = true;
+
+                foreach (char character in value)
+                {
+                    if (!char.IsLetterOrDigit(character))
+                    {
+                        inputIsValid = false;
+                        break;
+                    }
+                }
+
+                if (inputIsValid)
+                {
+                    m_LicencePlate = value;
+                }
+                else
+                {
+                    throw new FormatException("Invalid licence plate");
+                }
             }
         }
 
@@ -52,6 +105,14 @@ namespace Ex03.GarageLogic
             get
             {
                 return m_PowerSource;
+            }
+        }
+
+        internal int NumOfExtraProperties
+        {
+            get
+            {
+                return m_NumOfExtraProperties;
             }
         }
 
@@ -110,18 +171,28 @@ Current percentage of power in power source - {2}%
             return str;
         }
 
-        internal string GetProperty(int i_PropertyNumber)
+        internal Question GetProperty(int i_PropertyNumber)
         {
-
+            Question propertyQuestion;
+            eProperties property;
+            
+            if (i_PropertyNumber < (int)Enum.GetValues(typeof(eProperties)).GetValue(0)) {
+                propertyQuestion = base.GetProperty(i_PropertyNumber);
+            } else {
+                property = (eProperties)i_PropertyNumber;
+                switch (property)
+                {
+                    case eProperties.Model:
+                        propertyQuestion = getModelQuestion();
+                        break;
+                    case eProperties.PowerSource:
+                        propertyQuestion = getPowerSourceQuestion();
+                        break;
+                    case eProperties.Wheels:
+                        propertyQuestion = getWheelsQuestion
+                }
+            }
         }
-        protected enum eProperties
-        {
-            LicencePlate = 1,
-            Model,
-            PowerSource,
-            Wheels
-        }
 
-        
     }
 }

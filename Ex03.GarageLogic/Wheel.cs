@@ -17,6 +17,11 @@ namespace Ex03.GarageLogic
             m_CurrentAirPressure = i_CurrentAirPressure;
         }
 
+        public Wheel(float i_MaxAirPressure)
+        {
+            m_MaxAirPressure = i_MaxAirPressure;
+        }
+
         public void Inflate(float i_AirToAdd)
         {
             if (m_CurrentAirPressure + i_AirToAdd > m_MaxAirPressure)
@@ -57,6 +62,41 @@ namespace Ex03.GarageLogic
             get
             {
                 return m_ManufctorName;
+            }
+            set
+            {
+                if (value == string.Empty)
+                {
+                    throw new FormatException("Wheel manufctor name can not be null");
+                }
+                else
+                {
+                    m_ManufctorName = value;
+                }
+            }
+        }
+
+        public void SetCurrentAirPressure(string i_Input)
+        {
+            float airPressureInFloat;
+            if (float.TryParse(i_Input, out airPressureInFloat))
+            {
+                if (airPressureInFloat > m_MaxAirPressure)
+                {
+                    throw new ValueOutOfRangeException(0, m_MaxAirPressure);
+                }
+                else if (airPressureInFloat < 0)
+                {
+                    throw new FormatException("Current air pressure can not be below 0");
+                }
+                else
+                {
+                    CurrentAirPressure = airPressureInFloat;
+                }
+            }
+            else
+            {
+                throw new FormatException("Current air pressure must consist of digits");
             }
         }
     }

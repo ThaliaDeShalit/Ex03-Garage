@@ -33,7 +33,7 @@ namespace Ex03.GarageManagementSystem.ConsoleUI
 
 8: To exit";
         private const string k_InvalidUserOption = "Input not valid. Please enter the number corresponding with the operation you would like to perform.";
-        
+
         // exit
         private const string k_ExitPrompt = "Goodbye! (please press enter to exit)";
 
@@ -42,7 +42,7 @@ namespace Ex03.GarageManagementSystem.ConsoleUI
         private const string k_InvalidLicencePlate = "Input not valid. Please enter the licence plate using only letters and digits.";
 
         private const string k_VehicleAlreadyExists =
-@"Vehicle with licence plate %s already exists in the garage.
+@"Vehicle with this licence plate already exists in the garage.
 It's status has been changed to 'In Progress'.";
 
         // Vehicle type
@@ -54,15 +54,15 @@ It's status has been changed to 'In Progress'.";
 4: Electric Motorcycle
 5: Truck";
         private const string k_InvalidVehicleType = "The selected vehicle type is not supported. Please select one of the supported vehicle types displayed above.";
-        
+
         // Owner Name
         private const string k_GetNameOfOwner = "Please enter the name of the owner of the vehicle:";
         private const string k_InvalidOwnerName = "Input cannot be empty. Please enter the name of the vehicle owner:";
-        
+
         // Owner phone number
         private const string k_GetOwnerPhoneNumber = "Enter the owner's phone number:";
         private const string k_InvalidOwnerPhoneNumber = "Invalid input. Please enter a phone number, consisting of digits only.";
-        
+
         // Wheel manufctor name
         private const string k_GetWheelManufacturerName = "Enter the wheels' manufacturer name:";
         private const string k_InvalidWheelManufacturerName = "Input cannot be empty. Please enter the name of the wheels' manufacturer:";
@@ -263,7 +263,7 @@ It's status has been changed to 'In Progress'.";
                 // if we got here it means the licence plate is valid
                 carAlreadyExists = m_GarageManager.CheckIfExists(licencePlate);
 
-                
+
 
                 if (carAlreadyExists)
                 {
@@ -298,13 +298,13 @@ It's status has been changed to 'In Progress'.";
                         case eVehicleType.FueledMotorcycle:
                             vehicleProperties.Add(eVehiclePropertyType.WheelAirPressure, getFloatInput(k_MaxAirPressureFuelMotorcycle, k_GetWheelAirPressure, k_InvalidWheelAirPressure));
                             vehicleProperties.Add(eVehiclePropertyType.PowerSourceCapacity, getFloatInput(k_MaxFuelCapacityMotorcycle, k_GetPowerSourceCapacity, k_InvalidPowerSourceCapacity));
-                            vehicleProperties.Add(eVehiclePropertyType.LicenceType, (eLicenceType) getIntRepresentationOfEnum(1, 4, k_GetLicenceType, k_InvalidLicenceType));
+                            vehicleProperties.Add(eVehiclePropertyType.LicenceType, (eLicenceType)getIntRepresentationOfEnum(1, 4, k_GetLicenceType, k_InvalidLicenceType));
                             vehicleProperties.Add(eVehiclePropertyType.EngineVolume, getEngineVolume());
                             break;
                         case eVehicleType.ElecticMotorcycle:
                             vehicleProperties.Add(eVehiclePropertyType.WheelAirPressure, getFloatInput(k_MaxAirPressureCarAndElectricMotorcycle, k_GetWheelAirPressure, k_InvalidWheelAirPressure));
                             vehicleProperties.Add(eVehiclePropertyType.PowerSourceCapacity, getFloatInput(k_MaxBatteryCapacityMotorcycle, k_GetPowerSourceCapacity, k_InvalidPowerSourceCapacity));
-                            vehicleProperties.Add(eVehiclePropertyType.LicenceType, (eLicenceType) getIntRepresentationOfEnum(1, 4, k_GetLicenceType, k_InvalidLicenceType));
+                            vehicleProperties.Add(eVehiclePropertyType.LicenceType, (eLicenceType)getIntRepresentationOfEnum(1, 4, k_GetLicenceType, k_InvalidLicenceType));
                             vehicleProperties.Add(eVehiclePropertyType.EngineVolume, getEngineVolume());
                             break;
                         case eVehicleType.Truck:
@@ -318,6 +318,93 @@ It's status has been changed to 'In Progress'.";
                     m_GarageManager.InsertNewVehicle(nameOfOwner, phoneNumberOfOwner, vehicleType, vehicleProperties);
 
                     Console.WriteLine(k_VehicleRegisteredSuccefully);
+                }
+            }
+        }
+
+        private void NewCar()
+        {
+            string licencePlate;
+            bool inputIsValid = false;
+            bool carAlreadyExists;
+            string nameOfOwner;
+            string phoneNumberOfOwner;
+            List<string> extraPropertiesQuestions;
+            string input;
+
+            Console.WriteLine(k_GetLicencePlateToRegister);
+            while (true)
+            {
+                licencePlate = Console.ReadLine();
+
+                inputIsValid = true;
+                foreach (char character in licencePlate)
+                {
+                    if (!char.IsLetterOrDigit(character))
+                    {
+                        inputIsValid = false;
+                        break;
+                    }
+                }
+
+                if (!inputIsValid)
+                {
+                    Console.WriteLine(k_InvalidLicencePlate);
+                    continue;
+                }
+
+                // if we got here it means the licence plate is valid
+                carAlreadyExists = m_GarageManager.CheckIfExists(licencePlate);
+
+                if (carAlreadyExists)
+                {
+                    m_GarageManager.ChangeVehicleStatus(licencePlate, eVehicleStatus.InProgress);
+                    Console.WriteLine(k_VehicleAlreadyExists);
+                    break;
+                }
+                else
+                {
+                    getVehicleTypeAndCreateVehicle();
+                    nameOfOwner = getNameOfOwner();
+                    phoneNumberOfOwner = getPhoneNumberOfOwner();
+
+                    getAndSetVehicleModel();
+                    setLicencePlate(licencePlate);
+                    getAndSetWheelManucftorName();
+                    getAndSetWheelAirPressure();
+                    getAndSetPowerSourceCapacity();
+
+                    extraPropertiesQuestions = m_GarageManager.GetQuestionsOfVehicleExtraProperties();
+
+                    for (int i = 1; i <= extraPropertiesQuestions.Count; i++)
+                    {
+                        Console.WriteLine(extraPropertiesQuestions[i - 1]);
+                        input = Console.ReadLine();
+                        m_GarageManager.SetVehicleProperty(i, input);
+                    }
+
+                    m_GarageManager.FinalizeRegistryOfVehicle(nameOfOwner, phoneNumberOfOwner);
+                }
+
+            }
+        }
+
+        private void getVehicleTypeAndCreateVehicle()
+        {
+            string input;
+            bool inputIsValid = false;
+            Console.WriteLine(m_GarageManager.GetQuestionOfVehicleType());
+
+            while (!inputIsValid)
+            {
+                input = Console.ReadLine();
+                try
+                {
+                    m_GarageManager.CreateNewVehicle(input);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
                 }
             }
         }
@@ -362,217 +449,317 @@ It's status has been changed to 'In Progress'.";
             return licencePlate;
         }
 
-        private int getIntRepresentationOfEnum(int i_MinValue, int i_MaxValue, string i_RequestPrompt, string i_ErrorPrompt)
+        private void getAndSetVehicleModel()
         {
             string input;
-            int inputInInt = 0;
-
-            Console.WriteLine(i_RequestPrompt);
-            while (true)
-            {
-                input = Console.ReadLine();
-
-                if (checkValidityOfIntInput(input, i_MinValue, i_MaxValue, out inputInInt))
-                {
-                    break;                    
-                }
-
-                Console.WriteLine(i_ErrorPrompt);
-            }
-
-            return inputInInt;
-        }
-
-        private string getNameOfOwner()
-        {
-            string input;
-
-            Console.WriteLine(k_GetNameOfOwner);
-
-            while (true)
-            {
-                input = Console.ReadLine();
-
-                if (input == null)
-                {
-                    Console.WriteLine(k_InvalidOwnerName);
-                    continue;
-                }
-                else
-                {
-                    break;
-                }
-            }
-
-            return input;
-        }
-
-        private string getPhoneNumberOfOwner()
-        {
-            string input = string.Empty;
             bool inputIsValid = false;
-            Console.WriteLine(k_GetOwnerPhoneNumber);
+            Console.WriteLine(k_GetVehicleModelName);
 
             while (!inputIsValid)
             {
                 input = Console.ReadLine();
-
-                inputIsValid = true;
-                foreach (char characther in input)
+                try
                 {
-                    if (!char.IsDigit(characther))
-                    {
-                        inputIsValid = false;
-                        break;
-                    }
+                    m_GarageManager.SetModel(input);
                 }
-
-                if (!inputIsValid)
+                catch (Exception ex)
                 {
-                    Console.WriteLine(k_InvalidOwnerPhoneNumber);
-                    continue;
+                    Console.WriteLine(ex.Message);
                 }
             }
-
-            return input;
         }
 
-        private string getWheelManufacturerName()
+        private void setLicencePlate(string i_LicencePlate)
+        {
+            while (true)
+            {
+                try
+                {
+                    m_GarageManager.SetLicencePlate(i_LicencePlate);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    Console.WriteLine("Enter a valid licence plate");
+                    i_LicencePlate = Console.ReadLine();
+                }
+            }
+            
+        }
+
+        private void getAndSetWheelManucftorName()
         {
             string input;
-
+            bool inputIsValid = false;
             Console.WriteLine(k_GetWheelManufacturerName);
 
-            while (true)
+            while (!inputIsValid)
             {
                 input = Console.ReadLine();
-
-                if (input == null)
+                try
                 {
-                    Console.WriteLine(k_InvalidWheelManufacturerName);
-                    continue;
+                    m_GarageManager.SetWheelManufctorName(input);
                 }
-                else
+                catch (Exception ex)
                 {
-                    break;
+                    Console.WriteLine(ex.Message);
                 }
             }
-
-            return input;
         }
 
-        private float getFloatInput(float i_MaxValue, string i_RequestPrompt, string i_ErrorPrompt)
+        private void getAndSetWheelAirPressure()
         {
             string input;
             bool inputIsValid = false;
-            float inputInFloat = 0;
-            Console.WriteLine(i_RequestPrompt);
+            Console.WriteLine(k_GetWheelAirPressure);
 
             while (!inputIsValid)
             {
                 input = Console.ReadLine();
-
-                inputIsValid = float.TryParse(input, out inputInFloat);
-
-                if (inputIsValid)
+                try
                 {
-                    if (inputInFloat > i_MaxValue || inputInFloat < 0)
-                    {
-                        Console.WriteLine(i_ErrorPrompt);
-                        inputIsValid = false;
-                        continue;
-                    }
+                    m_GarageManager.SetWheelAirPressure(input);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
                 }
             }
-
-            return inputInFloat;
         }
 
-        private string getTextInput(string i_RequestPrompt, string i_ErrorPrompt)
+        private void getAndSetPowerSourceCapacity()
         {
             string input;
+            bool inputIsValid = false;
+            Console.WriteLine(k_GetPowerSourceCapacity);
 
-            Console.WriteLine(i_RequestPrompt);
-
-            while (true)
+            while (!inputIsValid)
             {
                 input = Console.ReadLine();
-
-                if (input != string.Empty)
+                try
                 {
-                    break;
+                    m_GarageManager.SetPowerSourceCapacity(input);
                 }
-
-                Console.WriteLine(i_ErrorPrompt);
-            }
-
-            return input;
-        }
-
-        private int getEngineVolume()
-        {
-            string input;
-            int inputInInt = 0;
-
-            Console.WriteLine(k_GetEngineVolume);
-            while (true)
-            {
-                input = Console.ReadLine();
-
-                if (int.TryParse(input, out inputInInt))
+                catch (Exception ex)
                 {
-                    break;
-                }
-
-                Console.WriteLine(k_InvalidEngineVolume);
-            }
-
-            return inputInInt;
-        }
-
-        private bool getCarryingHazardousMaterials()
-        {
-            string input;
-            bool isHazardous;
-
-            Console.WriteLine(k_GetCarryingHazardousMaterials);
-            while (true)
-            {
-                input = Console.ReadLine();
-                
-                if (input.Length == 1)
-                {
-                    if (input == "y" || input == "Y")
-                    {
-                        isHazardous = true;
-                        break;
-                    } else if (input == "n" || input == "N") {
-                        isHazardous = false;
-                        break;
-                    }
-                }
-
-                Console.WriteLine(k_InvalidCarryingHazardousMaterials);
-            }
-
-            return isHazardous;
-        }
-
-        private bool checkValidityOfIntInput(string i_Input, int i_Min, int i_Max, out int io_InputInInt)
-        {
-            bool isValid = false;
-
-            isValid = int.TryParse(i_Input, out io_InputInInt);
-            if (isValid)
-            {
-                if (io_InputInInt < i_Min || io_InputInInt > i_Max)
-                {
-                    isValid = false;
+                    Console.WriteLine(ex.Message);
                 }
             }
-
-            return isValid;
         }
+
+        //private int getIntRepresentationOfEnum(int i_MinValue, int i_MaxValue, string i_RequestPrompt, string i_ErrorPrompt)
+        //{
+        //    string input;
+        //    int inputInInt = 0;
+
+        //    Console.WriteLine(i_RequestPrompt);
+        //    while (true)
+        //    {
+        //        input = Console.ReadLine();
+
+        //        if (checkValidityOfIntInput(input, i_MinValue, i_MaxValue, out inputInInt))
+        //        {
+        //            break;
+        //        }
+
+        //        Console.WriteLine(i_ErrorPrompt);
+        //    }
+
+        //    return inputInInt;
+        //}
+
+        //private string getNameOfOwner()
+        //{
+        //    string input;
+
+        //    Console.WriteLine(k_GetNameOfOwner);
+
+        //    while (true)
+        //    {
+        //        input = Console.ReadLine();
+
+        //        if (input == null)
+        //        {
+        //            Console.WriteLine(k_InvalidOwnerName);
+        //            continue;
+        //        }
+        //        else
+        //        {
+        //            break;
+        //        }
+        //    }
+
+        //    return input;
+        //}
+
+        //private string getPhoneNumberOfOwner()
+        //{
+        //    string input = string.Empty;
+        //    bool inputIsValid = false;
+        //    Console.WriteLine(k_GetOwnerPhoneNumber);
+
+        //    while (!inputIsValid)
+        //    {
+        //        input = Console.ReadLine();
+
+        //        inputIsValid = true;
+        //        foreach (char characther in input)
+        //        {
+        //            if (!char.IsDigit(characther))
+        //            {
+        //                inputIsValid = false;
+        //                break;
+        //            }
+        //        }
+
+        //        if (!inputIsValid)
+        //        {
+        //            Console.WriteLine(k_InvalidOwnerPhoneNumber);
+        //            continue;
+        //        }
+        //    }
+
+        //    return input;
+        //}
+
+        //private string getWheelManufacturerName()
+        //{
+        //    string input;
+
+        //    Console.WriteLine(k_GetWheelManufacturerName);
+
+        //    while (true)
+        //    {
+        //        input = Console.ReadLine();
+
+        //        if (input == null)
+        //        {
+        //            Console.WriteLine(k_InvalidWheelManufacturerName);
+        //            continue;
+        //        }
+        //        else
+        //        {
+        //            break;
+        //        }
+        //    }
+
+        //    return input;
+        //}
+
+        //private float getFloatInput(float i_MaxValue, string i_RequestPrompt, string i_ErrorPrompt)
+        //{
+        //    string input;
+        //    bool inputIsValid = false;
+        //    float inputInFloat = 0;
+        //    Console.WriteLine(i_RequestPrompt);
+
+        //    while (!inputIsValid)
+        //    {
+        //        input = Console.ReadLine();
+
+        //        inputIsValid = float.TryParse(input, out inputInFloat);
+
+        //        if (inputIsValid)
+        //        {
+        //            if (inputInFloat > i_MaxValue || inputInFloat < 0)
+        //            {
+        //                Console.WriteLine(i_ErrorPrompt);
+        //                inputIsValid = false;
+        //                continue;
+        //            }
+        //        }
+        //    }
+
+        //    return inputInFloat;
+        //}
+
+        //private string getTextInput(string i_RequestPrompt, string i_ErrorPrompt)
+        //{
+        //    string input;
+
+        //    Console.WriteLine(i_RequestPrompt);
+
+        //    while (true)
+        //    {
+        //        input = Console.ReadLine();
+
+        //        if (input != string.Empty)
+        //        {
+        //            break;
+        //        }
+
+        //        Console.WriteLine(i_ErrorPrompt);
+        //    }
+
+        //    return input;
+        //}
+
+        //private int getEngineVolume()
+        //{
+        //    string input;
+        //    int inputInInt = 0;
+
+        //    Console.WriteLine(k_GetEngineVolume);
+        //    while (true)
+        //    {
+        //        input = Console.ReadLine();
+
+        //        if (int.TryParse(input, out inputInInt))
+        //        {
+        //            break;
+        //        }
+
+        //        Console.WriteLine(k_InvalidEngineVolume);
+        //    }
+
+        //    return inputInInt;
+        //}
+
+        //private bool getCarryingHazardousMaterials()
+        //{
+        //    string input;
+        //    bool isHazardous;
+
+        //    Console.WriteLine(k_GetCarryingHazardousMaterials);
+        //    while (true)
+        //    {
+        //        input = Console.ReadLine();
+
+        //        if (input.Length == 1)
+        //        {
+        //            if (input == "y" || input == "Y")
+        //            {
+        //                isHazardous = true;
+        //                break;
+        //            }
+        //            else if (input == "n" || input == "N")
+        //            {
+        //                isHazardous = false;
+        //                break;
+        //            }
+        //        }
+
+        //        Console.WriteLine(k_InvalidCarryingHazardousMaterials);
+        //    }
+
+        //    return isHazardous;
+        //}
+
+        //private bool checkValidityOfIntInput(string i_Input, int i_Min, int i_Max, out int io_InputInInt)
+        //{
+        //    bool isValid = false;
+
+        //    isValid = int.TryParse(i_Input, out io_InputInInt);
+        //    if (isValid)
+        //    {
+        //        if (io_InputInInt < i_Min || io_InputInInt > i_Max)
+        //        {
+        //            isValid = false;
+        //        }
+        //    }
+
+        //    return isValid;
+        //}
 
         private void pressEnterToContinue()
         {
@@ -626,7 +813,7 @@ It's status has been changed to 'In Progress'.";
                     {
                         Console.WriteLine(licencePlate);
                     }
-                    
+
                     break;
                 }
 
@@ -659,13 +846,13 @@ It's status has been changed to 'In Progress'.";
             eFuelType fuelType;
             float amountOfFuel;
             string input;
-            bool isValid = true;
+            bool isValid = false;
 
             licencePlate = getLicencePlate();
 
             fuelType = (eFuelType)getIntRepresentationOfEnum(1, 4, k_GetFuelType, k_InvalidFuelType);
 
-            while (true)
+            while (!isValid)
             {
                 Console.WriteLine(k_GetAmountOfFuel);
                 input = Console.ReadLine();
@@ -685,15 +872,10 @@ Please enter the correct fuel type for your vehicle:", exception.Message);
                         fuelType = (eFuelType)getIntRepresentationOfEnum(1, 4, str, k_InvalidFuelType);
                         isValid = false;
                     }
-                } 
-                else 
+                }
+                else
                 {
                     Console.WriteLine(k_InvalidAmountOfFuel);
-                }
-
-                if (isValid)
-                {
-                    break;
                 }
             }
         }

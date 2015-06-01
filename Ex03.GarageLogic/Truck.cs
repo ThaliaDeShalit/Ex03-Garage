@@ -22,6 +22,15 @@ namespace Ex03.GarageLogic
             InitializeWheels(i_WheelManufactorName, k_MaxWheelAirPressure, i_CurrentAirPressure, k_AmountOfWheels);
             m_IsCarryingHazardousMaterials = i_IsCarryingHazardousMaterials;
             m_CurrentCarryWeight = i_CurrentCarryWeight;
+            m_NumOfExtraProperties = 2;
+        }
+
+        internal Truck(PowerSource i_PowerSource)
+        {
+            m_PowerSource = i_PowerSource;
+            m_Wheels = new List<Wheel>();
+            SetWheelsMaxAirPressure(k_MaxWheelAirPressure, k_AmountOfWheels);
+            m_NumOfExtraProperties = 2;
         }
 
         public string ToString()
@@ -47,9 +56,38 @@ Current carry weight - {2}", base.ToString(), isCarryingHazardousMaterials, m_Cu
             return str;
         }
 
+        internal Question GetProperty(int i_PropertyNumber)
+        {
+            Question propertyQuestion = null;
+            eProperties property;
+
+            property = (eProperties)i_PropertyNumber;
+            switch (property)
+            {
+                case eProperties.IsCarryingHazardousMaterials:
+                    propertyQuestion = getIsCarryingHazardousMaterialsQuestion();
+                    break;
+                case eProperties.CurrentCarryWeight:
+                    propertyQuestion = getCurrentCarryWeightQuestion();
+                    break;
+            }
+
+            return propertyQuestion;
+        }
+
+        private QuestionWithOneAnswer getIsCarryingHazardousMaterialsQuestion()
+        {
+            return new QuestionWithOneAnswer("Are you carrying hazardous materials?");
+        }
+
+        private QuestionWithOneAnswer getCurrentCarryWeightQuestion()
+        {
+            return new QuestionWithOneAnswer("What is your truck's current wheight?");
+        }
+
         protected enum eProperties
         {
-            IsCarryingHazardousMaterials = (Enum.GetValues(typeof(Vehicle.eProperties)).Length + 1),
+            IsCarryingHazardousMaterials = 1,
             CurrentCarryWeight
         }
     }

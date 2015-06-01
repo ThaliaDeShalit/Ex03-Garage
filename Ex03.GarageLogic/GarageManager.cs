@@ -7,6 +7,7 @@ namespace Ex03.GarageLogic
     public class GarageManager
     {
         private Dictionary<string, VehicleInfo> m_Vehicles = new Dictionary<string, VehicleInfo>();
+        private Vehicle m_CurrentVehicle;
 
         public void InsertNewVehicle(string i_OwnerName, string i_OwnerNumber, eVehicleType i_VehicleType, Dictionary<eVehiclePropertyType, object> i_VehicleProporties)
         {
@@ -109,7 +110,78 @@ namespace Ex03.GarageLogic
             return m_Vehicles[i_LicencePlate].ToString();
         }
 
-        private List<string> generateQuestionsOfVehicle
+        public void CreateNewVehicle(string i_VehicleType)
+        {
+            m_CurrentVehicle = VehicleFactory.CreateVehicle(i_VehicleType);
+        }
 
+        public string GetQuestionOfVehicleType()
+        {
+            return new QuestionWithMultipleAnswers("Which type is your vehicle?", Enum.GetValues(typeof(eVehicleType))).ToString();
+        }
+
+        public List<string> GetQuestionsOfVehicleExtraProperties()
+        {
+            List<string> questions = new List<string>();
+
+            for (int i = 1; i <= m_CurrentVehicle.NumOfExtraProperties; i++ )
+            {
+                questions.Add(m_CurrentVehicle.GetProperty(i).ToString());
+            }
+
+            return questions;
+        }
+
+        public void SetVehicleProperty(int i_PropertyIndex, string i_UserInput) 
+        {
+            Vehicle.SetProperty(i_PropertyIndex, i_UserInput);
+        }  
+
+        public void SetNameOwner(string i_NameOfOwner)
+        {
+
+        }
+
+        public void SetModel(string i_Model)
+        {
+            m_CurrentVehicle.Model = i_Model;
+        }
+
+        public void SetLicencePlate(string i_LicencePlate)
+        {
+            m_CurrentVehicle.LicencePlate = i_LicencePlate;
+        }
+
+        public void SetWheelManufctorName(string i_WheelManufctorName)
+        {
+            foreach (Wheel wheel in m_CurrentVehicle.Wheels)
+            {
+                wheel.ManufctorName = i_WheelManufctorName;
+            }
+        }
+
+        public void SetWheelAirPressure(string i_WheelAirPressure)
+        {
+            foreach (Wheel wheel in m_CurrentVehicle.Wheels)
+            {
+                wheel.SetCurrentAirPressure(i_WheelAirPressure);
+            }
+        }
+
+        public void SetPowerSourceCapacity(string i_PowerSourceCapacity)
+        {
+            newPowerSource = new FuelTank(eFuelType.Octan96, k_MaxFuelCapacityCar, (float)i_VehicleProporties[eVehiclePropertyType.PowerSourceCapacity]);
+
+            switch (m_CurrentVehicle.)
+
+        }
+
+
+
+        public void FinalizeRegistryOfVehicle(string i_NameOfOwner, string i_PhoneOfOwner)
+        {
+            VehicleInfo newVehicleInfo = new VehicleInfo(i_NameOfOwner, i_PhoneOfOwner, eVehicleStatus.InProgress, m_CurrentVehicle);
+            m_Vehicles.Add(m_CurrentVehicle.LicencePlate, newVehicleInfo);
+        }
     }
 }

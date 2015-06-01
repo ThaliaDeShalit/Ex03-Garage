@@ -15,6 +15,12 @@ namespace Ex03.GarageLogic
             m_CurrentCapacity = i_CurrentFuelAmount;
         }
 
+        internal FuelTank(eFuelType i_FuelType, float i_MaxFuelAmount)
+        {
+            m_FuelType = i_FuelType;
+            m_MaximumCapacity = i_MaxFuelAmount;
+        }
+
         internal void Fuel(float i_AmountOfFuelToAdd, eFuelType i_FuelType)
         {
             if (i_FuelType != m_FuelType)
