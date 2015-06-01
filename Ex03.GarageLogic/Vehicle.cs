@@ -79,7 +79,7 @@ namespace Ex03.GarageLogic
                         inputIsValid = false;
                         break;
                     }
-                }
+        }
 
                 if (inputIsValid)
                 {
@@ -175,7 +175,7 @@ Current percentage of power in power source - {2}%
         {
             Question propertyQuestion;
             eProperties property;
-            
+
             if (i_PropertyNumber < (int)Enum.GetValues(typeof(eProperties)).GetValue(0)) {
                 propertyQuestion = base.GetProperty(i_PropertyNumber);
             } else {
@@ -191,7 +191,7 @@ Current percentage of power in power source - {2}%
                     case eProperties.Wheels:
                         propertyQuestion = getWheelsQuestion
                 }
-            }
+        }
         }
 
     }
