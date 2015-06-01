@@ -739,6 +739,7 @@ Please enter the correct fuel type for your vehicle:", exception.Message);
 
         private void getCompleteVehicleInfo()
         {
+
             string licencePlate;
 
             licencePlate = getLicencePlate();
