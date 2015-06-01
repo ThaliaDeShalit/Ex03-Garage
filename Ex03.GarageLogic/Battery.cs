@@ -12,6 +12,7 @@ namespace Ex03.GarageLogic
             m_CurrentCapacity = i_CurrentChargeInHours;
         }
 
+        // TODO change number of charge to minutes instead of hours??
         internal void Charge(float i_NumOfHoursToAdd)
         {
             FillPowerSource(i_NumOfHoursToAdd);
