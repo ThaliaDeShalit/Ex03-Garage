@@ -41,11 +41,15 @@ Number of doors - {2}", base.ToString(), m_CarColor, m_NumOfCarDoors);
             return str;
         }
 
+        // Creates a Question object to be sent to the user. A different Question must be created
+        // for each property in the car
         internal Question GetProperty(int i_PropertyNumber)
         {
             Question propertyQuestion = null;
             eProperties property;
 
+            // According to the index of the property, send to the corresponding method
+            // to create the question
             property = (eProperties)i_PropertyNumber;
             switch (property)
             {
