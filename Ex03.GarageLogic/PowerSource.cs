@@ -13,6 +13,8 @@ namespace Ex03.GarageLogic
         {
             set
             {
+                // If attempting to set current capacity to a value too large, throw exception
+                // The PowerSource cannot be over-filled
                 if (value > m_MaximumCapacity)
                 {
                     throw new ValueOutOfRangeException("Input invalid - value out of range");
@@ -38,6 +40,8 @@ namespace Ex03.GarageLogic
 
         internal void FillPowerSource(float i_AmountOfPowerToAdd)
         {
+            // If the PowerSource is attempted to be filled over the maximum allowed
+            // capacity, throw the proper exception
             if (m_CurrentCapacity + i_AmountOfPowerToAdd > m_MaximumCapacity)
             {
                 throw new ValueOutOfRangeException("Invalid input - value out of range");
