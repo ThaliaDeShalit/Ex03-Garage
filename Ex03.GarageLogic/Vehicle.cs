@@ -121,7 +121,5 @@ Current percentage of power in power source - {2}%
             PowerSource,
             Wheels
         }
-
-        
     }
 }

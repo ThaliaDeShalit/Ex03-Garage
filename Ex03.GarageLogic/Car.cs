@@ -32,7 +32,7 @@ Number of doors - {2}", base.ToString(), m_CarColor, m_NumOfCarDoors);
             return str;
         }
 
-        protected enum eProperties
+        internal enum eProperties
         {
             CarColor = (Enum.GetValues(typeof(Vehicle.eProperties)).Length + 1),
             AmountOfDoors
