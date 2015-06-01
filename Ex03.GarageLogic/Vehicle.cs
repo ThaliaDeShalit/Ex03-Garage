@@ -109,5 +109,13 @@ Current percentage of power in power source - {2}%
 
             return str;
         }
+
+        protected enum eProperties
+        {
+            LicencePlate = 1,
+            Model,
+            PowerSource,
+            Wheels
+        }
     }
 }

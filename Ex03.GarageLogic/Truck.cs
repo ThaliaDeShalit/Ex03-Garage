@@ -46,5 +46,11 @@ Current carry weight - {2}", base.ToString(), isCarryingHazardousMaterials, m_Cu
 
             return str;
         }
+
+        protected enum eProperties
+        {
+            IsCarryingHazardousMaterials = (Enum.GetValues(typeof(Vehicle.eProperties)).Length + 1),
+            CurrentCarryWeight
+        }
     }
 }

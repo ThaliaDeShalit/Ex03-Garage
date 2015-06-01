@@ -745,6 +745,11 @@ Please enter the correct fuel type for your vehicle:", exception.Message);
             licencePlate = getLicencePlate();
             Console.WriteLine(m_GarageManager.ToString(licencePlate));
         }
+
+        private string splitCamelCase(string i_CamelCasedString)
+        {
+            return System.Text.RegularExpressions.Regex.Replace(i_CamelCasedString, "([A-Z])", " $1", System.Text.RegularExpressions.RegexOptions.Compiled).Trim();
+        }
     }
 
     enum eGarageOperations

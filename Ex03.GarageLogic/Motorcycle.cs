@@ -32,6 +32,12 @@ Engine volume - {2}", base.ToString(), m_LicenceType, m_EngineVolume.ToString())
 
             return str;
         }
+
+        protected enum eProperties
+        {
+            LicenceType = (Enum.GetValues(typeof(Vehicle.eProperties)).Length + 1),
+            EngineVolume
+        }
     }
 
     public enum eLicenceType
