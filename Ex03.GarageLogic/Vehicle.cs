@@ -22,8 +22,7 @@ namespace Ex03.GarageLogic
             m_PercentageOfEnergyLeft = i_PowerSource.CurrentPowerSourceCapacity / i_PowerSource.MaximumPowerSourceCapacity;
         }
 
-        internal Vehicle();
-
+        // Create all the whees for this vehicle
         protected void InitializeWheels(string i_ManufcatorName, float i_MaxWheelAirPressure, float i_CurrentAirPressure, int i_AmountOfWheels)
         {
             m_Wheels = new List<Wheel>();
@@ -35,6 +34,7 @@ namespace Ex03.GarageLogic
             }
         }
 
+        // Set the maximum allowed air pressure for each wheel
         protected void SetWheelsMaxAirPressure(float i_MaxAirPressure, int i_AmountOfWheels)
         {
             for (int i = 0; i < i_AmountOfWheels; i++)
@@ -51,12 +51,14 @@ namespace Ex03.GarageLogic
             }
             set
             {
+                // Check for a valid input - anything but an empty string
                 if (value != string.Empty)
                 {
                     m_Model = value;
                 }
                 else
                 {
+                    // If the string is empty, throw the proper exception
                     throw new FormatException("Model name can not be empty");
                 }
             }
@@ -72,6 +74,7 @@ namespace Ex03.GarageLogic
             {
                 bool inputIsValid = true;
 
+                // Check that the input is only letters or digits
                 foreach (char character in value)
                 {
                     if (!char.IsLetterOrDigit(character))
@@ -79,7 +82,7 @@ namespace Ex03.GarageLogic
                         inputIsValid = false;
                         break;
                     }
-        }
+                }
 
                 if (inputIsValid)
                 {
@@ -87,6 +90,7 @@ namespace Ex03.GarageLogic
                 }
                 else
                 {
+                    // The input contained an illegal character, throw the proper exception
                     throw new FormatException("Invalid licence plate");
                 }
             }
@@ -116,6 +120,7 @@ namespace Ex03.GarageLogic
             }
         }
 
+        // Check if vehicle is using a FuelTank
         internal bool isFueled()
         {
             bool v_Fuel = false;
@@ -128,6 +133,7 @@ namespace Ex03.GarageLogic
             return v_Fuel;
         }
 
+        // Check if vehicle is using a Battery
         internal bool isElectric()
         {
             bool v_Electric = false;
@@ -152,6 +158,7 @@ namespace Ex03.GarageLogic
             }
         }
 
+        // Create a complete textual representation of this vehicle
         internal string ToString()
         {
             int percentage = (int)(m_PercentageOfEnergyLeft * 100);
@@ -171,6 +178,7 @@ Current percentage of power in power source - {2}%
             return str;
         }
 
+        // TODO Complete comments
         internal Question GetProperty(int i_PropertyNumber)
         {
             Question propertyQuestion;

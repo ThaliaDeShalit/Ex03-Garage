@@ -4,8 +4,10 @@ using System.Text;
 
 namespace Ex03.GarageLogic
 {
+    // Used for questions that only accept a few pre-decided answers, such as car color, amount of doors, etc.
     internal class QuestionWithMultipleAnswers : Question
     {
+        // A field to hold the possible answers
         private string[] m_Options;
 
         internal QuestionWithMultipleAnswers(string i_Question, Array i_Options)
@@ -18,6 +20,7 @@ namespace Ex03.GarageLogic
             }
         }
 
+        // Formats the question into readable text that could be displayed to the user
         internal override string ToString()
         {
             StringBuilder sb = new StringBuilder();

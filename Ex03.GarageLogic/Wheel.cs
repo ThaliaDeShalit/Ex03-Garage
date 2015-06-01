@@ -24,6 +24,8 @@ namespace Ex03.GarageLogic
 
         public void Inflate(float i_AirToAdd)
         {
+            // If attempting to set current capacity to a value too large, throw exception
+            // The Wheel cannot be over-filled
             if (m_CurrentAirPressure + i_AirToAdd > m_MaxAirPressure)
             {
                 throw new ValueOutOfRangeException();
@@ -65,6 +67,7 @@ namespace Ex03.GarageLogic
             }
             set
             {
+                // If the string is empty throw the proper exception. The wheel must have a manufacturer name
                 if (value == string.Empty)
                 {
                     throw new FormatException("Wheel manufctor name can not be null");
@@ -87,6 +90,7 @@ namespace Ex03.GarageLogic
                 }
                 else if (airPressureInFloat < 0)
                 {
+                    // If the input is negative, throw the proper exception. Air pressure must be positive
                     throw new FormatException("Current air pressure can not be below 0");
                 }
                 else
@@ -96,6 +100,7 @@ namespace Ex03.GarageLogic
             }
             else
             {
+                // If the input is not a number, throw the proper exception
                 throw new FormatException("Current air pressure must consist of digits");
             }
         }

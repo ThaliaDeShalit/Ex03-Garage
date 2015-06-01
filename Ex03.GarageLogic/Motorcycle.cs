@@ -42,12 +42,16 @@ Engine volume - {2}", base.ToString(), m_LicenceType, m_EngineVolume.ToString())
             return str;
         }
 
+        // Creates a Question object to be sent to the user. A different Question must be created
+        // for each property in the motorcycle
         internal Question GetProperty(int i_PropertyNumber)
         {
             Question propertyQuestion = null;
             eProperties property;
 
             property = (eProperties)i_PropertyNumber;
+            // According to the index of the property, send to the corresponding method
+            // to create the question
             switch (property)
             {
                 case eProperties.LicenceType:
