@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Ex03.GarageLogic
 {
-    abstract class Vehicle
+    private abstract class Vehicle
     {
         protected string m_Model;
         protected string m_LicencePlate;
@@ -12,7 +12,7 @@ namespace Ex03.GarageLogic
         protected List<Wheel> m_Wheels;
         protected PowerSource m_PowerSource;
 
-        public Vehicle(string i_Model, string i_LicenceNumber, PowerSource i_PowerSource)
+        internal Vehicle(string i_Model, string i_LicenceNumber, PowerSource i_PowerSource)
         {
             m_Model = i_Model;
             m_LicencePlate = i_LicenceNumber;
@@ -20,7 +20,7 @@ namespace Ex03.GarageLogic
             m_PercentageOfEnergyLeft = i_PowerSource.CurrentPowerSourceCapacity / i_PowerSource.MaximumPowerSourceCapacity;
         }
 
-        public virtual void InitializeWheels(string i_ManufcatorName, float i_MaxWheelAirPressure, float i_CurrentAirPressure, int i_AmountOfWheels)
+        protected virtual void InitializeWheels(string i_ManufcatorName, float i_MaxWheelAirPressure, float i_CurrentAirPressure, int i_AmountOfWheels)
         {
             m_Wheels = new List<Wheel>();
             Wheel tempWheel = new Wheel(i_ManufcatorName, i_MaxWheelAirPressure, i_CurrentAirPressure);
@@ -31,7 +31,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public string LicencePlate
+        internal string LicencePlate
         {
             get
             {
@@ -39,7 +39,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public List<Wheel> Wheels
+        internal List<Wheel> Wheels
         {
             get
             {
@@ -47,7 +47,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public PowerSource PowerSource
+        internal PowerSource PowerSource
         {
             get
             {
@@ -55,7 +55,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public bool isFueled()
+        internal bool isFueled()
         {
             bool v_Fuel = false;
 
@@ -67,7 +67,7 @@ namespace Ex03.GarageLogic
             return v_Fuel;
         }
 
-        public bool isElectric()
+        internal bool isElectric()
         {
             bool v_Electric = false;
 
@@ -79,7 +79,7 @@ namespace Ex03.GarageLogic
             return v_Electric;
         }
 
-        public float PercentageOfEnergyLeft
+        internal float PercentageOfEnergyLeft
         {
             get
             {
@@ -91,7 +91,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public string ToString()
+        internal string ToString()
         {
             int percentage = (int)(m_PercentageOfEnergyLeft * 100);
             string str = string.Format(
@@ -108,6 +108,11 @@ Current percentage of power in power source - {2}%
 {6}", m_Model, m_LicencePlate, percentage, m_Wheels[0].ManufctorName, m_Wheels[0].CurrentAirPressure, m_Wheels[0].MaxAirPressure, m_PowerSource.ToString());
 
             return str;
+        }
+
+        internal string GetProperty(int i_PropertyNumber)
+        {
+
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Ex03.GarageLogic
         protected float m_MaximumCapacity;
         protected float m_CurrentCapacity;
 
-        public float CurrentPowerSourceCapacity
+        internal float CurrentPowerSourceCapacity
         {
             set
             {
@@ -28,7 +28,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public float MaximumPowerSourceCapacity
+        internal float MaximumPowerSourceCapacity
         {
             get
             {
@@ -36,7 +36,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public void FillPowerSource(float i_AmountOfPowerToAdd)
+        internal void FillPowerSource(float i_AmountOfPowerToAdd)
         {
             if (m_CurrentCapacity + i_AmountOfPowerToAdd > m_MaximumCapacity)
             {

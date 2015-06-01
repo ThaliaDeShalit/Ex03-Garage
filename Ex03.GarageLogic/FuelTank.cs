@@ -4,18 +4,18 @@ using System.Text;
 
 namespace Ex03.GarageLogic
 {
-    class FuelTank : PowerSource
+    internal class FuelTank : PowerSource
     {
         private eFuelType m_FuelType;
 
-        public FuelTank(eFuelType i_FuelType, float i_MaxFuelAmount, float i_CurrentFuelAmount)
+        internal FuelTank(eFuelType i_FuelType, float i_MaxFuelAmount, float i_CurrentFuelAmount)
         {
             m_FuelType = i_FuelType;
             m_MaximumCapacity = i_MaxFuelAmount;
             m_CurrentCapacity = i_CurrentFuelAmount;
         }
 
-        public void Fuel(float i_AmountOfFuelToAdd, eFuelType i_FuelType)
+        internal void Fuel(float i_AmountOfFuelToAdd, eFuelType i_FuelType)
         {
             if (i_FuelType != m_FuelType)
             {
@@ -27,7 +27,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public eFuelType FuelType
+        internal eFuelType FuelType
         {
             get
             {
@@ -35,7 +35,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public override string ToString()
+        internal override string ToString()
         {
             string str = string.Format(
 @"Power source type - fuel tank
@@ -45,7 +45,7 @@ Fuel type - {0}", m_FuelType);
         }
     }
 
-    public enum eFuelType
+    internal enum eFuelType
     {
         Soler = 1,
         Octan95,

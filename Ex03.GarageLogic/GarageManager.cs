@@ -109,5 +109,7 @@ namespace Ex03.GarageLogic
             return m_Vehicles[i_LicencePlate].ToString();
         }
 
+        private List<string> generateQuestionsOfVehicle
+
     }
 }

@@ -38,6 +38,8 @@
     <Compile Include="Battery.cs" />
     <Compile Include="Car.cs" />
     <Compile Include="PowerSource.cs" />
+    <Compile Include="QuestionWithMultipleAnswers.cs" />
+    <Compile Include="QuestionWithOneAnswer.cs" />
     <Compile Include="VehicleFactory.cs" />
     <Compile Include="VehicleInfo.cs" />
     <Compile Include="FuelTank.cs" />
@@ -46,6 +48,7 @@
     <Compile Include="Truck.cs" />
     <Compile Include="ValueOutOfRangeException.cs" />
     <Compile Include="Vehicle.cs" />
+    <Compile Include="Question.cs" />
     <Compile Include="Wheel.cs" />
   </ItemGroup>
   <ItemGroup>

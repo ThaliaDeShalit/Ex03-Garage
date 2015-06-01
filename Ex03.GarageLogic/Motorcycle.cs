@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Ex03.GarageLogic
 {
-    class Motorcycle : Vehicle
+    internal class Motorcycle : Vehicle
     {
         private const int k_AmountOfWheels = 2;
         private readonly float r_MaxAirPressure;
@@ -12,7 +12,7 @@ namespace Ex03.GarageLogic
         private eLicenceType m_LicenceType;
         private int m_EngineVolume;
 
-        public Motorcycle(string i_Model, string i_LicenceNumber, PowerSource i_PowerSource, string i_WheelManufactorName, float i_MaxAirPressure, float i_CurrentAirPressure, eLicenceType i_LicenceType, int i_EngineVolume)
+        internal Motorcycle(string i_Model, string i_LicenceNumber, PowerSource i_PowerSource, string i_WheelManufactorName, float i_MaxAirPressure, float i_CurrentAirPressure, eLicenceType i_LicenceType, int i_EngineVolume)
             : base(i_Model, i_LicenceNumber, i_PowerSource)
         {
             InitializeWheels(i_WheelManufactorName, r_MaxAirPressure, i_CurrentAirPressure, k_AmountOfWheels);
@@ -21,7 +21,7 @@ namespace Ex03.GarageLogic
             r_MaxAirPressure = i_MaxAirPressure;
         }
 
-        public string ToString()
+        internal string ToString()
         {
             string str = string.Format(
 @"{0}
