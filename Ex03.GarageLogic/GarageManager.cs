@@ -22,7 +22,6 @@ namespace Ex03.GarageLogic
             if (m_Vehicles.ContainsKey(i_LicencePlate))
             {
                 exists = true;
-                m_Vehicles[i_LicencePlate].VehicleStatus = eVehicleStatus.InProgress;
             }
 
             return exists;
@@ -85,7 +84,7 @@ namespace Ex03.GarageLogic
                 }
                 else
                 {
-                    throw new ArgumentException();
+                    throw new ArgumentException("Fuel type doesn't match vehicle's fuel type");
                 }
             }
         }
@@ -101,7 +100,7 @@ namespace Ex03.GarageLogic
             else
             {
                 ((Battery)vehicleToCharge.PowerSource).Charge(i_HoursToCharge);
-                vehicleToCharge.PercentageOfEnergyLeft = i_HoursToCharge / vehicleToCharge.PowerSource.MaximumPowerSourceCapacity;
+                vehicleToCharge.PercentageOfEnergyLeft = vehicleToCharge.PowerSource.CurrentPowerSourceCapacity / vehicleToCharge.PowerSource.MaximumPowerSourceCapacity;
             }
         }
 

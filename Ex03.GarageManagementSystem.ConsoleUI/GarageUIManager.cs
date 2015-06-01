@@ -152,6 +152,8 @@ It's status has been changed to 'In Progress'.";
         private const string k_GetAmountOfMinToCharge = "Please enter the amount of minutes to charge your vehicle with";
         private const string k_InvalidAmountOfMinToCharge = "Invalid input, please enter an int to represent the amount of minutes to charge your vehicle";
 
+        private const string k_LicencePlateNotInDatabase = "Vehicle does not exist in database, please re-enter licence plate";
+
         public void Run()
         {
             string userInput;
@@ -261,8 +263,11 @@ It's status has been changed to 'In Progress'.";
                 // if we got here it means the licence plate is valid
                 carAlreadyExists = m_GarageManager.CheckIfExists(licencePlate);
 
+                
+
                 if (carAlreadyExists)
                 {
+                    m_GarageManager.ChangeVehicleStatus(licencePlate, eVehicleStatus.InProgress);
                     Console.WriteLine(k_VehicleAlreadyExists, licencePlate);
                     break;
                 }
@@ -321,7 +326,7 @@ It's status has been changed to 'In Progress'.";
         {
             string licencePlate;
             bool inputIsValid = false;
-            
+
             Console.WriteLine(k_GetLicencePlate);
             while (true)
             {
@@ -339,10 +344,19 @@ It's status has been changed to 'In Progress'.";
 
                 if (inputIsValid)
                 {
-                    break;
+                    if (!m_GarageManager.CheckIfExists(licencePlate))
+                    {
+                        Console.WriteLine(k_LicencePlateNotInDatabase);
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
-
-                Console.WriteLine(k_InvalidLicencePlate);
+                else
+                {
+                    Console.WriteLine(k_InvalidLicencePlate);
+                }
             }
 
             return licencePlate;
@@ -568,7 +582,6 @@ It's status has been changed to 'In Progress'.";
             Console.Clear();
         }
 
-        // Todo - talk to nadav regarding the implementation
         private void pullAllVehicles()
         {
             string input;
@@ -640,7 +653,6 @@ It's status has been changed to 'In Progress'.";
             m_GarageManager.InflateWheels(licencePlate);
         }
 
-        // todo - add try and catch
         private void fuelVehicle()
         {
             string licencePlate;
@@ -650,11 +662,12 @@ It's status has been changed to 'In Progress'.";
             bool isValid = true;
 
             licencePlate = getLicencePlate();
+
             fuelType = (eFuelType)getIntRepresentationOfEnum(1, 4, k_GetFuelType, k_InvalidFuelType);
 
-            Console.WriteLine(k_GetAmountOfFuel);
             while (true)
             {
+                Console.WriteLine(k_GetAmountOfFuel);
                 input = Console.ReadLine();
 
                 if (float.TryParse(input, out amountOfFuel))
@@ -666,7 +679,10 @@ It's status has been changed to 'In Progress'.";
                     }
                     catch (ArgumentException exception)
                     {
-                        Console.WriteLine(exception);
+                        string str = string.Format(
+@"{0}
+Please enter the correct fuel type for your vehicle:", exception.Message);
+                        fuelType = (eFuelType)getIntRepresentationOfEnum(1, 4, str, k_InvalidFuelType);
                         isValid = false;
                     }
                 } 
@@ -700,7 +716,7 @@ It's status has been changed to 'In Progress'.";
                 {
                     try
                     {
-                        m_GarageManager.ChargeVehicle(licencePlate, minToCharge / 60);
+                        m_GarageManager.ChargeVehicle(licencePlate, ((float)minToCharge / 60f));
                         isValid = true;
                     }
                     catch (ArgumentException exception)
@@ -721,7 +737,6 @@ It's status has been changed to 'In Progress'.";
             }
         }
 
-        // TODO: Check if licence plate is in the dictionary
         private void getCompleteVehicleInfo()
         {
             string licencePlate;
