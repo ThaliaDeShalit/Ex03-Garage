@@ -22,7 +22,9 @@ namespace Ex03.GarageLogic
             m_PercentageOfEnergyLeft = i_PowerSource.CurrentPowerSourceCapacity / i_PowerSource.MaximumPowerSourceCapacity;
         }
 
-        internal Vehicle();
+        internal Vehicle(PowerSource i_PowerSource);
+
+        internal Vehicle(PowerSource i_PowerSource, float i_MaxAirPressure);
 
         protected void InitializeWheels(string i_ManufcatorName, float i_MaxWheelAirPressure, float i_CurrentAirPressure, int i_AmountOfWheels)
         {
@@ -152,7 +154,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        internal string ToString()
+        public override string ToString()
         {
             int percentage = (int)(m_PercentageOfEnergyLeft * 100);
             string str = string.Format(
@@ -171,28 +173,9 @@ Current percentage of power in power source - {2}%
             return str;
         }
 
-        internal Question GetProperty(int i_PropertyNumber)
-        {
-            Question propertyQuestion;
-            eProperties property;
+        internal abstract Question GetProperty(int i_PropertyNumber);
 
-            if (i_PropertyNumber < (int)Enum.GetValues(typeof(eProperties)).GetValue(0)) {
-                propertyQuestion = base.GetProperty(i_PropertyNumber);
-            } else {
-                property = (eProperties)i_PropertyNumber;
-                switch (property)
-                {
-                    case eProperties.Model:
-                        propertyQuestion = getModelQuestion();
-                        break;
-                    case eProperties.PowerSource:
-                        propertyQuestion = getPowerSourceQuestion();
-                        break;
-                    case eProperties.Wheels:
-                        propertyQuestion = getWheelsQuestion
-                }
-        }
-        }
+        internal abstract void SetProperty(int i_PropertyNumber, string i_PropertyValue);
 
     }
 }

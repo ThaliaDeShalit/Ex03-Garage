@@ -29,7 +29,23 @@ namespace Ex03.GarageLogic
             m_NumOfExtraProperties = 2;
         }
 
-        internal string ToString()
+        internal eCarColor CarColor
+        {
+            set
+            {
+                m_CarColor = value;
+            }
+        }
+
+        internal eAmountOfDoors AmountOfDoors
+        {
+            set
+            {
+                m_NumOfCarDoors = value;
+            }
+        }
+
+        public override string ToString()
         {
             string str = string.Format(
 @"{0}
@@ -43,7 +59,7 @@ Number of doors - {2}", base.ToString(), m_CarColor, m_NumOfCarDoors);
 
         // Creates a Question object to be sent to the user. A different Question must be created
         // for each property in the car
-        internal Question GetProperty(int i_PropertyNumber)
+        internal override Question GetProperty(int i_PropertyNumber)
         {
             Question propertyQuestion = null;
             eProperties property;
@@ -72,6 +88,64 @@ Number of doors - {2}", base.ToString(), m_CarColor, m_NumOfCarDoors);
         private QuestionWithOneAnswer getAmountOfDoorsQuestion()
         {
             return new QuestionWithOneAnswer("How many doors do you have? (between 2 and 5)");
+        }
+
+        internal override void SetProperty(int i_PropertyNumber, string i_PropertyValue)
+        {
+            eProperties property;
+
+            property = (eProperties)i_PropertyNumber;
+            switch (property)
+            {
+                case eProperties.CarColor:
+                    setCarColor(i_PropertyValue);
+                    break;
+                case eProperties.AmountOfDoors:
+                    setAmountOfDoors(i_PropertyValue);
+                    break;
+            }
+        }
+
+        internal void setCarColor(string i_Input)
+        {
+            int intRepresentationOfEnum;
+
+            if (int.TryParse(i_Input, out intRepresentationOfEnum))
+            {
+                if (intRepresentationOfEnum > 0 && intRepresentationOfEnum < 5)
+                {
+                    CarColor = (eCarColor)intRepresentationOfEnum;
+                }
+                else
+                {
+                    throw new FormatException("Car color must be a digit corresponding to a car color");
+                }
+            }
+            else
+            {
+                throw new FormatException("Car color must be a digit");
+            }
+        }
+
+        internal void setAmountOfDoors(string i_Input)
+        {
+            int intRepresentationOfEnum;
+
+            if (int.TryParse(i_Input, out intRepresentationOfEnum))
+            {
+                if (intRepresentationOfEnum > 0 && intRepresentationOfEnum < 5)
+                {
+                    AmountOfDoors = (eAmountOfDoors)intRepresentationOfEnum;
+                }
+                else
+                {
+                    throw new FormatException("Amount of doors must be a digit between 2 and 5");
+                }
+            }
+            else
+            {
+                throw new FormatException("Amount of doors must be a digit");
+            }
         }
 
         internal enum eProperties

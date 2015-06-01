@@ -43,7 +43,28 @@ namespace Ex03.GarageLogic
             }
         }
 
-        internal override string ToString()
+        internal static eFuelType GetFuelType(string i_Input)
+        {
+            int intRepresentationOfEnum;
+
+            if (int.TryParse(i_Input, out intRepresentationOfEnum))
+            {
+                if (intRepresentationOfEnum > 0 && intRepresentationOfEnum < 5)
+                {
+                    return (eFuelType)intRepresentationOfEnum;
+                }
+                else
+                {
+                    throw new FormatException("Fuel type must be a digit corresponding to a fuel type");
+                }
+            }
+            else
+            {
+                throw new FormatException("Fuel type must be a digit");
+            }
+        }
+
+        public override string ToString()
         {
             string str = string.Format(
 @"Power source type - fuel tank

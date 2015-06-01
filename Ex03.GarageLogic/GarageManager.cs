@@ -34,10 +34,13 @@ namespace Ex03.GarageLogic
 
         // Get a list as string representation of licence plates for cars currently in the garage.
         // Coule be filtered by status
-        public List<string> GetLicencePlates(eVehicleStatus? i_VehicleStatus)
+        public List<string> GetLicencePlates(string i_VehicleStatus)
         {
+            eVehicleStatus? vehicleStatus = null;
             List<string> licencePlate = new List<string>();
-            
+
+            vehicleStatus = checkValidityOfLicencePlatesPullRequest(i_VehicleStatus);
+
             // No filter requested, simply display the whole list
             if (i_VehicleStatus == null)
             {
@@ -48,7 +51,6 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                eVehicleStatus vehicleStatus = (eVehicleStatus)i_VehicleStatus;
                 
                 // Display only licence plates of vehicles mathing the requested status
                 foreach (VehicleInfo vehicleInfo in m_Vehicles.Values)
@@ -63,9 +65,47 @@ namespace Ex03.GarageLogic
             return licencePlate;
         }
 
-        public void ChangeVehicleStatus(string i_LicencePlate, eVehicleStatus i_NewStatus)
+        private eVehicleStatus? checkValidityOfLicencePlatesPullRequest(string i_Input)
         {
-            m_Vehicles[i_LicencePlate].VehicleStatus = i_NewStatus;
+            eVehicleStatus? vehicleStatus = null;
+            
+            if (i_Input.Length == 1)
+                {
+                    if (i_Input == "i" || i_Input == "I")
+                    {
+                        vehicleStatus = eVehicleStatus.InProgress;
+                    }
+                    else if (i_Input == "f" || i_Input == "F")
+                    {
+                        vehicleStatus = eVehicleStatus.Fixed;
+                    }
+                    else if (i_Input == "p" || i_Input == "P")
+                    {
+                        vehicleStatus = eVehicleStatus.Paid;
+                    }
+                    else if (!(i_Input == "a" || i_Input == "A"))
+                    {
+                        throwOneCharException();
+                    }
+                }
+            else
+            {
+                throwOneCharException();
+            }
+
+            return vehicleStatus;
+        }
+
+        private void throwOneCharException()
+        {
+            throw new FormatException("Vehicle status must consist of one char");
+        }
+
+        public void ChangeVehicleStatus(string i_LicencePlate, string i_NewStatus)
+        {
+            eVehicleStatus vehicleStatus = VehicleInfo.GetVehicleStatus(i_NewStatus);
+            
+            m_Vehicles[i_LicencePlate].VehicleStatus = vehicleStatus;
         }
 
         // Inflate all the wheels of the requested vehicle to their maximum allowed pressure
@@ -77,8 +117,12 @@ namespace Ex03.GarageLogic
         }
 
         // Fuel a requested vehicle. Add the given i_AmountOfFuel to the current ammount in the FuelTank
-        public void FuelVehicle(string i_LicencePlate, eFuelType i_FuelType, float i_AmountOfFuel)
+        public void FuelVehicle(string i_LicencePlate, string i_FuelType, string i_AmountOfFuel)
         {
+            float amountOfFuel;
+            FuelTank fuelTank;
+            eFuelType fuelType = FuelTank.GetFuelType(i_FuelType);
+            
             Vehicle vehicleToFuel = m_Vehicles[i_LicencePlate].Vehicle;
 
             // If the vehicle requested is not powered by a FuelTank, throw the proper exception
@@ -86,14 +130,15 @@ namespace Ex03.GarageLogic
             {
                 throw new ArgumentException("Vehicle not powered by fuel");
             }
-            else
+            else if (float.TryParse(i_AmountOfFuel, out amountOfFuel))
             {
-                FuelTank fuelTank = (FuelTank)vehicleToFuel.PowerSource;
+                fuelTank = (FuelTank)vehicleToFuel.PowerSource;
 
                 // If the fuel type matched the FuelTank's FuelType, fuel the vehicle and update the PercentageOfEnergyLeft
-                if (fuelTank.FuelType == i_FuelType) {
-                    fuelTank.Fuel(i_AmountOfFuel, i_FuelType);
-                    vehicleToFuel.PercentageOfEnergyLeft = i_AmountOfFuel / fuelTank.MaximumPowerSourceCapacity;
+                if (fuelTank.FuelType == fuelType)
+                {
+                    fuelTank.Fuel(amountOfFuel, fuelType);
+                    vehicleToFuel.PercentageOfEnergyLeft = amountOfFuel / fuelTank.MaximumPowerSourceCapacity;
                 }
                 else
                 {
@@ -101,11 +146,16 @@ namespace Ex03.GarageLogic
                     throw new ArgumentException("Fuel type doesn't match vehicle's fuel type");
                 }
             }
+            else
+            {
+                throw new FormatException("Amount of fuel must be float");
+            }
         }
 
         // Charge a requested vehicle for a given number of minutes
-        public void ChargeVehicle(string i_LicencePlate, float i_MinutesToCharge)
+        public void ChargeVehicle(string i_LicencePlate, string i_MinutesToCharge)
         {
+            int minutesToCharge;
             Vehicle vehicleToCharge = m_Vehicles[i_LicencePlate].Vehicle;
 
             // If the vehicle requested is not powered by a Battery, throw the proper exception
@@ -113,11 +163,15 @@ namespace Ex03.GarageLogic
             {
                 throw new ArgumentException("Vehicle is not powered by electricity");
             }
-            else
+            else if (int.TryParse(i_MinutesToCharge, out minutesToCharge)) 
             {
                 // Send the value to charge the battery, as hours
-                ((Battery)vehicleToCharge.PowerSource).Charge(i_MinutesToCharge / 60);
+                ((Battery)vehicleToCharge.PowerSource).Charge(minutesToCharge / 60);
                 vehicleToCharge.PercentageOfEnergyLeft = vehicleToCharge.PowerSource.CurrentPowerSourceCapacity / vehicleToCharge.PowerSource.MaximumPowerSourceCapacity;
+            }
+            else
+            {
+                throw new FormatException("Minutes to charge must consist of digits");
             }
         }
 
@@ -152,7 +206,7 @@ namespace Ex03.GarageLogic
 
         public void SetVehicleProperty(int i_PropertyIndex, string i_UserInput) 
         {
-            Vehicle.SetProperty(i_PropertyIndex, i_UserInput);
+            m_CurrentVehicle.SetProperty(i_PropertyIndex, i_UserInput);
         }  
 
         public void SetNameOwner(string i_NameOfOwner)
@@ -190,8 +244,6 @@ namespace Ex03.GarageLogic
         {
             m_CurrentVehicle.PowerSource.SetCurrentPowerSourceCapacity(i_PowerSourceCapacity);
         }
-
-
 
         public void FinalizeRegistryOfVehicle(string i_NameOfOwner, string i_PhoneOfOwner)
         {

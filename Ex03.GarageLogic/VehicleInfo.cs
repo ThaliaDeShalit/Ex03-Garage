@@ -4,14 +4,14 @@ using System.Text;
 
 namespace Ex03.GarageLogic
 {
-    class VehicleInfo
+    internal class VehicleInfo
     {
         private string m_VehicleOwnerName;
         private string m_VehicleOwnerNumber;
         private eVehicleStatus m_VehicleStatus;
         private Vehicle m_Vehicle;
 
-        public VehicleInfo(string i_VehicleOwnerName, string i_VehicleOwnerNumber, eVehicleStatus i_VehicleStatus, Vehicle i_Vehicle)
+        internal VehicleInfo(string i_VehicleOwnerName, string i_VehicleOwnerNumber, eVehicleStatus i_VehicleStatus, Vehicle i_Vehicle)
         {
             m_VehicleOwnerName = i_VehicleOwnerName;
             m_VehicleOwnerNumber = i_VehicleOwnerNumber;
@@ -19,7 +19,7 @@ namespace Ex03.GarageLogic
             m_Vehicle = i_Vehicle;
         }
 
-        public Vehicle Vehicle
+        internal Vehicle Vehicle
         {
             get
             {
@@ -27,7 +27,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public eVehicleStatus VehicleStatus
+        internal eVehicleStatus VehicleStatus
         {
             get
             {
@@ -39,7 +39,28 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public string ToString()
+        internal static eVehicleStatus GetVehicleStatus(string i_Input)
+        {
+            int intRepresentationOfEnum;
+
+            if (int.TryParse(i_Input, out intRepresentationOfEnum))
+            {
+                if (intRepresentationOfEnum > 0 && intRepresentationOfEnum < 4)
+                {
+                    return (eVehicleStatus)intRepresentationOfEnum;
+                }
+                else
+                {
+                    throw new FormatException("Vehicle status must be a digit corresponding to a status");
+                }
+            }
+            else
+            {
+                throw new FormatException("Vehicle status must be a digit");
+            }
+        }
+
+        public override string ToString()
         {
             string str = string.Format(
 @"General vehicle info:

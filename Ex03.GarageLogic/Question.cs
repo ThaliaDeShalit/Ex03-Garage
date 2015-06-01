@@ -13,7 +13,7 @@ namespace Ex03.GarageLogic
             m_Question = i_Question;
         }
 
-        internal string ToString()
+        public override string ToString()
         {
             return m_Question;
         }

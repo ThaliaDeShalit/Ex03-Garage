@@ -26,7 +26,7 @@ namespace Ex03.GarageLogic
             return;
         }
 
-        public string Message
+        public override string Message
         {
             get
             {

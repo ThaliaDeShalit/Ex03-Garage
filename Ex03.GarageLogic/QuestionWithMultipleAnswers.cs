@@ -18,7 +18,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        internal override string ToString()
+        public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
 

@@ -15,7 +15,7 @@ namespace Ex03.GarageLogic
             {
                 if (value > m_MaximumCapacity)
                 {
-                    throw new ValueOutOfRangeException();
+                    throw new ValueOutOfRangeException("Input invalid - value out of range");
                 }
                 else
                 {
@@ -40,7 +40,7 @@ namespace Ex03.GarageLogic
         {
             if (m_CurrentCapacity + i_AmountOfPowerToAdd > m_MaximumCapacity)
             {
-                throw new ValueOutOfRangeException();
+                throw new ValueOutOfRangeException("Invalid input - value out of range");
             }
             else
             {

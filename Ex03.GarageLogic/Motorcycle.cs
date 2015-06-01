@@ -30,7 +30,23 @@ namespace Ex03.GarageLogic
             m_NumOfExtraProperties = 2;
         }
 
-        internal string ToString()
+        internal eLicenceType LicenceType
+        {
+            set
+            {
+                m_LicenceType = value;
+            }
+        }
+
+        internal int EngineVolume
+        {
+            set
+            {
+                m_EngineVolume = value;
+            }
+        }
+
+        public override string ToString()
         {
             string str = string.Format(
 @"{0}
@@ -42,7 +58,7 @@ Engine volume - {2}", base.ToString(), m_LicenceType, m_EngineVolume.ToString())
             return str;
         }
 
-        internal Question GetProperty(int i_PropertyNumber)
+        internal override Question GetProperty(int i_PropertyNumber)
         {
             Question propertyQuestion = null;
             eProperties property;
@@ -69,6 +85,64 @@ Engine volume - {2}", base.ToString(), m_LicenceType, m_EngineVolume.ToString())
         private QuestionWithOneAnswer getEngineVolumeQuestion()
         {
             return new QuestionWithOneAnswer("What is your engine volume?");
+        }
+
+        internal override void SetProperty(int i_PropertyNumber, string i_PropertyValue)
+        {
+            eProperties property;
+
+            property = (eProperties)i_PropertyNumber;
+            switch (property)
+            {
+                case eProperties.LicenceType:
+                    setLicenceType(i_PropertyValue);
+                    break;
+                case eProperties.EngineVolume:
+                    setEngineVolume(i_PropertyValue);
+                    break;
+            }
+        }
+
+        internal void setLicenceType(string i_Input)
+        {
+            int intRepresentationOfEnum;
+
+            if (int.TryParse(i_Input, out intRepresentationOfEnum))
+            {
+                if (intRepresentationOfEnum > 0 && intRepresentationOfEnum < 5)
+                {
+                    LicenceType = (eLicenceType)intRepresentationOfEnum;
+                }
+                else
+                {
+                    throw new FormatException("Licence type must be a digit corresponding to a licence type");
+                }
+            }
+            else
+            {
+                throw new FormatException("Licence type must be a digit");
+            }
+        }
+
+        internal void setEngineVolume(string i_Input)
+        {
+            int parsedInput;
+
+            if (int.TryParse(i_Input, out parsedInput))
+            {
+                if (parsedInput > 0)
+                {
+                    EngineVolume = parsedInput;
+                }
+                else
+                {
+                    throw new FormatException("Engine volume must be positive value");
+                }
+            }
+            else
+            {
+                throw new FormatException("Engine volume must consist of digits");
+            }
         }
 
         protected enum eProperties

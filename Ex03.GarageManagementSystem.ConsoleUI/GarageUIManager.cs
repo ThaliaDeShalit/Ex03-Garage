@@ -358,7 +358,7 @@ It's status has been changed to 'In Progress'.";
 
                 if (carAlreadyExists)
                 {
-                    m_GarageManager.ChangeVehicleStatus(licencePlate, eVehicleStatus.InProgress);
+                    m_GarageManager.ChangeVehicleStatus(licencePlate, "i");
                     Console.WriteLine(k_VehicleAlreadyExists);
                     break;
                 }
@@ -772,8 +772,6 @@ It's status has been changed to 'In Progress'.";
         private void pullAllVehicles()
         {
             string input;
-            eVehicleStatus? vehicleStatus = null;
-            bool isValid = false;
             List<string> vehicles;
 
             Console.WriteLine(k_GetVehicleTypeToPull);
@@ -782,33 +780,9 @@ It's status has been changed to 'In Progress'.";
             {
                 input = Console.ReadLine();
 
-                if (input.Length == 1)
+                try
                 {
-                    if (input == "a" || input == "A")
-                    {
-                        isValid = true;
-                    }
-                    else if (input == "i" || input == "I")
-                    {
-                        vehicleStatus = eVehicleStatus.InProgress;
-                        isValid = true;
-                    }
-                    else if (input == "f" || input == "F")
-                    {
-                        vehicleStatus = eVehicleStatus.Fixed;
-                        isValid = true;
-                    }
-                    else if (input == "p" || input == "P")
-                    {
-                        vehicleStatus = eVehicleStatus.Paid;
-                        isValid = true;
-                    }
-                }
-
-                if (isValid)
-                {
-                    vehicles = m_GarageManager.GetLicencePlates(vehicleStatus);
-
+                    vehicles = m_GarageManager.GetLicencePlates(input);
                     foreach (string licencePlate in vehicles)
                     {
                         Console.WriteLine(licencePlate);
@@ -816,20 +790,35 @@ It's status has been changed to 'In Progress'.";
 
                     break;
                 }
-
-                Console.WriteLine(k_InvalidVehicleTypeToPull);
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
         }
 
         private void changeVehicleStatus()
         {
             string licencePlate;
-            eVehicleStatus vehicleStatus;
+            string input;
 
             licencePlate = getLicencePlate();
-            vehicleStatus = (eVehicleStatus)getIntRepresentationOfEnum(1, 3, k_GetVehicleStatus, k_InvalidVehicleStatus);
 
-            m_GarageManager.ChangeVehicleStatus(licencePlate, vehicleStatus);
+            Console.WriteLine(k_GetVehicleStatus);
+            while (true)
+            {
+                input = Console.ReadLine();
+
+                try
+                {
+                    m_GarageManager.ChangeVehicleStatus(licencePlate, input);
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
         }
 
         private void inflateWheels()
@@ -843,39 +832,27 @@ It's status has been changed to 'In Progress'.";
         private void fuelVehicle()
         {
             string licencePlate;
-            eFuelType fuelType;
-            float amountOfFuel;
-            string input;
-            bool isValid = false;
+            string fuelType;
+            string amountOfFuel;
 
             licencePlate = getLicencePlate();
 
-            fuelType = (eFuelType)getIntRepresentationOfEnum(1, 4, k_GetFuelType, k_InvalidFuelType);
+            Console.WriteLine(k_GetFuelType);
+            Console.WriteLine("And then, " + k_GetAmountOfFuel);
 
-            while (!isValid)
+            while (true)
             {
-                Console.WriteLine(k_GetAmountOfFuel);
-                input = Console.ReadLine();
+                fuelType = Console.ReadLine();
+                amountOfFuel = Console.ReadLine();
 
-                if (float.TryParse(input, out amountOfFuel))
+                try
                 {
-                    try
-                    {
-                        m_GarageManager.FuelVehicle(licencePlate, fuelType, amountOfFuel);
-                        isValid = true;
-                    }
-                    catch (ArgumentException exception)
-                    {
-                        string str = string.Format(
-@"{0}
-Please enter the correct fuel type for your vehicle:", exception.Message);
-                        fuelType = (eFuelType)getIntRepresentationOfEnum(1, 4, str, k_InvalidFuelType);
-                        isValid = false;
-                    }
+                    m_GarageManager.FuelVehicle(licencePlate, fuelType, amountOfFuel);
+                    break;
                 }
-                else
+                catch (Exception ex)
                 {
-                    Console.WriteLine(k_InvalidAmountOfFuel);
+                    Console.WriteLine(ex.Message);
                 }
             }
         }
@@ -884,8 +861,6 @@ Please enter the correct fuel type for your vehicle:", exception.Message);
         {
             string licencePlate;
             string input;
-            int minToCharge;
-            bool isValid = false;
 
             licencePlate = getLicencePlate();
 
@@ -894,27 +869,14 @@ Please enter the correct fuel type for your vehicle:", exception.Message);
             {
                 input = Console.ReadLine();
 
-                if (int.TryParse(input, out minToCharge))
+                try
                 {
-                    try
-                    {
-                        m_GarageManager.ChargeVehicle(licencePlate, ((float)minToCharge / 60f));
-                        isValid = true;
-                    }
-                    catch (ArgumentException exception)
-                    {
-                        Console.WriteLine(exception);
-                        isValid = false;
-                    }
-                }
-                else
-                {
-                    Console.WriteLine(k_InvalidAmountOfMinToCharge);
-                }
-
-                if (isValid)
-                {
+                    m_GarageManager.ChargeVehicle(licencePlate, input);
                     break;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
                 }
             }
         }
@@ -926,11 +888,6 @@ Please enter the correct fuel type for your vehicle:", exception.Message);
 
             licencePlate = getLicencePlate();
             Console.WriteLine(m_GarageManager.ToString(licencePlate));
-        }
-
-        private string splitCamelCase(string i_CamelCasedString)
-        {
-            return System.Text.RegularExpressions.Regex.Replace(i_CamelCasedString, "([A-Z])", " $1", System.Text.RegularExpressions.RegexOptions.Compiled).Trim();
         }
     }
 
