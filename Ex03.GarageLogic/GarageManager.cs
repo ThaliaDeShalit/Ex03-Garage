@@ -72,7 +72,7 @@ namespace Ex03.GarageLogic
 
             if (!vehicleToFuel.isFueled())
             {
-                throw new ArgumentException();
+                throw new ArgumentException("Vehicle not powered by fuel");
             }
             else
             {

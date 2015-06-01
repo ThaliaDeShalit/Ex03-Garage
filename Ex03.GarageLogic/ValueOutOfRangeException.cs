@@ -15,7 +15,7 @@ namespace Ex03.GarageLogic
             m_MinValue = i_MinValue;
         }
 
-        public ValueOutOfRangeException()
+        public ValueOutOfRangeException(string i_ErrorMessage) : base(i_ErrorMessage)
         {
 
         }
