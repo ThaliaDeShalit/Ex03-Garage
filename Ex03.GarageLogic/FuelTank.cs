@@ -23,6 +23,8 @@ namespace Ex03.GarageLogic
 
         internal void Fuel(float i_AmountOfFuelToAdd, eFuelType i_FuelType)
         {
+            // Throw a new argument exception if the provided FuelType doesn't match this
+            // FuelTank's FuelType. Cannot fuel Soler into an Octan98 car!
             if (i_FuelType != m_FuelType)
             {
                 throw new ArgumentException();
