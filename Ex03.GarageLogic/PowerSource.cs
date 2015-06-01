@@ -47,5 +47,29 @@ namespace Ex03.GarageLogic
                 m_CurrentCapacity += i_AmountOfPowerToAdd;
             }
         }
+
+        internal void SetCurrentPowerSourceCapacity(string i_Input)
+        {
+            float currentCapacityInFloat;
+            if (float.TryParse(i_Input, out currentCapacityInFloat))
+            {
+                if (currentCapacityInFloat > m_MaximumCapacity)
+                {
+                    throw new ValueOutOfRangeException(0, m_MaximumCapacity);
+                }
+                else if (currentCapacityInFloat < 0)
+                {
+                    throw new FormatException("Current power source capcity can not be below 0");
+                }
+                else
+                {
+                    CurrentPowerSourceCapacity = currentCapacityInFloat;
+                }
+            }
+            else
+            {
+                throw new FormatException("Current power source capacity must consist of digits");
+            }
+        }
     }
 }

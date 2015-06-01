@@ -59,5 +59,5 @@ Fuel type - {0}", m_FuelType);
         Octan98
     }
 
-    
+
 }

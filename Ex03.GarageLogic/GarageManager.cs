@@ -170,10 +170,7 @@ namespace Ex03.GarageLogic
 
         public void SetPowerSourceCapacity(string i_PowerSourceCapacity)
         {
-            newPowerSource = new FuelTank(eFuelType.Octan96, k_MaxFuelCapacityCar, (float)i_VehicleProporties[eVehiclePropertyType.PowerSourceCapacity]);
-
-            switch (m_CurrentVehicle.)
-
+            m_CurrentVehicle.PowerSource.SetCurrentPowerSourceCapacity(i_PowerSourceCapacity);
         }
 
 
