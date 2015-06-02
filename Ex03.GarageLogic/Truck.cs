@@ -14,23 +14,12 @@ namespace Ex03.GarageLogic
         private bool m_IsCarryingHazardousMaterials;
         private float m_CurrentCarryWeight;
 
-        private FuelTank m_FuelTank;
-
-        public Truck(string i_Model, string i_LicenceNumber, PowerSource i_PowerSource, string i_WheelManufactorName, float i_CurrentAirPressure, bool i_IsCarryingHazardousMaterials, float i_CurrentCarryWeight)
-            : base(i_Model, i_LicenceNumber, i_PowerSource)
-        {
-            InitializeWheels(i_WheelManufactorName, k_MaxWheelAirPressure, i_CurrentAirPressure, k_AmountOfWheels);
-            m_IsCarryingHazardousMaterials = i_IsCarryingHazardousMaterials;
-            m_CurrentCarryWeight = i_CurrentCarryWeight;
-            m_NumOfExtraProperties = 2;
-        }
-
         public Truck(PowerSource i_PowerSource)
         {
             m_PowerSource = i_PowerSource;
             m_Wheels = new List<Wheel>();
             SetWheelsMaxAirPressure(k_MaxWheelAirPressure, k_AmountOfWheels);
-            m_NumOfExtraProperties = 2;
+            m_NumOfExtraProperties = Enum.GetValues(typeof(eProperties)).Length;
         }
 
         internal bool IsCarryingHazardousMaterials

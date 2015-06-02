@@ -39,6 +39,7 @@ namespace Ex03.GarageLogic
             }
         }
 
+        // parses string to eVehicleStatus
         internal static eVehicleStatus GetVehicleStatus(string i_Input)
         {
             int intRepresentationOfEnum;

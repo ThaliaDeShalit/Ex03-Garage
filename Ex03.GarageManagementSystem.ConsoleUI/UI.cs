@@ -5,7 +5,7 @@ using Ex03.GarageLogic;
 
 namespace Ex03.GarageManagementSystem.ConsoleUI
 {
-    class GarageUIManager
+    class UI
     {
         private GarageManager m_GarageManager;
 
@@ -21,14 +21,17 @@ namespace Ex03.GarageManagementSystem.ConsoleUI
 6: Charge a veicle powered by battery
 7: Show all the information for a selected vehicle
 
-8: To exit";
+8: To exit
+--Press Exit in any of the pages to exit to the main menu--";
         private const string k_InvalidUserOption = "Input not valid. Please enter the number corresponding with the operation you would like to perform.";
 
         // exit
         private const string k_ExitPrompt = "Goodbye! (please press enter to exit)";
 
         // Licence plate
-        private const string k_GetLicencePlateToRegister = "Please enter the licence plate of the vehicle you would like to register (digits and letters only):";
+        private const string k_GetLicencePlateToRegister =
+@"Please enter the licence plate of the vehicle you would like to register (digits and letters only):
+--Please note that this is the last place in this operation to use the 'exit' option--";
         private const string k_InvalidLicencePlate = "Input not valid. Please enter the licence plate using only letters and digits.";
 
         private const string k_VehicleAlreadyExists =
@@ -103,6 +106,7 @@ It's status has been changed to 'In Progress'.";
             string userInput;
             int userInputInNumber;
             bool quit = false;
+            bool invalidInput = false;
 
             m_GarageManager = new GarageManager();
 
@@ -110,13 +114,27 @@ It's status has been changed to 'In Progress'.";
 
             while (true)
             {
-                Console.WriteLine(k_UserOptions);
+                if (!invalidInput)
+                {
+                    Console.WriteLine(k_UserOptions);
+                }
+
                 userInput = Console.ReadLine();
+
+                if (checkIfExit(userInput))
+                {
+                    return;
+                }
 
                 if (!checkValidityOfIntInput(userInput, 1, 8, out userInputInNumber))
                 {
                     Console.WriteLine(k_InvalidUserOption);
+                    invalidInput = true;
                     continue;
+                }
+                else
+                {
+                    invalidInput = false;
                 }
 
                 switch ((eGarageOperations)userInputInNumber)
@@ -181,11 +199,17 @@ It's status has been changed to 'In Progress'.";
             string phoneNumberOfOwner;
             List<string> extraPropertiesQuestions;
             string input;
+            bool isValid = true;
 
             Console.WriteLine(k_GetLicencePlateToRegister);
             while (true)
             {
                 licencePlate = Console.ReadLine();
+
+                if (checkIfExit(licencePlate))
+                {
+                    return;
+                }
 
                 inputIsValid = true;
                 foreach (char character in licencePlate)
@@ -210,7 +234,7 @@ It's status has been changed to 'In Progress'.";
 
             if (carAlreadyExists)
             {
-                m_GarageManager.ChangeVehicleStatus(licencePlate, "i");
+                m_GarageManager.VehicleAlreadyExistsUpdateStatus(licencePlate);
                 Console.WriteLine(k_VehicleAlreadyExists);
             }
             else
@@ -229,16 +253,22 @@ It's status has been changed to 'In Progress'.";
 
                 for (int i = 1; i <= extraPropertiesQuestions.Count; i++)
                 {
-                    Console.WriteLine(extraPropertiesQuestions[i - 1]);
+                    if (isValid)
+                    {
+                        Console.WriteLine(extraPropertiesQuestions[i - 1]);
+                    }
                     input = Console.ReadLine();
+
                     try
                     {
                         m_GarageManager.SetVehicleProperty(i, input);
+                        isValid = true;
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
                         i--;
+                        isValid = false;
                     }
                 }
 
@@ -256,6 +286,12 @@ It's status has been changed to 'In Progress'.";
             while (true)
             {
                 input = Console.ReadLine();
+
+                if (checkIfExit(input))
+                {
+                    return;
+                }
+
                 try
                 {
                     m_GarageManager.CreateNewVehicle(input);
@@ -268,7 +304,7 @@ It's status has been changed to 'In Progress'.";
             }
         }
 
-        private string getLicencePlate()
+        private string getLicencePlate(out bool o_Exit)
         {
             string licencePlate;
             bool inputIsValid = false;
@@ -278,30 +314,39 @@ It's status has been changed to 'In Progress'.";
             {
                 licencePlate = Console.ReadLine();
 
-                inputIsValid = true;
-                foreach (char character in licencePlate)
+                if (checkIfExit(licencePlate))
                 {
-                    if (!char.IsLetterOrDigit(character))
-                    {
-                        inputIsValid = false;
-                        break;
-                    }
-                }
-
-                if (inputIsValid)
-                {
-                    if (!m_GarageManager.CheckIfExists(licencePlate))
-                    {
-                        Console.WriteLine(k_LicencePlateNotInDatabase);
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    o_Exit = true;
+                    break;
                 }
                 else
                 {
-                    Console.WriteLine(k_InvalidLicencePlate);
+                    o_Exit = false;
+
+                    inputIsValid = true;
+                    foreach (char character in licencePlate)
+                    {
+                        if (!char.IsLetterOrDigit(character))
+                        {
+                            inputIsValid = false;
+                            break;
+                        }
+                    }
+                    if (inputIsValid)
+                    {
+                        if (!m_GarageManager.CheckIfExists(licencePlate))
+                        {
+                            Console.WriteLine(k_LicencePlateNotInDatabase);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine(k_InvalidLicencePlate);
+                    }
                 }
             }
 
@@ -316,6 +361,12 @@ It's status has been changed to 'In Progress'.";
             while (true)
             {
                 input = Console.ReadLine();
+
+                if (checkIfExit(input))
+                {
+                    return;
+                }
+
                 try
                 {
                     m_GarageManager.SetModel(input);
@@ -342,6 +393,11 @@ It's status has been changed to 'In Progress'.";
                     Console.WriteLine(ex.Message);
                     Console.WriteLine("Enter a valid licence plate");
                     i_LicencePlate = Console.ReadLine();
+
+                    if (checkIfExit(i_LicencePlate))
+                    {
+                        return;
+                    }
                 }
             }
 
@@ -355,6 +411,12 @@ It's status has been changed to 'In Progress'.";
             while (true)
             {
                 input = Console.ReadLine();
+
+                if (checkIfExit(input))
+                {
+                    return;
+                }
+
                 try
                 {
                     m_GarageManager.SetWheelManufctorName(input);
@@ -375,6 +437,12 @@ It's status has been changed to 'In Progress'.";
             while (true)
             {
                 input = Console.ReadLine();
+
+                if (checkIfExit(input))
+                {
+                    return;
+                }
+
                 try
                 {
                     m_GarageManager.SetWheelAirPressure(input);
@@ -395,6 +463,12 @@ It's status has been changed to 'In Progress'.";
             while (true)
             {
                 input = Console.ReadLine();
+
+                if (checkIfExit(input))
+                {
+                    return;
+                }
+
                 try
                 {
                     m_GarageManager.SetPowerSourceCapacity(input);
@@ -517,6 +591,11 @@ It's status has been changed to 'In Progress'.";
             {
                 input = Console.ReadLine();
 
+                if (checkIfExit(input))
+                {
+                    return;
+                }
+
                 try
                 {
                     vehicles = m_GarageManager.GetLicencePlates(input);
@@ -538,36 +617,49 @@ It's status has been changed to 'In Progress'.";
         {
             string licencePlate;
             string input;
+            bool toExit = false;
 
-            licencePlate = getLicencePlate();
+            licencePlate = getLicencePlate(out toExit);
 
-            Console.WriteLine(k_GetVehicleStatus);
-            while (true)
+            if (!toExit)
             {
-                input = Console.ReadLine();
+                Console.WriteLine(k_GetVehicleStatus);
+                while (true)
+                {
+                    input = Console.ReadLine();
 
-                try
-                {
-                    m_GarageManager.ChangeVehicleStatus(licencePlate, input);
-                    break;
+                    if (checkIfExit(input))
+                    {
+                        return;
+                    }
+
+                    try
+                    {
+                        m_GarageManager.ChangeVehicleStatus(licencePlate, input);
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
+
+                Console.WriteLine(k_VehicleChangedStatusSuccefully);
             }
-
-            Console.WriteLine(k_VehicleChangedStatusSuccefully);
         }
 
         private void inflateWheels()
         {
             string licencePlate;
+            bool toExit;
 
-            licencePlate = getLicencePlate();
-            m_GarageManager.InflateWheels(licencePlate);
+            licencePlate = getLicencePlate(out toExit);
+            if (!toExit)
+            {
+                m_GarageManager.InflateWheels(licencePlate);
 
-            Console.WriteLine(k_VehicleInflatedSuccefully);
+                Console.WriteLine(k_VehicleInflatedSuccefully);
+            }
         }
 
         private void fuelVehicle()
@@ -575,64 +667,99 @@ It's status has been changed to 'In Progress'.";
             string licencePlate;
             string fuelType;
             string amountOfFuel;
+            bool toExit;
 
-            licencePlate = getLicencePlate();
+            licencePlate = getLicencePlate(out toExit);
 
-            Console.WriteLine(k_GetFuelType);
-            Console.WriteLine("And then, " + k_GetAmountOfFuel);
-
-            while (true)
+            if (!toExit)
             {
-                fuelType = Console.ReadLine();
-                amountOfFuel = Console.ReadLine();
+                Console.WriteLine(k_GetFuelType);
+                Console.WriteLine("And then, " + k_GetAmountOfFuel);
 
-                try
+                while (true)
                 {
-                    m_GarageManager.FuelVehicle(licencePlate, fuelType, amountOfFuel);
-                    break;
+                    fuelType = Console.ReadLine();
+                    amountOfFuel = Console.ReadLine();
+
+                    if (checkIfExit(fuelType) || checkIfExit(amountOfFuel))
+                    {
+                        return;
+                    }
+
+                    try
+                    {
+                        m_GarageManager.FuelVehicle(licencePlate, fuelType, amountOfFuel);
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
+
+                Console.WriteLine(k_VehicleFuledSuccefully);
             }
-
-            Console.WriteLine(k_VehicleFuledSuccefully);
         }
 
         private void chargeVehicle()
         {
             string licencePlate;
             string input;
+            bool toExit;
 
-            licencePlate = getLicencePlate();
+            licencePlate = getLicencePlate(out toExit);
 
-            Console.WriteLine(k_GetAmountOfMinToCharge);
-            while (true)
+            if (!toExit)
             {
-                input = Console.ReadLine();
 
-                try
+                Console.WriteLine(k_GetAmountOfMinToCharge);
+                while (true)
                 {
-                    m_GarageManager.ChargeVehicle(licencePlate, input);
-                    break;
+                    input = Console.ReadLine();
+
+                    if (checkIfExit(input))
+                    {
+                        return;
+                    }
+
+                    try
+                    {
+                        m_GarageManager.ChargeVehicle(licencePlate, input);
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
+
+                Console.WriteLine(k_VehicleChargedSuccefully);
             }
-
-            Console.WriteLine(k_VehicleChargedSuccefully);
         }
 
         private void getCompleteVehicleInfo()
         {
 
             string licencePlate;
+            bool toExit;
 
-            licencePlate = getLicencePlate();
-            Console.WriteLine(m_GarageManager.ToString(licencePlate));
+            licencePlate = getLicencePlate(out toExit);
+            if (!toExit)
+            {
+                Console.WriteLine(m_GarageManager.ToString(licencePlate));
+            }
+        }
+
+        private bool checkIfExit(string i_Input)
+        {
+            bool isExit = false;
+
+            if (i_Input.Equals("Exit") || i_Input.Equals("exit") || i_Input.Equals("EXIT"))
+            {
+                isExit = true;
+            }
+
+            return isExit;
         }
     }
 

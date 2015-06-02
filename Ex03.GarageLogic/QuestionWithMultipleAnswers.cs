@@ -29,7 +29,11 @@ namespace Ex03.GarageLogic
             {
                 sb.Append(i + ": ");
                 sb.Append(m_Options[i - 1]);
-                sb.Append(Environment.NewLine);
+
+                if (i < m_Options.Length)
+                {
+                    sb.Append(Environment.NewLine);
+                }
             }
 
             string question = string.Format(

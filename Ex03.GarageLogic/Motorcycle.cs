@@ -12,22 +12,12 @@ namespace Ex03.GarageLogic
         private eLicenceType m_LicenceType;
         private int m_EngineVolume;
 
-        public Motorcycle(string i_Model, string i_LicenceNumber, PowerSource i_PowerSource, string i_WheelManufactorName, float i_MaxAirPressure, float i_CurrentAirPressure, eLicenceType i_LicenceType, int i_EngineVolume)
-            : base(i_Model, i_LicenceNumber, i_PowerSource)
-        {
-            InitializeWheels(i_WheelManufactorName, r_MaxAirPressure, i_CurrentAirPressure, k_AmountOfWheels);
-            m_LicenceType = i_LicenceType;
-            m_EngineVolume = i_EngineVolume;
-            r_MaxAirPressure = i_MaxAirPressure;
-            m_NumOfExtraProperties = 2;
-        }
-
         public Motorcycle(PowerSource i_PowerSource, float i_MaxAirPressure)
         {
             m_PowerSource = i_PowerSource;
             m_Wheels = new List<Wheel>();
             SetWheelsMaxAirPressure(i_MaxAirPressure, k_AmountOfWheels);
-            m_NumOfExtraProperties = 2;
+            m_NumOfExtraProperties = Enum.GetValues(typeof(eProperties)).Length;
         }
 
         internal eLicenceType LicenceType

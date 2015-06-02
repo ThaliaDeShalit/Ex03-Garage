@@ -8,7 +8,7 @@ namespace Ex03.GarageManagementSystem.ConsoleUI
     {
         public static void Main()
         {
-            GarageUIManager UI = new GarageUIManager();
+            UI UI = new UI();
             UI.Run();
         }
     }

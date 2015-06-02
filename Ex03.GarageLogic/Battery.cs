@@ -6,17 +6,12 @@ namespace Ex03.GarageLogic
 {
     internal class Battery : PowerSource
     {
-        internal Battery(float i_MaxChargeInHours, float i_CurrentChargeInHours)
-        {
-            m_MaximumCapacity = i_MaxChargeInHours;
-            m_CurrentCapacity = i_CurrentChargeInHours;
-        }
-
-        internal Battery(float i_MaxChargeInHours)
+        public Battery(float i_MaxChargeInHours)
         {
             m_MaximumCapacity = i_MaxChargeInHours;
         }
 
+        // charges the battery with hours
         internal void Charge(float i_NumOfHoursToAdd)
         {
             FillPowerSource(i_NumOfHoursToAdd);

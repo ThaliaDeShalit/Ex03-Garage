@@ -12,21 +12,12 @@ namespace Ex03.GarageLogic
         private eCarColor m_CarColor;
         private eAmountOfDoors m_NumOfCarDoors;
 
-        public Car(string i_Model, string i_LicenceNumber, PowerSource i_PowerSource, string i_WheelManufactorName, float i_CurrentAirPressure, eCarColor i_CarColor, eAmountOfDoors i_NumOfCarDoors)
-            : base(i_Model, i_LicenceNumber, i_PowerSource)
-        {
-            InitializeWheels(i_WheelManufactorName, k_MaxWheelAirPressure, i_CurrentAirPressure, k_AmountOfWheels);
-            m_CarColor = i_CarColor;
-            m_NumOfCarDoors = i_NumOfCarDoors;
-            m_NumOfExtraProperties = 2;
-        }
-
         public Car(PowerSource i_PowerSource)
         {
             m_PowerSource = i_PowerSource;
             m_Wheels = new List<Wheel>();
             SetWheelsMaxAirPressure(k_MaxWheelAirPressure, k_AmountOfWheels);
-            m_NumOfExtraProperties = 2;
+            m_NumOfExtraProperties = Enum.GetValues(typeof(eProperties)).Length;
         }
 
         internal eCarColor CarColor
@@ -90,6 +81,7 @@ Number of doors - {2}", base.ToString(), m_CarColor, m_NumOfCarDoors);
             return new QuestionWithOneAnswer("How many doors do you have? (between 2 and 5)");
         }
 
+        // sets the extra properites in the vehicle
         internal override void SetProperty(int i_PropertyNumber, string i_PropertyValue)
         {
             eProperties property;
@@ -106,7 +98,7 @@ Number of doors - {2}", base.ToString(), m_CarColor, m_NumOfCarDoors);
             }
         }
 
-        internal void setCarColor(string i_Input)
+        private void setCarColor(string i_Input)
         {
             int intRepresentationOfEnum;
 
@@ -127,13 +119,13 @@ Number of doors - {2}", base.ToString(), m_CarColor, m_NumOfCarDoors);
             }
         }
 
-        internal void setAmountOfDoors(string i_Input)
+        private void setAmountOfDoors(string i_Input)
         {
             int intRepresentationOfEnum;
 
             if (int.TryParse(i_Input, out intRepresentationOfEnum))
             {
-                if (intRepresentationOfEnum > 0 && intRepresentationOfEnum < 5)
+                if (intRepresentationOfEnum > 1 && intRepresentationOfEnum < 5)
                 {
                     AmountOfDoors = (eAmountOfDoors)intRepresentationOfEnum;
                 }
@@ -148,6 +140,7 @@ Number of doors - {2}", base.ToString(), m_CarColor, m_NumOfCarDoors);
             }
         }
 
+        // the vehicles extra properties
         internal enum eProperties
         {
             CarColor = 1,

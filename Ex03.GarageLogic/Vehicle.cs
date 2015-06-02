@@ -37,16 +37,6 @@ namespace Ex03.GarageLogic
             return;
         }
 
-        protected void InitializeWheels(string i_ManufcatorName, float i_MaxWheelAirPressure, float i_CurrentAirPressure, int i_AmountOfWheels)
-        {
-            m_Wheels = new List<Wheel>();
-            Wheel tempWheel = new Wheel(i_ManufcatorName, i_MaxWheelAirPressure, i_CurrentAirPressure);
-
-            for (int i = 0; i < i_AmountOfWheels; i++)
-            {
-                m_Wheels.Add(tempWheel);
-            }
-        }
 
         // Set the maximum allowed air pressure for each wheel
         protected void SetWheelsMaxAirPressure(float i_MaxAirPressure, int i_AmountOfWheels)
@@ -191,9 +181,10 @@ Current percentage of power in power source - {2}%
             return str;
         }
 
-        // TODO Complete comments
+        // the method that creates the questions to show the user regarding the extra property each vehicle possess
         internal abstract Question GetProperty(int i_PropertyNumber);
 
+        // the method that sets the extra properties
         internal abstract void SetProperty(int i_PropertyNumber, string i_PropertyValue);
 
     }

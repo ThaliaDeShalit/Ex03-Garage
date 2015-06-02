@@ -8,13 +8,6 @@ namespace Ex03.GarageLogic
     {
         private eFuelType m_FuelType;
 
-        internal FuelTank(eFuelType i_FuelType, float i_MaxFuelAmount, float i_CurrentFuelAmount)
-        {
-            m_FuelType = i_FuelType;
-            m_MaximumCapacity = i_MaxFuelAmount;
-            m_CurrentCapacity = i_CurrentFuelAmount;
-        }
-
         internal FuelTank(eFuelType i_FuelType, float i_MaxFuelAmount)
         {
             m_FuelType = i_FuelType;
@@ -43,6 +36,7 @@ namespace Ex03.GarageLogic
             }
         }
 
+        // parses string to eFuelType
         internal static eFuelType GetFuelType(string i_Input)
         {
             int intRepresentationOfEnum;

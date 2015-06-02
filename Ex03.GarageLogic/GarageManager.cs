@@ -12,13 +12,6 @@ namespace Ex03.GarageLogic
         // one property at a time
         private Vehicle m_CurrentVehicle;
 
-        public void InsertNewVehicle(string i_OwnerName, string i_OwnerNumber, eVehicleType i_VehicleType, Dictionary<eVehiclePropertyType, object> i_VehicleProporties)
-        {
-            Vehicle vehicle = VehicleFactory.CreateVehicle(i_VehicleType, i_VehicleProporties);
-            VehicleInfo newVehicleInfo = new VehicleInfo(i_OwnerName, i_OwnerNumber, eVehicleStatus.InProgress, vehicle);
-            m_Vehicles.Add(vehicle.LicencePlate, newVehicleInfo);
-        }
-
         // Check if a vehicle is already entered into the database
         public bool CheckIfExists(string i_LicencePlate)
         {
@@ -42,7 +35,7 @@ namespace Ex03.GarageLogic
             vehicleStatus = checkValidityOfLicencePlatesPullRequest(i_VehicleStatus);
 
             // No filter requested, simply display the whole list
-            if (i_VehicleStatus == null)
+            if (vehicleStatus == null)
             {
                 foreach (VehicleInfo vehicleInfo in m_Vehicles.Values)
                 {
@@ -186,12 +179,13 @@ namespace Ex03.GarageLogic
             m_CurrentVehicle = VehicleFactory.CreateVehicle(i_VehicleType);
         }
 
-        // TODO Continue commenting from here
+        // Creates a modular question for the vehicle types
         public string GetQuestionOfVehicleType()
         {
             return new QuestionWithMultipleAnswers("Which type is your vehicle?", Enum.GetValues(typeof(eVehicleType))).ToString();
         }
 
+        // creates a list of all the questions regarding the vehicle extra properties
         public List<string> GetQuestionsOfVehicleExtraProperties()
         {
             List<string> questions = new List<string>();
@@ -204,6 +198,7 @@ namespace Ex03.GarageLogic
             return questions;
         }
 
+        // send the string inputs to the relevant vehicle to set it;s property
         public void SetVehicleProperty(int i_PropertyIndex, string i_UserInput) 
         {
             m_CurrentVehicle.SetProperty(i_PropertyIndex, i_UserInput);
@@ -246,10 +241,17 @@ namespace Ex03.GarageLogic
             m_CurrentVehicle.PercentageOfEnergyLeft = m_CurrentVehicle.PowerSource.CurrentPowerSourceCapacity / m_CurrentVehicle.PowerSource.MaximumPowerSourceCapacity;
         }
 
+        // once the vehicle has been created succefully, the vehicle is put in the DB
         public void FinalizeRegistryOfVehicle(string i_NameOfOwner, string i_PhoneOfOwner)
         {
             VehicleInfo newVehicleInfo = new VehicleInfo(i_NameOfOwner, i_PhoneOfOwner, eVehicleStatus.InProgress, m_CurrentVehicle);
             m_Vehicles.Add(m_CurrentVehicle.LicencePlate, newVehicleInfo);
+        }
+
+        // updates the status of the vehicle if it already exists
+        public void VehicleAlreadyExistsUpdateStatus(string i_LicenePlate)
+        {
+            m_Vehicles[i_LicenePlate].VehicleStatus = eVehicleStatus.InProgress;
         }
     }
 }
