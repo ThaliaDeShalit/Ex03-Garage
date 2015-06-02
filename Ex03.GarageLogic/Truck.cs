@@ -25,7 +25,7 @@ namespace Ex03.GarageLogic
             m_NumOfExtraProperties = 2;
         }
 
-        internal Truck(PowerSource i_PowerSource)
+        public Truck(PowerSource i_PowerSource)
         {
             m_PowerSource = i_PowerSource;
             m_Wheels = new List<Wheel>();
@@ -74,7 +74,7 @@ Current carry weight - {2}", base.ToString(), isCarryingHazardousMaterials, m_Cu
 
         // Creates a Question object to be sent to the user. A different Question must be created
         // for each property in the truck
-        internal Question GetProperty(int i_PropertyNumber)
+        internal override Question GetProperty(int i_PropertyNumber)
         {
             Question propertyQuestion = null;
             eProperties property;

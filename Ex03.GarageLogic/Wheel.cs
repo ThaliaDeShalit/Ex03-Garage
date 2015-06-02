@@ -28,7 +28,7 @@ namespace Ex03.GarageLogic
             // The Wheel cannot be over-filled
             if (m_CurrentAirPressure + i_AirToAdd > m_MaxAirPressure)
             {
-                throw new ValueOutOfRangeException();
+                throw new ValueOutOfRangeException("Value out of range");
             }
             else
             {

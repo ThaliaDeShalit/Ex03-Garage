@@ -22,9 +22,20 @@ namespace Ex03.GarageLogic
             m_PercentageOfEnergyLeft = i_PowerSource.CurrentPowerSourceCapacity / i_PowerSource.MaximumPowerSourceCapacity;
         }
 
-        internal Vehicle(PowerSource i_PowerSource);
+        internal Vehicle()
+        {
+            return;
+        }
 
-        internal Vehicle(PowerSource i_PowerSource, float i_MaxAirPressure);
+        internal Vehicle(PowerSource i_PowerSource)
+        {
+            return;
+        }
+
+        internal Vehicle(PowerSource i_PowerSource, float i_MaxAirPressure)
+        {
+            return;
+        }
 
         protected void InitializeWheels(string i_ManufcatorName, float i_MaxWheelAirPressure, float i_CurrentAirPressure, int i_AmountOfWheels)
         {
@@ -181,10 +192,7 @@ Current percentage of power in power source - {2}%
         }
 
         // TODO Complete comments
-        internal Question GetProperty(int i_PropertyNumber)
-        {
-            Question propertyQuestion;
-            eProperties property;
+        internal abstract Question GetProperty(int i_PropertyNumber);
 
         internal abstract void SetProperty(int i_PropertyNumber, string i_PropertyValue);
 

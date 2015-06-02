@@ -12,7 +12,7 @@ namespace Ex03.GarageLogic
         private eLicenceType m_LicenceType;
         private int m_EngineVolume;
 
-        internal Motorcycle(string i_Model, string i_LicenceNumber, PowerSource i_PowerSource, string i_WheelManufactorName, float i_MaxAirPressure, float i_CurrentAirPressure, eLicenceType i_LicenceType, int i_EngineVolume)
+        public Motorcycle(string i_Model, string i_LicenceNumber, PowerSource i_PowerSource, string i_WheelManufactorName, float i_MaxAirPressure, float i_CurrentAirPressure, eLicenceType i_LicenceType, int i_EngineVolume)
             : base(i_Model, i_LicenceNumber, i_PowerSource)
         {
             InitializeWheels(i_WheelManufactorName, r_MaxAirPressure, i_CurrentAirPressure, k_AmountOfWheels);
@@ -22,7 +22,7 @@ namespace Ex03.GarageLogic
             m_NumOfExtraProperties = 2;
         }
 
-        internal Motorcycle(PowerSource i_PowerSource, float i_MaxAirPressure)
+        public Motorcycle(PowerSource i_PowerSource, float i_MaxAirPressure)
         {
             m_PowerSource = i_PowerSource;
             m_Wheels = new List<Wheel>();
@@ -60,7 +60,7 @@ Engine volume - {2}", base.ToString(), m_LicenceType, m_EngineVolume.ToString())
 
         // Creates a Question object to be sent to the user. A different Question must be created
         // for each property in the motorcycle
-        internal Question GetProperty(int i_PropertyNumber)
+        internal override Question GetProperty(int i_PropertyNumber)
         {
             Question propertyQuestion = null;
             eProperties property;

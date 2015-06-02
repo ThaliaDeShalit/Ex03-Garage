@@ -21,7 +21,7 @@ namespace Ex03.GarageLogic
         }
 
         // Formats the question into readable text that could be displayed to the user
-        internal override string ToString()
+        public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
 

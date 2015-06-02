@@ -6,13 +6,13 @@ namespace Ex03.GarageLogic
 {
     internal class Car : Vehicle
     {
-        internal const float k_MaxWheelAirPressure = 31;
+        private const float k_MaxWheelAirPressure = 31;
         private const int k_AmountOfWheels = 4;
 
         private eCarColor m_CarColor;
         private eAmountOfDoors m_NumOfCarDoors;
 
-        internal Car(string i_Model, string i_LicenceNumber, PowerSource i_PowerSource, string i_WheelManufactorName, float i_CurrentAirPressure, eCarColor i_CarColor, eAmountOfDoors i_NumOfCarDoors)
+        public Car(string i_Model, string i_LicenceNumber, PowerSource i_PowerSource, string i_WheelManufactorName, float i_CurrentAirPressure, eCarColor i_CarColor, eAmountOfDoors i_NumOfCarDoors)
             : base(i_Model, i_LicenceNumber, i_PowerSource)
         {
             InitializeWheels(i_WheelManufactorName, k_MaxWheelAirPressure, i_CurrentAirPressure, k_AmountOfWheels);
@@ -21,7 +21,7 @@ namespace Ex03.GarageLogic
             m_NumOfExtraProperties = 2;
         }
 
-        internal Car(PowerSource i_PowerSource)
+        public Car(PowerSource i_PowerSource)
         {
             m_PowerSource = i_PowerSource;
             m_Wheels = new List<Wheel>();

@@ -243,6 +243,7 @@ namespace Ex03.GarageLogic
         public void SetPowerSourceCapacity(string i_PowerSourceCapacity)
         {
             m_CurrentVehicle.PowerSource.SetCurrentPowerSourceCapacity(i_PowerSourceCapacity);
+            m_CurrentVehicle.PercentageOfEnergyLeft = m_CurrentVehicle.PowerSource.CurrentPowerSourceCapacity / m_CurrentVehicle.PowerSource.MaximumPowerSourceCapacity;
         }
 
         public void FinalizeRegistryOfVehicle(string i_NameOfOwner, string i_PhoneOfOwner)
